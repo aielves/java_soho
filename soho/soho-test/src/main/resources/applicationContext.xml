@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+    <description>Spring Configuration</description>
+
+    <!-- 添加注解驱动 -->
+    <context:annotation-config/>
+
+    <!-- 默认扫描的包路径 -->
+    <context:component-scan base-package="com.soho"/>
+
+    <!-- 开启父类代理模式 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- 必须配置 -->
+    <aop:config/>
+
+    <!-- Zookeeper读取配置中心数据并设置指定解密字段 -->
+    <bean class="com.soho.zookeeper.core.ZKPropertyConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:f:/zookeeper.properties</value>
+            </list>
+        </property>
+        <property name="decipher">
+            <bean class="com.soho.zookeeper.security.imp.AESDcipher"/>
+        </property>
+        <property name="decipherKeys">
+            <array>
+                <value>db.passwd</value>
+            </array>
+        </property>
+    </bean>
+
+    <!-- 数据源配置 -->
+    <bean id="springDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
+        <property name="driverClassName" value="${db.driver}"/>
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.user}"/>
+        <property name="password" value="${db.passwd}"/>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="5"/>
+        <property name="minIdle" value="5"/>
+        <property name="maxActive" value="10"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="validationQuery" value="SELECT 'x' from dual"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用） -->
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="10"/>
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat"/>
+    </bean>
+
+    <!-- MyBatis读取XML文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="springDataSource"/>
+        <property name="configLocation" value="mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:/**/mapper/*Mapper.xml</value>
+                <value>classpath*:/mybatis_sqlresolver.xml</value> <!-- SQL解析器(SQLCnd方式查询数据) -->
+            </list>
+        </property>
+        <property name="plugins">
+            <array>
+                <ref bean="sqlMonitorInterceptor"/>
+                <ref bean="pageableInterceptor"/>
+            </array>
+        </property>
+    </bean>
+
+    <!-- 系统数据库选择器 -->
+    <bean id="dbSelector" class="com.soho.mybatis.database.selector.imp.SimpleDBSelector">
+        <property name="dbType" value="${db.database}"/>
+    </bean>
+
+    <!-- 数据分页插件 -->
+    <bean id="pageableInterceptor" class="com.soho.mybatis.interceptor.PageableInterceptor">
+        <property name="dbSelector" ref="dbSelector"/>
+    </bean>
+
+    <!-- SQL监控插件 -->
+    <bean id="sqlMonitorInterceptor" class="com.soho.mybatis.interceptor.SqlMonitorInterceptor">
+        <property name="dbSelector" ref="dbSelector"/>
+        <property name="handler">
+            <bean class="com.soho.mybatis.interceptor.handler.imp.SimpleSqlMonitorHandler"/>
+        </property>
+    </bean>
+
+    <!-- 业务监控拦截器 -->
+    <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice">
+            <bean class="com.soho.mybatis.interceptor.SpringBizInterceptor">
+                <property name="handler">
+                    <bean
+                            class="com.soho.mybatis.interceptor.handler.imp.SimpleBizMonitorHandler"></bean>
+                </property>
+            </bean>
+        </property>
+        <property name="patterns">
+            <list>
+                <value>
+                    com.soho.test.service.*.
+                </value>
+            </list>
+        </property>
+    </bean>
+
+    <import resource="dubbo-service.xml"/>
+
+</beans>

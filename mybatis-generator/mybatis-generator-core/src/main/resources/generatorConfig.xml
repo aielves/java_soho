@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright ${license.git.copyrightYears} the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE generatorConfiguration
+PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+	<!-- 数据库驱动 -->
+	<classPathEntry location="F:\repo\mysql\mysql-connector-java\5.1.18\mysql-connector-java-5.1.18.jar" />
+	<classPathEntry location="F:\repo\mysql\mysql-connector-java\5.1.18\mysql-connector-java-5.1.18.jar" />
+
+	<context id="MySQLTables" targetRuntime="MyBatis3">
+
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<!--数据库链接URL，用户名、密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://39.108.64.191:3306/chaseyo" userId="root"
+			password="ff13823912543">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 生成模型的包名和位置 -->
+		<javaModelGenerator targetPackage="com.soho.codegen"
+			targetProject="none">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- 生成映射文件的包名和位置 -->
+		<sqlMapGenerator targetPackage="com.soho.codegen"
+			targetProject="none">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 生成DAO的包名和位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.soho.codegen" targetProject="none">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<!--自定义XML参数配置 -->
+		<javaParam baseDAO="com.soho.mybatis.crud.dao.MyBatisDAO"
+			baseService="com.soho.mybatis.crud.service.BaseService"
+			buildType="1,2,3,4" mapperExt="DAO"
+			cndClass="com.soho.mybatis.sqlcode.condition.Cnd"
+			baseModel="com.soho.mybatis.crud.domain.IDEntity"
+			baseFXType="java.lang.Long"
+			baseProject="E:\project"
+			basePackage="">
+		</javaParam>
+
+		<!-- 配置生成表 -->
+		<table tableName="oauth_user,db_message" enableCountByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			enableUpdateByExample="false">
+			<property name="modelOnly" value="false" />
+            <property name="useActualColumnNames" value="true" />
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+
+	</context>
+
+</generatorConfiguration>

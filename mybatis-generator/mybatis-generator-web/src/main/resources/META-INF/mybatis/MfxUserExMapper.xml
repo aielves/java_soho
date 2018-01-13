@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright ${license.git.copyrightYears} the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldsaints.mofaxin.dao.MfxUserExDAO">
+    
+    <resultMap id="BaseResultMap" type="com.goldsaints.mofaxin.domain.MfxUser">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="passwd" jdbcType="VARCHAR" property="passwd" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="headimg" jdbcType="VARCHAR" property="headimg" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="realname" jdbcType="VARCHAR" property="realname" />
+        <result column="idno" jdbcType="VARCHAR" property="idno" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="mfs" jdbcType="VARCHAR" property="mfs" />
+        <result column="money" jdbcType="VARCHAR" property="money" />
+        <result column="ctime" jdbcType="BIGINT" property="ctime" />
+        <result column="utime" jdbcType="BIGINT" property="utime" />
+        <result column="skype" jdbcType="VARCHAR" property="skype" />
+        <result column="uid" jdbcType="VARCHAR" property="uid" />
+        <result column="state" jdbcType="INTEGER" property="state" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, username, passwd, sex, age, headimg, nickname, mobile, realname, idno, email, 
+        mfs, money, ctime, utime, skype, uid, state
+    </sql>
+    
+    <insert id="insert" parameterType="com.goldsaints.mofaxin.domain.MfxUser">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into mfx_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="passwd != null">
+                passwd,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="headimg != null">
+                headimg,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="realname != null">
+                realname,
+            </if>
+            <if test="idno != null">
+                idno,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="mfs != null">
+                mfs,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="utime != null">
+                utime,
+            </if>
+            <if test="skype != null">
+                skype,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="headimg != null">
+                #{headimg,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="realname != null">
+                #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="idno != null">
+                #{idno,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mfs != null">
+                #{mfs,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=BIGINT},
+            </if>
+            <if test="utime != null">
+                #{utime,jdbcType=BIGINT},
+            </if>
+            <if test="skype != null">
+                #{skype,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    
+    <update id="update" parameterType="com.goldsaints.mofaxin.domain.MfxUser">
+        update mfx_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                passwd = #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="headimg != null">
+                headimg = #{headimg,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="realname != null">
+                realname = #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="idno != null">
+                idno = #{idno,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mfs != null">
+                mfs = #{mfs,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=BIGINT},
+            </if>
+            <if test="utime != null">
+                utime = #{utime,jdbcType=BIGINT},
+            </if>
+            <if test="skype != null">
+                skype = #{skype,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from mfx_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    
+    <select id="countByCnd" parameterType="com.soho.mybatis.sqlcode.condition.Cnd" resultType="java.lang.Integer">
+        select count(1) 
+        from mfx_user
+        <include refid="Global.Where_Clause" />
+    </select>
+    
+    <select id="findByCnd" parameterType="com.soho.mybatis.sqlcode.condition.Cnd" resultMap="BaseResultMap">
+        select 
+        <include refid="Global.Field_Clause" />
+        from mfx_user
+        <include refid="Global.Where_Clause" />
+    </select>
+    
+    <delete id="deleteByCnd" parameterType="com.soho.mybatis.sqlcode.condition.Cnd">
+        delete from mfx_user
+        <include refid="Global.Where_Clause" />
+    </delete>
+    
+    <update id="updateByCnd" parameterType="com.soho.mybatis.sqlcode.condition.Cnd">
+        update mfx_user
+        <set>
+            <if test="updateObj.username != null">
+                username = #{updateObj.username,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.passwd != null">
+                passwd = #{updateObj.passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.sex != null">
+                sex = #{updateObj.sex,jdbcType=INTEGER},
+            </if>
+            <if test="updateObj.age != null">
+                age = #{updateObj.age,jdbcType=INTEGER},
+            </if>
+            <if test="updateObj.headimg != null">
+                headimg = #{updateObj.headimg,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.nickname != null">
+                nickname = #{updateObj.nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.mobile != null">
+                mobile = #{updateObj.mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.realname != null">
+                realname = #{updateObj.realname,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.idno != null">
+                idno = #{updateObj.idno,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.email != null">
+                email = #{updateObj.email,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.mfs != null">
+                mfs = #{updateObj.mfs,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.money != null">
+                money = #{updateObj.money,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.ctime != null">
+                ctime = #{updateObj.ctime,jdbcType=BIGINT},
+            </if>
+            <if test="updateObj.utime != null">
+                utime = #{updateObj.utime,jdbcType=BIGINT},
+            </if>
+            <if test="updateObj.skype != null">
+                skype = #{updateObj.skype,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.uid != null">
+                uid = #{updateObj.uid,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.state != null">
+                state = #{updateObj.state,jdbcType=INTEGER},
+            </if>
+        </set>
+        <include refid="Global.Where_Clause" />
+    </update>
+</mapper>

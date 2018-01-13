@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soho.test.domain.Article">
+	<sql id="Base_Column_List">
+		id as id ,
+		title as title ,
+		columnId as columnId ,
+		scolumnId as scolumnId ,
+		content as content ,
+		summary as summary ,
+		articleKeyword as articleKeyword ,
+		visitTime as visitTime ,
+		publish as publish ,
+		stick as stick ,
+		coverUrl as coverUrl ,
+		creator as creator ,
+		lastModifier as lastModifier ,
+		createDate as createDate ,
+		lastModDate as lastModDate ,
+		status as status
+	</sql>
+	
+	<select id="count" parameterType="com.soho.mybatis.sqlcode.condition.Cnd" resultType="Integer">
+        SELECT COUNT(1)
+        FROM qfd_article
+        <include refid="Global.Where_Clause" />
+    </select>
+	
+	<select id="find" parameterType="com.soho.mybatis.sqlcode.condition.Cnd" resultType="com.soho.test.domain.Article">
+        SELECT
+        <include refid="Global.Field_Clause" />
+        FROM qfd_article
+        <include refid="Global.Where_Clause" />
+    </select>
+	
+</mapper>

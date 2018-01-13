@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.YxProductDAO">
+    
+    <resultMap id="BaseResultMap" type="com.test.YxProduct">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="price" jdbcType="VARCHAR" property="price" />
+        <result column="ctime" jdbcType="BIGINT" property="ctime" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, name, price, ctime
+    </sql>
+    
+    <insert id="insert" parameterType="com.test.YxProduct">
+        insert into yx_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    
+    <update id="update" parameterType="com.test.YxProduct">
+        update yx_product
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from yx_product
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    
+    <select id="countByCnd" parameterType="com.soho.mybatis.sqlcode.condition.Cnd" resultType="java.lang.Integer">
+        select count(1) 
+        from yx_product
+        <include refid="Global.Where_Clause" />
+    </select>
+    
+    <select id="findByCnd" parameterType="com.soho.mybatis.sqlcode.condition.Cnd" resultMap="BaseResultMap">
+        select 
+        <include refid="Global.Field_Clause" />
+        from yx_product
+        <include refid="Global.Where_Clause" />
+    </select>
+    
+    <delete id="deleteByCnd" parameterType="com.soho.mybatis.sqlcode.condition.Cnd">
+        delete from yx_product
+        <include refid="Global.Where_Clause" />
+    </delete>
+    
+    <update id="updateByCnd" parameterType="com.soho.mybatis.sqlcode.condition.Cnd">
+        update yx_product
+        <set>
+            <if test="updateObj.name != null">
+                name = #{updateObj.name,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.price != null">
+                price = #{updateObj.price,jdbcType=VARCHAR},
+            </if>
+            <if test="updateObj.ctime != null">
+                ctime = #{updateObj.ctime,jdbcType=BIGINT},
+            </if>
+        </set>
+        <include refid="Global.Where_Clause" />
+    </update>
+</mapper>

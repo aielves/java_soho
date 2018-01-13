@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright ${license.git.copyrightYears} the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<configuration>
+    <!-- 控制台输出日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{mm:ss} %-5level %logger{36} >>> %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--每天生成一个日志文件，保存30天的日志文件。-->
+    <appender name="DayFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>F:/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--指定logger name为包名或类全名 指定级别 additivity设置是否传递到root logger -->
+    <logger name="slf4j" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DayFile"/>
+    </logger>
+    <!--slf4j2包下的类在ERROR级别时候传递到root logger中-->
+    <logger name="slf4j2" level="INFO" />
+    <!--根logger控制-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
