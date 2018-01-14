@@ -17,6 +17,7 @@ public class OAuth2Client {
     private String response_type = "code";
     private String grant_type = "authorization_code";
     private String state;
+    private String domain_uri;
 
     public String getClient_id() {
         return client_id;
@@ -112,5 +113,13 @@ public class OAuth2Client {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getDomain_uri() {
+        return domain_uri;
+    }
+
+    public void setDomain_uri(String domain_uri) {
+        this.domain_uri = domain_uri;
     }
 }
