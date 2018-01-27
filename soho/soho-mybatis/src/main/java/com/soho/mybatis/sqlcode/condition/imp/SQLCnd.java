@@ -234,6 +234,9 @@ public class SQLCnd implements Cnd {
     }
 
     public String getOnlyField() {
+        if (fields.isEmpty()) {
+            return "";
+        }
         return fields.get(0);
     }
 

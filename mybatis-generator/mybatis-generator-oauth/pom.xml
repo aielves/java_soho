@@ -33,6 +33,16 @@
             <artifactId>mybatis-generator-crud</artifactId>
             <version>${parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.aliyun.sdk</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.sdk</groupId>
+            <artifactId>aliyun-java-sdk-jaq</artifactId>
+            <version>2.0.6</version>
+        </dependency>
     </dependencies>
 
 </project>

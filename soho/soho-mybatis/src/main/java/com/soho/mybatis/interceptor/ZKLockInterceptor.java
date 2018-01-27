@@ -2,9 +2,9 @@ package com.soho.mybatis.interceptor;
 
 import com.soho.ex.BizErrorEx;
 import com.soho.mybatis.interceptor.lock.DistributedLock;
+import com.soho.shiro.utils.SessionUtils;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
 /**
@@ -18,7 +18,7 @@ public class ZKLockInterceptor implements MethodInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         DistributedLock lock = null;
         try {
-            Session session = SecurityUtils.getSubject().getSession();
+            Session session = SessionUtils.getSession();
             lock = new DistributedLock(zkUrl, session.getId().toString());
             lock.lock();
             // System.out.println("===Thread " + Thread.currentThread().getId() + " running");

@@ -1,7 +1,7 @@
 package com.soho.shiro.oauth2.aconst;
 
 /**
- * Created by Administrator on 2018/1/14.
+ * Created by shadow on 2018/1/14.
  */
 public class OAuth2ErrorCode {
 

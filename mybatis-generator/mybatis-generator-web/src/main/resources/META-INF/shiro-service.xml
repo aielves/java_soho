@@ -37,11 +37,11 @@
         <property name="authenticationCachingEnabled" value="false"/>
         <property name="authenticationCacheName" value="authenticationCache"/>
         <property name="authorizationCacheName" value="authorizationCache"/>
-        <property name="oAuth2Client" ref="oauth2Client"/>
+        <property name="oAuth2Client" ref="oAuth2Client"/>
     </bean>
 
     <!-- OAUTH CLIENT配置 -->
-    <bean id="oauth2Client" class="com.soho.shiro.oauth2.aconst.OAuth2Client">
+    <bean id="oAuth2Client" class="com.soho.shiro.oauth2.aconst.OAuth2Client">
         <property name="client_id" value="${oauth.client_id}"/>
         <property name="client_secret" value="${oauth.client_secret}"/>
         <property name="client_type" value="${oauth.client_type}"/>
@@ -49,6 +49,8 @@
         <property name="authorize_code_uri" value="${oauth.authorize_code_uri}"/>
         <property name="access_token_uri" value="${oauth.access_token_uri}"/>
         <property name="userinfo_uri" value="${oauth.userinfo_uri}"/>
+        <property name="domain_uri" value="${oauth.index_uri}"/>
+        <property name="logout_token_uri" value="${oauth.logout_token_uri}"/>
     </bean>
 
     <!-- Session服务器配置 -->
@@ -90,8 +92,6 @@
         <property name="sessionManager" ref="sessionManager"/>
     </bean>
 
-    <bean id="oAuthClientService" class="com.soho.shiro.oauth2.server.imp.OAuthClientServiceImp"/>
-
     <!-- Shiro主过滤器本身功能十分强大,其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行 -->
     <!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -112,15 +112,13 @@
         <property name="filters">
             <map>
                 <entry key="oauth2">
-                    <bean class="com.soho.shiro.oauth2.client.OAuth2AuthenticationFilter">
-                        <property name="authcCodeParam" value="code"/>
+                    <bean class="com.soho.shiro.oauth2.filter.OAuth2AuthenticationFilter">
                         <property name="successUrl" value="${oauth.index_uri}"/>
-                        <property name="failureUrl" value="/static/unauthorized.html"/>
                     </bean>
                 </entry>
                 <entry key="authc">
                     <bean class="com.soho.shiro.filter.SimpleOAuth2AuthenticationFilter">
-                        <property name="oAuth2Client" ref="oauth2Client"/>
+                        <property name="oAuth2Client" ref="oAuth2Client"/>
                     </bean>
                 </entry>
                 <entry key="role">
@@ -132,12 +130,12 @@
         </property>
     </bean>
 
-    <bean class="com.soho.codegen.shiro.service.imp.SimpleFilterChainDefinitionsService" init-method="initDefinitions"
+    <bean class="com.soho.codegen.shiro.service.SimpleFilterChainDefinitionsService" init-method="initDefinitions"
           lazy-init="false">
         <property name="definitions">
             <value>
-                /client/logout*=anon
-                /client/oauth*=oauth2
+                /codegen/oauth* = oauth2
+                /codegen/logout* = authc
                 /codegen/generate* = authc
                 /codegen/getZipFile* = authc
                 /codegen/downFile* = authc

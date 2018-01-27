@@ -7,7 +7,7 @@ import com.soho.shiro.oauth2.aconst.OAuth2Token;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2017/5/1.
+ * Created by shadow on 2017/5/1.
  */
 public interface OAuth2TokenService {
 
@@ -144,5 +144,15 @@ public interface OAuth2TokenService {
      * @return String
      */
     public String getOAuth2LoginView();
+
+    /**
+     * 登录认证校验状态
+     */
+    public void validJaqState() throws BizErrorEx;
+
+    /**
+     * 删除登录认证状态
+     */
+    public void delJaqState();
 
 }

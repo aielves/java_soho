@@ -48,7 +48,7 @@
         <property name="locations">
             <list>
                 <value>file:/home/config/zookeeper.properties</value>
-                <value>file:e:/repo/mybatis-generator/zookeeper.properties</value>
+                <value>file:C:/IdeaProjects/soho/mybatis-generator/zookeeper.properties</value>
             </list>
         </property>
         <property name="decipher">
@@ -80,7 +80,6 @@
         <property name="timeBetweenEvictionRunsMillis" value="60000"/>
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
         <property name="minEvictableIdleTimeMillis" value="300000"/>
-        <property name="defaultAutoCommit" value="false"/>
         <property name="validationQuery" value="SELECT 'x' from dual"/>
         <property name="testWhileIdle" value="true"/>
         <property name="testOnBorrow" value="false"/>

@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Administrator on 2017/4/27.
+ * Created by shadow on 2017/4/27.
  */
 public interface OnAccessDeniedHandler {
 

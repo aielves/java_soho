@@ -5,6 +5,9 @@ import com.soho.codegen.domain.OauthUser;
 import com.soho.codegen.domain.ZipMessage;
 import com.soho.codegen.service.CodeGenService;
 import com.soho.ex.BizErrorEx;
+import com.soho.shiro.oauth2.aconst.OAuth2Client;
+import com.soho.shiro.utils.HttpUtils;
+import com.soho.shiro.utils.SessionUtils;
 import com.soho.web.domain.Ret;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -12,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/codegen")
@@ -22,6 +27,18 @@ public class CodeGenController {
 
     @Autowired
     private CodeGenService codeGenService;
+
+    @Autowired
+    private OAuth2Client oAuth2Client;
+
+    @RequestMapping(value = "/logout")
+    @ResponseBody
+    public Object logout() {
+        Map<String, String> map = (Map<String, String>) SessionUtils.getAttribute("tokeninfo");
+        String s = HttpUtils.sendPost(oAuth2Client.getLogout_token_uri() + "?access_token=" + map.get("access_token") + "&access_pbk=" + map.get("access_pbk"), null);
+        SecurityUtils.getSubject().logout();
+        return new ModelAndView("redirect:" + oAuth2Client.getDomain_uri() + "?ts=" + System.currentTimeMillis());
+    }
 
     @RequestMapping(value = "/generate")
     @ResponseBody

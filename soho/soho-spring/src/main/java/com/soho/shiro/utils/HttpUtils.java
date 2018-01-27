@@ -1,11 +1,25 @@
 package com.soho.shiro.utils;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.springframework.util.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class HttpUtils {
 
@@ -22,7 +36,7 @@ public class HttpUtils {
      */
     public static boolean isAPI(HttpServletRequest request) {
         String queryString = request.getQueryString();
-        return (queryString != null && queryString.indexOf("jsid") != -1);
+        return (queryString != null && queryString.indexOf("access_token") != -1);
     }
 
     /**
@@ -90,6 +104,33 @@ public class HttpUtils {
             }
         }
         return ip;
+    }
+
+    // 发送Post请求,返回JSON字符串,请求失败返回空字符串
+    public static String sendPost(String url, Map<String, String> map) {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPatch = new HttpPost(url);
+        // httpPatch.setHeader("Content-type", "application/json");
+        httpPatch.setHeader("Charset", HTTP.UTF_8);
+        // httpPatch.setHeader("Accept", "application/json");
+        httpPatch.setHeader("Accept-Charset", HTTP.UTF_8);
+        try {
+            List<NameValuePair> nvps = new ArrayList<>();
+            if (map != null && !map.isEmpty()) {
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+                }
+            }
+            httpPatch.setEntity(new UrlEncodedFormEntity(nvps));
+            HttpResponse response = httpClient.execute(httpPatch);
+            String result = EntityUtils.toString(response.getEntity());
+            if (!StringUtils.isEmpty(result)) {
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

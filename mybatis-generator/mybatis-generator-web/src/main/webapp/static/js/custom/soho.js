@@ -21,7 +21,7 @@ var islogin = false;
 function initMsg() {
     jQuery.post("/codegen/getUser", "", function (result) {
         if (result.code == "000000") {
-            jQuery("#loginName").html(result.data.nickname + "&nbsp;&nbsp;<a href='/client/logout'>退出</a>");
+            jQuery("#loginName").html(result.data.nickname + "&nbsp;&nbsp;<a href='/codegen/logout'>退出</a>");
             islogin = true;
         } else {
             var msg = "友情提示:生成功能需要登录后方可使用!";

@@ -3,7 +3,7 @@ package com.soho.web.vo;
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 2017/9/8.
+ * Created by shadow on 2017/9/8.
  */
 public class BaseVO<T> implements Serializable {
 
@@ -13,11 +13,11 @@ public class BaseVO<T> implements Serializable {
     private String app_version;     // APP版本号
     private String client_type;     // 客户端类型 参数: app, web
     private String client_uid;      // 用户UID
-    private String pbk;              // 用户授权公钥
-    private T user;            // 用户信息,可填充ID,USER对象
+    private String client_pbk;      // 用户授权公钥
+    private T user;                 // 用户信息,可填充ID,USER对象
 
     private Integer pageNo = 1;
-    private Integer pageSize = 20;
+    private Integer pageSize = 50;
 
     public BaseVO() {
 
@@ -99,12 +99,12 @@ public class BaseVO<T> implements Serializable {
         this.user = user;
     }
 
-    public String getPbk() {
-        return pbk;
+    public String getClient_pbk() {
+        return client_pbk;
     }
 
-    public void setPbk(String pbk) {
-        this.pbk = pbk;
+    public void setClient_pbk(String client_pbk) {
+        this.client_pbk = client_pbk;
     }
 
 }

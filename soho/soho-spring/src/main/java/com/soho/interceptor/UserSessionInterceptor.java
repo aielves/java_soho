@@ -1,9 +1,9 @@
 package com.soho.interceptor;
 
+import com.soho.shiro.utils.SessionUtils;
 import com.soho.web.vo.BaseVO;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
 /**
@@ -20,11 +20,11 @@ public class UserSessionInterceptor implements MethodInterceptor {
             for (int i = 0; i < objects.length; i++) {
                 if (objects[0] instanceof BaseVO<?>) {
                     BaseVO base = (BaseVO) objects[i];
-                    Session session = SecurityUtils.getSubject().getSession();
+                    Session session = SessionUtils.getSession();
                     if (session != null) {
-                        Object val = session.getAttribute("session_user");
-                        if (val != null) {
-                            base.setUser(val);
+                        Object user = session.getAttribute(SessionUtils.USER);
+                        if (user != null) {
+                            base.setUser(user);
                             newobjects[i] = base;
                         } else {
                             newobjects[i] = objects[i];

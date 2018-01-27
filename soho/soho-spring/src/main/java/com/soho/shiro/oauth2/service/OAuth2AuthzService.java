@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URISyntaxException;
 
 /**
- * Created by Administrator on 2017/12/18.
+ * Created by shadow on 2017/12/18.
  */
 public interface OAuth2AuthzService {
 

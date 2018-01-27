@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 /**
- * Created by Administrator on 2017/4/27.
+ * Created by shadow on 2017/4/27.
  */
 
 public class BizExceptionHandler implements HandlerExceptionResolver {

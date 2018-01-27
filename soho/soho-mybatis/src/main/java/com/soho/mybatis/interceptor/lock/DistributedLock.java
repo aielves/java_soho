@@ -46,9 +46,7 @@ public class DistributedLock implements Lock, Watcher {
         }
     }
 
-    /**
-     * zookeeper节点的监视器
-     */
+    // zookeeper节点的监视器
     public void process(WatchedEvent event) {
         if (this.latch != null) {
             this.latch.countDown();
@@ -74,7 +72,7 @@ public class DistributedLock implements Lock, Watcher {
                 throw new LockException("lockName can not contains \\u000B");
             //创建临时子节点
             myZnode = zk.create(root + "/" + lockName + splitStr, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
-//            System.out.println(myZnode + " is created ");
+            // System.out.println(myZnode + " is created ");
             //取出所有子节点
             List<String> subNodes = zk.getChildren(root, false);
             //取出所有lockName的锁
@@ -86,7 +84,7 @@ public class DistributedLock implements Lock, Watcher {
                 }
             }
             Collections.sort(lockObjNodes);
-//            System.out.println(myZnode + "==" + lockObjNodes.get(0));
+            // System.out.println(myZnode + "==" + lockObjNodes.get(0));
             if (myZnode.equals(root + "/" + lockObjNodes.get(0))) {
                 //如果是最小的节点,则表示取得锁
                 return true;
@@ -118,7 +116,7 @@ public class DistributedLock implements Lock, Watcher {
         Stat stat = zk.exists(root + "/" + lower, true);
         //判断比自己小一个数的节点是否存在,如果不存在则无需等待锁,同时注册监听
         if (stat != null) {
-//            System.out.println("Thread " + Thread.currentThread().getId() + " waiting for " + root + "/" + lower);
+            // System.out.println("Thread " + Thread.currentThread().getId() + " waiting for " + root + "/" + lower);
             this.latch = new CountDownLatch(1);
             this.latch.await(waitTime, TimeUnit.MILLISECONDS);
             this.latch = null;
@@ -128,7 +126,7 @@ public class DistributedLock implements Lock, Watcher {
 
     public void unlock() {
         try {
-//            System.out.println("unlock " + myZnode);
+            // System.out.println("unlock " + myZnode);
             zk.delete(myZnode, -1);
             myZnode = null;
             zk.close();

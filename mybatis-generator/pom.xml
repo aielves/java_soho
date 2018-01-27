@@ -41,7 +41,7 @@
     </build>
 
     <properties>
-        <soho.version>2.0.0</soho.version>
+        <soho.version>2.0.1</soho.version>
     </properties>
 
     <dependencies>

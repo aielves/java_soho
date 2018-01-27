@@ -11,6 +11,7 @@ public class OAuth2Client {
     private String redirect_uri;
     private String access_token_uri;
     private String authorize_code_uri;
+    private String logout_token_uri;
     private String userinfo_uri;
     private String username;
     private String password;
@@ -65,6 +66,14 @@ public class OAuth2Client {
 
     public void setAuthorize_code_uri(String authorize_code_uri) {
         this.authorize_code_uri = authorize_code_uri;
+    }
+
+    public String getLogout_token_uri() {
+        return logout_token_uri;
+    }
+
+    public void setLogout_token_uri(String logout_token_uri) {
+        this.logout_token_uri = logout_token_uri;
     }
 
     public String getUserinfo_uri() {
@@ -122,4 +131,5 @@ public class OAuth2Client {
     public void setDomain_uri(String domain_uri) {
         this.domain_uri = domain_uri;
     }
+
 }

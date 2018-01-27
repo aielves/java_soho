@@ -16,22 +16,15 @@
 package com.soho.codegen.shiro.oauth.realm;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.soho.codegen.domain.OauthUser;
-import com.soho.codegen.service.OauthUserService;
+import com.soho.codegen.shiro.aconst.BizErrorCode;
 import com.soho.ex.BizErrorEx;
-import com.soho.mybatis.sqlcode.condition.imp.SQLCnd;
 import com.soho.shiro.oauth2.aconst.OAuth2Client;
-import com.soho.shiro.oauth2.client.OAuth2Token;
+import com.soho.shiro.oauth2.token.OAuth2WebToken;
+import com.soho.shiro.utils.HttpUtils;
+import com.soho.shiro.utils.SessionUtils;
 import com.soho.web.domain.Ret;
-import org.apache.oltu.oauth2.client.OAuthClient;
-import org.apache.oltu.oauth2.client.URLConnectionClient;
-import org.apache.oltu.oauth2.client.request.OAuthBearerClientRequest;
-import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
-import org.apache.oltu.oauth2.client.response.OAuthResourceResponse;
-import org.apache.oltu.oauth2.common.OAuth;
-import org.apache.oltu.oauth2.common.message.types.GrantType;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -40,19 +33,17 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class OAuth2Realm extends AuthorizingRealm {
 
     @Autowired
     private OAuth2Client oAuth2Client;
-    @Autowired
-    private OauthUserService oauthUserService;
 
     private CacheManager cacheManager;
 
@@ -63,7 +54,7 @@ public class OAuth2Realm extends AuthorizingRealm {
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof OAuth2Token;//表示此Realm只支持OAuth2Token类型
+        return token instanceof OAuth2WebToken;//表示此Realm只支持OAuth2Token类型
     }
 
     @Override
@@ -76,51 +67,60 @@ public class OAuth2Realm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        OAuth2Token oAuth2Token = (OAuth2Token) token;
-        String code = oAuth2Token.getAuthCode();
-        String username = getOAuthUsername(code);
         try {
-            OauthUser user = oauthUserService.findOneByCnd(new SQLCnd().eq("username", username));
-            if (user != null) {
-                Session session = SecurityUtils.getSubject().getSession();
-                session.setAttribute("session_user", user);
-            } else {
-                throw new AuthenticationException("没有找到用户数据:" + username);
-            }
+            OAuth2WebToken oAuth2WebToken = (OAuth2WebToken) token;
+            String code = oAuth2WebToken.getPrincipal().toString();
+            Map<String, String> accessToken = getAccessToken(code);
+            OauthUser user = getUserInfo(accessToken.get("access_token"), accessToken.get("access_pbk"));
+            SessionUtils.setUser(user);
+            SessionUtils.setAttribute("tokeninfo", accessToken);
+            SessionUtils.removeAttribute("state");
+            return new SimpleAuthenticationInfo(user.getUid(), code, getName());
         } catch (BizErrorEx ex) {
             throw new AuthenticationException(ex.getMessage());
         }
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, code, getName());
-        return authenticationInfo;
     }
 
-    private String getOAuthUsername(String code) {
-        try {
-            OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
-            OAuthClientRequest accessTokenRequest = OAuthClientRequest
-                    .tokenLocation(oAuth2Client.getAccess_token_uri())
-                    .setGrantType(GrantType.AUTHORIZATION_CODE)
-                    .setClientId(oAuth2Client.getClient_id())
-                    .setClientSecret(oAuth2Client.getClient_secret())
-                    .setCode(code)
-                    .setRedirectURI(oAuth2Client.getRedirect_uri())
-                    .buildQueryMessage();
-            OAuthAccessTokenResponse oAuthResponse = oAuthClient.accessToken(accessTokenRequest, OAuth.HttpMethod.POST);
-            String accessToken = oAuthResponse.getAccessToken();
-            // Long expiresIn = oAuthResponse.getExpiresIn();
-            OAuthClientRequest userInfoRequest = new OAuthBearerClientRequest(oAuth2Client.getUserinfo_uri())
-                    .setAccessToken(accessToken).buildQueryMessage();
-            OAuthResourceResponse resourceResponse = oAuthClient.resource(userInfoRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
-            String username = resourceResponse.getBody();
-            return username;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new AuthenticationException(e);
+    // 获取授权令牌
+    private Map<String, String> getAccessToken(String code) throws BizErrorEx {
+        Map<String, String> map = new HashMap<>();
+        map.put("client_id", oAuth2Client.getClient_id());
+        map.put("client_secret", oAuth2Client.getClient_secret());
+        map.put("grant_type", "authorization_code");
+        map.put("code", code);
+        map.put("redirect_uri", oAuth2Client.getRedirect_uri());
+        String result = HttpUtils.sendPost(oAuth2Client.getAccess_token_uri(), map);
+        JSONObject jsonObject = JSON.parseObject(result);
+        if (Ret.OK_STATUS.equals(jsonObject.getString("code"))) {
+            JSONObject data = jsonObject.getJSONObject("data");
+            if (Ret.OK_STATUS.equals(data.getString("biz_code"))) {
+                String access_token = data.getString("access_token");
+                String access_pbk = data.getString("access_pbk");
+                if (!StringUtils.isEmpty(access_token) && !StringUtils.isEmpty(access_pbk)) {
+                    Map<String, String> retMap = new HashMap<>();
+                    retMap.put("access_token", access_token);
+                    retMap.put("access_pbk", access_pbk);
+                    return retMap;
+                }
+            }
         }
+        throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "获取授权令牌失败");
     }
 
-    public OAuth2Client getoAuth2Client() {
-        return oAuth2Client;
+    // 获取用户信息
+    private OauthUser getUserInfo(String access_token, String access_pbk) throws BizErrorEx {
+        String result = HttpUtils.sendPost(oAuth2Client.getUserinfo_uri() + "?access_token=" + access_token + "&access_pbk=" + access_pbk, null);
+        JSONObject jsonObject = JSON.parseObject(result);
+        if (Ret.OK_STATUS.equals(jsonObject.getString("code"))) {
+            JSONObject data = jsonObject.getJSONObject("data");
+            if (Ret.OK_STATUS.equals(data.getString("biz_code"))) {
+                String uid = data.getString("uid");
+                if (!StringUtils.isEmpty(uid)) {
+                    return JSON.parseObject(data.toJSONString(), OauthUser.class);
+                }
+            }
+        }
+        throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "获取用户信息失败");
     }
 
     public void setoAuth2Client(OAuth2Client oAuth2Client) {

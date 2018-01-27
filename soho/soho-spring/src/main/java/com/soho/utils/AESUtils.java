@@ -6,11 +6,14 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by Administrator on 2017/8/14.
+ * Created by shadow on 2017/8/14.
  */
 public class AESUtils {
+
+    public static final String PRV_KEY = "#Wg!Y5As*vTF&dPU";
+
     /**
-     * aes加密
+     * aes加密,key需要16位字符
      */
     public static String encrypt(String input, String key) {
         byte[] crypted = null;
@@ -27,7 +30,7 @@ public class AESUtils {
     }
 
     /**
-     * aes解密
+     * aes解密,key需要16位字符
      */
     public static String decrypt(String input, String key) {
         byte[] output = null;
@@ -39,9 +42,7 @@ public class AESUtils {
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-
         return new String(output);
-
     }
 
 }

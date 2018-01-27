@@ -7,6 +7,7 @@ import com.soho.shiro.oauth2.aconst.OAuth2ErrorCode;
 import com.soho.shiro.oauth2.aconst.OAuth2Token;
 import com.soho.shiro.oauth2.service.OAuth2AuthzService;
 import com.soho.shiro.oauth2.service.OAuth2TokenService;
+import com.soho.shiro.utils.SessionUtils;
 import com.soho.utils.MD5Util;
 import com.soho.web.domain.Ret;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
@@ -22,7 +23,6 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.ParameterStyle;
 import org.apache.oltu.oauth2.rs.request.OAuthAccessResourceRequest;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -68,19 +68,21 @@ public class OAuth2AuthzServiceImp implements OAuth2AuthzService {
             String username = StringUtils.isEmpty(oAuthAuthzRequest.getParam("username")) ? "" : oAuthAuthzRequest.getParam("username");
             String password = StringUtils.isEmpty(oAuthAuthzRequest.getParam("password")) ? "" : oAuthAuthzRequest.getParam("password");
             // 校验PBK签名
-            Object s_pbk = SecurityUtils.getSubject().getSession().getAttribute("client_pbk");
+            Object s_pbk = SessionUtils.getAttribute("client_pbk");
             String pbk = oAuthAuthzRequest.getParam("client_pbk");
             if (StringUtils.isEmpty(s_pbk) || !s_pbk.equals(pbk)) {
                 return toLoginView(oAuthAuthzRequest, redirect_uri, "", "");
             }
             try {
-                Map<String, String> user = oAuth2TokenService.loginByUsername(username, password);
                 String authorizationCode = null;
                 OAuthIssuer oAuthIssuer = new OAuthIssuerImpl(new MD5Generator());
                 authorizationCode = oAuthIssuer.authorizationCode();
                 String accessToken = oAuthIssuer.accessToken();
                 String refreshToken = oAuthIssuer.accessToken();
+                Map<String, String> user = oAuth2TokenService.loginByUsername(username, password);
+                oAuth2TokenService.validJaqState();
                 oAuth2Token = oAuth2TokenService.addClientToken(oAuthAuthzRequest.getClientId(), user.get("uid"), user.get("username"), authorizationCode, accessToken, refreshToken);
+                oAuth2TokenService.delJaqState();
             } catch (BizErrorEx e) { // WEB方式登录失败时跳转到登陆页面
                 return toLoginView(oAuthAuthzRequest, redirect_uri, username, e.getMessage());
             }
@@ -118,7 +120,7 @@ public class OAuth2AuthzServiceImp implements OAuth2AuthzService {
         client.setRedirect_uri(redirect_uri);
         client.setState(oAuthAuthzRequest.getState());
         String pbk = MD5Util.MD5PBK(client.getClient_id() + System.currentTimeMillis()).toLowerCase();
-        SecurityUtils.getSubject().getSession().setAttribute("client_pbk", pbk);
+        SessionUtils.setAttribute("client_pbk", pbk);
         ModelAndView view = new ModelAndView(oAuth2TokenService.getOAuth2LoginView());
         view.addObject("client", client);
         view.addObject("username", username);
@@ -171,26 +173,20 @@ public class OAuth2AuthzServiceImp implements OAuth2AuthzService {
             String accessToken = oAuthAccessResourceRequest.getAccessToken();
             // 获取令牌公钥
             String accessPbk = request.getParameter("access_pbk");
-            // 读取OAuth用户信息
-            Map<String, String> user = null;
             try {
+                // 校验客户端公钥
                 OAuth2Token oAuth2Token = oAuth2TokenService.validAccessPbk(accessToken, accessPbk);
-                user = oAuth2TokenService.getOauthUser(oAuth2Token.getUid());
+                // 读取OAuth用户信息
+                Map<String, String> user = oAuth2TokenService.getOauthUser(oAuth2Token.getUid());
+                // 生成OAuth响应
+                Map<String, Object> map = toBuildJsonMapResponse(Ret.OK_STATUS, "", HttpServletResponse.SC_OK, "");
+                for (Map.Entry<String, String> entry : user.entrySet()) {
+                    map.put(entry.getKey(), entry.getValue());
+                }
+                return map;
             } catch (BizErrorEx ex) {
                 return toBuildJsonMapResponse(ex.getErrorCode(), ex.getMessage(), HttpServletResponse.SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_GRANT);
             }
-            // 生成OAuth响应
-            Map<String, Object> map = toBuildJsonMapResponse(Ret.OK_STATUS, "", HttpServletResponse.SC_OK, "");
-            map.put("uid", user.get("uid"));
-            map.put("nickname", user.get("nickname"));
-            map.put("headimg", user.get("headimg"));
-            map.put("sex", user.get("sex"));
-            map.put("point", user.get("point"));
-            map.put("asc_jt", user.get("asc_jt"));
-            map.put("asc_dt", user.get("asc_dt"));
-            map.put("asc_addr", user.get("asc_addr"));
-            map.put("asc_worth", "1.00");
-            return map;
         } catch (OAuthProblemException e) {
             return toBuildJsonMapResponse(OAuth2ErrorCode.OAUTH_CLIENT_ERROR, e.getMessage(), HttpServletResponse.SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_REQUEST);
         }
