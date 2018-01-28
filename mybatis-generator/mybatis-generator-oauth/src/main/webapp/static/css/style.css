@@ -31,7 +31,7 @@ img{max-width:100%;}
 body{
 	font-family: 'Rokkitt', serif;
 	font-size:100%;
-	background: url(../images/bg.png) no-repeat;
+	background: url(/static/images/bg.png) no-repeat;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center;
@@ -44,7 +44,7 @@ body{
 /*start-contact-form*/
 .contact_form {
 	width: 50%;
-	background: url("../images/border.png") no-repeat 348px 77px;
+	background: url("/static/images/border.png") no-repeat 348px 77px;
 	float: left;
 	position: relative;
 }
@@ -355,7 +355,7 @@ body{
 }
 .checkbox input + i:after {
 	content: '';
-	background: url("../images/mark.png") no-repeat 3px 2px;
+	background: url("/static/images/mark.png") no-repeat 3px 2px;
 	top: -1px;
 	left: -1px;
 	width: 15px;
@@ -465,7 +465,7 @@ body{
 		padding: 13px 20px;
 	}
 	.contact_form {
-		background: url("../images/border.png") no-repeat 313px 77px;
+		background: url("/static/images/border.png") no-repeat 313px 77px;
 	}
 	.forgot {
 		margin-right: 65px;
@@ -521,7 +521,7 @@ body{
 		font-size: 1em;
 	}
 	.contact_form {
-		background: url("../images/border.png") no-repeat 247px 41px;
+		background: url("/static/images/border.png") no-repeat 247px 41px;
 	}
 	.forgot {
 		margin-right: 27px;

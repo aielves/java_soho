@@ -19,13 +19,13 @@
         <!-- start-account -->
         <div class="account">
             <h2><a href="https://www.cartoonai.com/static/signup.html">Don' have an account? Sign Up!</a></h2>
-            <div class="span"><a href="#"><img src="images/facebook.png" alt=""/><i>Sign In with Facebook</i>
+            <div class="span"><a href="#"><img src="/static/images/facebook.png" alt=""/><i>Sign In with Facebook</i>
                 <div class="clear"></div>
             </a></div>
-            <div class="span1"><a href="#"><img src="images/twitter.png" alt=""/><i>Sign In with Twitter</i>
+            <div class="span1"><a href="#"><img src="/static/images/twitter.png" alt=""/><i>Sign In with Twitter</i>
                 <div class="clear"></div>
             </a></div>
-            <div class="span2"><a href="#"><img src="images/gplus.png" alt=""/><i>Sign In with Google+</i>
+            <div class="span2"><a href="#"><img src="/static/images/gplus.png" alt=""/><i>Sign In with Google+</i>
                 <div class="clear"></div>
             </a></div>
         </div>
@@ -44,11 +44,11 @@
                 <li style="width: 300px">
                     <input type="text" class="textbox1" name="username" maxlength="10" value="${username!''}" placeholder="username"/>
                     <span class="form_hint">Enter Your Account</span>
-                    <p><img src="images/contact.png" alt=""></p>
+                    <p><img src="/static/images/contact.png" alt=""></p>
                 </li>
                 <li style="width: 300px">
                     <input type="password" name="password" class="textbox2" maxlength="10" placeholder="password">
-                    <p><img src="images/lock.png" alt=""></p>
+                    <p><img src="/static/images/lock.png" alt=""></p>
                 </li>
             </ul>
             <div class="container" style="margin-left: 0px;margin-top: 8%;width: 100%;">

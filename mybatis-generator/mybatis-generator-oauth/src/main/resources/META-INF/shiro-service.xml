@@ -41,6 +41,11 @@
         </property>
     </bean>
 
+    <!-- OAUTH CLIENT配置 -->
+    <bean id="oAuth2Client" class="com.soho.shiro.oauth2.aconst.OAuth2Client">
+        <property name="domain_uri" value="${deft.domainPath}"/>
+    </bean>
+
     <!-- Session会话管理器配置 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!-- Session存放Redis服务器 -->

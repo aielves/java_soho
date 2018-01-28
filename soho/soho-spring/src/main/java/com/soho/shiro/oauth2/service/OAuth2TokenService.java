@@ -146,6 +146,13 @@ public interface OAuth2TokenService {
     public String getOAuth2LoginView();
 
     /**
+     * OAUTH2登录域名
+     *
+     * @return String
+     */
+    public String getOAuth2DomainUri();
+
+    /**
      * 登录认证校验状态
      */
     public void validJaqState() throws BizErrorEx;

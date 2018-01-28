@@ -33,8 +33,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,11 +69,12 @@ public class OAuth2AuthzServiceImp implements OAuth2AuthzService {
             OAuth2Token oAuth2Token = null;
             String username = StringUtils.isEmpty(oAuthAuthzRequest.getParam("username")) ? "" : oAuthAuthzRequest.getParam("username");
             String password = StringUtils.isEmpty(oAuthAuthzRequest.getParam("password")) ? "" : oAuthAuthzRequest.getParam("password");
+            String error = StringUtils.isEmpty(oAuthAuthzRequest.getParam("error")) ? "" : oAuthAuthzRequest.getParam("error");
             // 校验PBK签名
             Object s_pbk = SessionUtils.getAttribute("client_pbk");
             String pbk = oAuthAuthzRequest.getParam("client_pbk");
             if (StringUtils.isEmpty(s_pbk) || !s_pbk.equals(pbk)) {
-                return toLoginView(oAuthAuthzRequest, redirect_uri, "", "");
+                return toInitLoginView(oAuthAuthzRequest, redirect_uri, username, error);
             }
             try {
                 String authorizationCode = null;
@@ -84,7 +87,7 @@ public class OAuth2AuthzServiceImp implements OAuth2AuthzService {
                 oAuth2Token = oAuth2TokenService.addClientToken(oAuthAuthzRequest.getClientId(), user.get("uid"), user.get("username"), authorizationCode, accessToken, refreshToken);
                 oAuth2TokenService.delJaqState();
             } catch (BizErrorEx e) { // WEB方式登录失败时跳转到登陆页面
-                return toLoginView(oAuthAuthzRequest, redirect_uri, username, e.getMessage());
+                return toFailureLoginView(oAuthAuthzRequest, oAuth2TokenService.getOAuth2DomainUri() + request.getRequestURI(), redirect_uri, username, e.getMessage());
             }
             // 进行OAuth响应构建
             OAuthASResponse.OAuthAuthorizationResponseBuilder builder =
@@ -113,7 +116,25 @@ public class OAuth2AuthzServiceImp implements OAuth2AuthzService {
         }
     }
 
-    private ModelAndView toLoginView(OAuthAuthzRequest oAuthAuthzRequest, String redirect_uri, String username, String error) {
+    // 登录失败重定向初始化界面
+    private ModelAndView toFailureLoginView(OAuthAuthzRequest oAuthAuthzRequest, String req_uri, String redirect_uri, String username, String error) {
+        try {
+            StringBuffer buffer = new StringBuffer("redirect:").append(req_uri);
+            buffer.append("?client_id=").append(oAuthAuthzRequest.getClientId());
+            buffer.append("&response_type=").append(oAuthAuthzRequest.getResponseType());
+            buffer.append("&redirect_uri=").append(URLEncoder.encode(redirect_uri, "UTF-8"));
+            buffer.append("&state=").append(oAuthAuthzRequest.getState());
+            buffer.append("&error=").append(URLEncoder.encode(error, "UTF-8"));
+            buffer.append("&username=").append(username);
+            return new ModelAndView(buffer.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // 初始化OAUTH2.0登录界面
+    private ModelAndView toInitLoginView(OAuthAuthzRequest oAuthAuthzRequest, String redirect_uri, String username, String error) {
         OAuth2Client client = new OAuth2Client();
         client.setClient_id(oAuthAuthzRequest.getClientId());
         client.setResponse_type(oAuthAuthzRequest.getResponseType());

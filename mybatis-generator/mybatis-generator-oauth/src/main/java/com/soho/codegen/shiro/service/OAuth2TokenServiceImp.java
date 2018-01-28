@@ -38,6 +38,9 @@ public class OAuth2TokenServiceImp implements OAuth2TokenService {
     @Autowired
     private OauthClientTokenDAO oauthClientTokenDAO;
 
+    @Autowired
+    private OAuth2Client oAuth2Client;
+
     @Override
     public OAuth2Token addClientToken(String clientId, String uid, String username, String code, String token, String refresh_token) throws BizErrorEx {
         try {
@@ -251,6 +254,11 @@ public class OAuth2TokenServiceImp implements OAuth2TokenService {
     @Override
     public String getOAuth2LoginView() {
         return "oauth2/login";
+    }
+
+    @Override
+    public String getOAuth2DomainUri() {
+        return oAuth2Client.getDomain_uri();
     }
 
     @Override
