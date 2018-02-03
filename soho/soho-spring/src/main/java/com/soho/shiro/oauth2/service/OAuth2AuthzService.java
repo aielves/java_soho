@@ -23,4 +23,7 @@ public interface OAuth2AuthzService {
     // 注销access_token
     public Object logout_token(HttpServletRequest request, HttpServletResponse response) throws OAuthSystemException;
 
+    // 续期access_token
+    public Object refresh_token(HttpServletRequest request, HttpServletResponse response) throws OAuthSystemException;
+
 }

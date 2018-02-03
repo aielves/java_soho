@@ -214,6 +214,40 @@ public class OAuth2AuthzServiceImp implements OAuth2AuthzService {
     }
 
     @Override
+    public Object refresh_token(HttpServletRequest request, HttpServletResponse response) throws OAuthSystemException {
+        try {
+            // 构建OAuth资源请求
+            OAuthAccessResourceRequest oAuthAccessResourceRequest = new OAuthAccessResourceRequest(request, ParameterStyle.QUERY);
+            // 获取Client_Id
+            String clientId = request.getParameter("client_id");
+            // 获取Access_Token
+            String accessToken = oAuthAccessResourceRequest.getAccessToken();
+            // 获取Refresh_Token
+            String refreshToken = request.getParameter("refresh_token");
+            // 获取令牌公钥
+            String accessPbk = request.getParameter("access_pbk");
+            // 延期Access_Token授权时间
+            try {
+                if (StringUtils.isEmpty(clientId) || StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(refreshToken) || StringUtils.isEmpty(accessPbk)) {
+                    return toBuildJsonMapResponse(OAuth2ErrorCode.OAUTH_CLIENT_ERROR, "Required parameter missing", HttpServletResponse.SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_REQUEST);
+                }
+                OAuth2Token oAuth2Token = new OAuth2Token();
+                oAuth2Token.setClient_id(clientId);
+                oAuth2Token.setAccess_token(accessToken);
+                oAuth2Token.setRefresh_token(refreshToken);
+                oAuth2TokenService.refreshToken(clientId, refreshToken, accessToken, accessPbk);
+            } catch (BizErrorEx ex) {
+                return toBuildJsonMapResponse(ex.getErrorCode(), ex.getMessage(), HttpServletResponse.SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_REQUEST);
+            }
+            // 根据OAuthResponse生成ResponseEntity
+            return toBuildJsonMapResponse(Ret.OK_STATUS, "", HttpServletResponse.SC_OK, "");
+        } catch (OAuthProblemException e) {
+            // 构建错误响应
+            return toBuildJsonMapResponse(OAuth2ErrorCode.OAUTH_CLIENT_ERROR, e.getMessage(), HttpServletResponse.SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_REQUEST);
+        }
+    }
+
+    @Override
     public Object logout_token(HttpServletRequest request, HttpServletResponse response) throws OAuthSystemException {
         try {
             // 构建OAuth资源请求

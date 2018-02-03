@@ -120,6 +120,19 @@ public interface OAuth2TokenService {
      */
     public OAuth2Token logoutToken(String access_token, String access_pbk) throws BizErrorEx;
 
+
+    /**
+     * 续期access_token
+     *
+     * @param clientId
+     * @param refresh_token
+     * @param access_token
+     * @param access_pbk
+     * @return OAuth2Token
+     * @throws BizErrorEx
+     */
+    public OAuth2Token refreshToken(String clientId, String refresh_token, String access_token, String access_pbk) throws BizErrorEx;
+
     /**
      * 帐号密码登录
      *
@@ -132,11 +145,11 @@ public interface OAuth2TokenService {
     /**
      * 生成二次认证的密钥,防止暴力破解
      *
-     * @param appId
+     * @param clientId
      * @param access_token
      * @return String
      */
-    public String buildAccessPbk(String appId, String access_token);
+    public String buildAccessPbk(String clientId, String access_token);
 
     /**
      * OAUTH2登录WebView

@@ -226,6 +226,28 @@ public class OAuth2TokenServiceImp implements OAuth2TokenService {
     }
 
     @Override
+    public OAuth2Token refreshToken(String clientId, String refreshToken, String accessToken, String accessPbk) throws BizErrorEx {
+        if (!buildAccessPbk(clientId, accessToken).equals(accessPbk)) {
+            throw new BizErrorEx(BizErrorCode.OAUTH_TOKEN_NULL, "令牌公钥无效");
+        }
+        try {
+            OauthClientToken clientToken = oauthClientTokenDAO.findOneByCnd(new SQLCnd().eq("client_id", clientId).eq("access_token", accessToken).eq("refresh_token", refreshToken).eq("state", 1));
+            if (clientToken != null) {
+                long refresh_time = System.currentTimeMillis();
+                clientToken.setToken_state(1);
+                clientToken.setToken_expire(refresh_time + 1209600000l);
+                clientToken.setRefresh_time(refresh_time);
+                clientToken.setUtime(refresh_time);
+                oauthClientTokenDAO.update(clientToken);
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        throw new BizErrorEx(BizErrorCode.OAUTH_CLIENT_ERROR, "续期TOKEN失败");
+    }
+
+    @Override
     public Map<String, String> loginByUsername(String username, String password) throws BizErrorEx {
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_NULL, "帐号/密码不能为空");

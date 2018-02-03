@@ -46,6 +46,15 @@ public abstract class OAuth2AuthzController {
         }
     }
 
+    public Object refresh(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            return getOAuth2AuthzService().refresh_token(request, response);
+        } catch (OAuthSystemException e) {
+            return new ResponseEntity(
+                    e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     protected abstract OAuth2AuthzService getOAuth2AuthzService();
 
 }
