@@ -179,6 +179,7 @@ public class OAuth2AuthzServiceImp implements OAuth2AuthzService {
             map.put("access_time", oAuth2Token.getAccess_time());
             map.put("refresh_token", oAuth2Token.getRefresh_token());
             map.put("refresh_time", oAuth2Token.getRefresh_time());
+            map.put("token_expire", oAuth2Token.getToken_expire());
             return map;
         } catch (OAuthProblemException e) {
             return toBuildJsonMapResponse(OAuth2ErrorCode.OAUTH_CLIENT_ERROR, e.getMessage(), HttpServletResponse.SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_REQUEST);
