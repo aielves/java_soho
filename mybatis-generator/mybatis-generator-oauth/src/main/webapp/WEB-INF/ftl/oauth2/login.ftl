@@ -42,12 +42,12 @@
             <h1>Login Into Your Account</h1>
             <ul class="clearfix">
                 <li style="width: 300px">
-                    <input type="text" class="textbox1" name="username" maxlength="10" value="${username!''}" placeholder="username"/>
+                    <input type="text" class="textbox1" name="username" maxlength="15" value="${username!''}" placeholder="username"/>
                     <span class="form_hint">Enter Your Account</span>
                     <p><img src="/static/images/contact.png" alt=""></p>
                 </li>
                 <li style="width: 300px">
-                    <input type="password" name="password" class="textbox2" maxlength="10" placeholder="password">
+                    <input type="password" name="password" class="textbox2" maxlength="15" placeholder="password">
                     <p><img src="/static/images/lock.png" alt=""></p>
                 </li>
             </ul>

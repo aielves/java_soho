@@ -10,71 +10,70 @@ import java.util.zip.ZipOutputStream;
  */
 public final class ZipUtils {
 
-    /**
-     * 压缩文件
-     *
-     * @param filePath 待压缩的文件路径
-     * @return 压缩后的文件
-     */
-    public static File zip(String filePath) {
-        File target = null;
-        File source = new File(filePath);
-        if (source.exists()) {
-            // 压缩文件名=源文件名.zip
-            String zipName = source.getName() + ".zip";
-            target = new File(source.getParent(), zipName);
-            if (target.exists()) {
-                target.delete(); // 删除旧的文件
-            }
-            FileOutputStream fos = null;
-            ZipOutputStream zos = null;
+    public static void zip(String sourcePath, String outFilePath) {
+        FileOutputStream fos = null;
+        ZipOutputStream zos = null;
+        try {
+            fos = new FileOutputStream(outFilePath);
+            zos = new ZipOutputStream(fos);
+            writeZip(new File(sourcePath), "", zos);
+            deleteDir(new File(sourcePath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
             try {
-                fos = new FileOutputStream(target);
-                zos = new ZipOutputStream(new BufferedOutputStream(fos));
-                // 添加对应的文件Entry
-                addEntry("/", source, zos);
+                if (zos != null) {
+                    zos.close();
+                }
             } catch (IOException e) {
-                throw new RuntimeException(e);
-            } finally {
-                closeQuietly(zos, fos);
-                deleteDir(new File(filePath));
+                e.printStackTrace();
             }
+
         }
-        return target;
     }
 
-    /**
-     * 扫描添加文件Entry
-     *
-     * @param base   基路径
-     * @param source 源文件
-     * @param zos    Zip文件输出流
-     * @throws IOException
-     */
-    private static void addEntry(String base, File source, ZipOutputStream zos)
-            throws IOException {
-        // 按目录分级，形如：/aaa/bbb.txt
-        String entry = base + source.getName();
-        if (source.isDirectory()) {
-            for (File file : source.listFiles()) {
-                // 递归列出目录下的所有文件，添加文件Entry
-                addEntry(entry + "/", file, zos);
-            }
-        } else {
-            FileInputStream fis = null;
-            BufferedInputStream bis = null;
-            try {
-                byte[] buffer = new byte[1024 * 10];
-                fis = new FileInputStream(source);
-                bis = new BufferedInputStream(fis, buffer.length);
-                int read = 0;
-                zos.putNextEntry(new ZipEntry(entry));
-                while ((read = bis.read(buffer, 0, buffer.length)) != -1) {
-                    zos.write(buffer, 0, read);
+    private static void writeZip(File file, String parentPath, ZipOutputStream zos) {
+        if (file.exists()) {
+            if (file.isDirectory()) { // 处理文件夹
+                parentPath += file.getName() + File.separator;
+                File[] files = file.listFiles();
+                if (files.length != 0) {
+                    for (File f : files) {
+                        writeZip(f, parentPath, zos);
+                    }
+                } else { //空目录则创建当前目录
+                    try {
+                        zos.putNextEntry(new ZipEntry(parentPath));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-                zos.closeEntry();
-            } finally {
-                closeQuietly(bis, fis);
+            } else {
+                FileInputStream fis = null;
+                try {
+                    fis = new FileInputStream(file);
+                    ZipEntry ze = new ZipEntry(parentPath + file.getName());
+                    zos.putNextEntry(ze);
+                    byte[] content = new byte[1024];
+                    int len;
+                    while ((len = fis.read(content)) != -1) {
+                        zos.write(content, 0, len);
+                        zos.flush();
+                    }
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (fis != null) {
+                            fis.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -84,7 +83,7 @@ public final class ZipUtils {
      *
      * @param filePath 压缩文件路径
      */
-    public static void unzip(String filePath) {
+    public static void unzip(String filePath, String unzipDir) {
         File source = new File(filePath);
         if (source.exists()) {
             ZipInputStream zis = null;
@@ -94,11 +93,11 @@ public final class ZipUtils {
                 ZipEntry entry = null;
                 while ((entry = zis.getNextEntry()) != null
                         && !entry.isDirectory()) {
-                    File target = new File(source.getParent(), entry.getName());
-                    if (!target.getParentFile().exists()) {
-                        // 创建文件父目录
-                        target.getParentFile().mkdirs();
+                    File unDirFile = new File(unzipDir);
+                    if (!unDirFile.exists()) {
+                        unDirFile.mkdirs();
                     }
+                    File target = new File(unzipDir, entry.getName());
                     // 写入文件
                     bos = new BufferedOutputStream(new FileOutputStream(target));
                     int read = 0;
@@ -107,22 +106,14 @@ public final class ZipUtils {
                         bos.write(buffer, 0, read);
                     }
                     bos.flush();
+                    bos.close();
                 }
                 zis.closeEntry();
+                zis.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
                 closeQuietly(zis, bos);
-            }
-        }
-    }
-
-    public static void close(Closeable... closeables) throws IOException {
-        if (closeables != null) {
-            for (Closeable closeable : closeables) {
-                if (closeable != null) {
-                    closeable.close();
-                }
             }
         }
     }
@@ -134,9 +125,15 @@ public final class ZipUtils {
      */
     public static void closeQuietly(Closeable... closeables) {
         try {
-            close(closeables);
+            if (closeables != null) {
+                for (Closeable closeable : closeables) {
+                    if (closeable != null) {
+                        closeable.close();
+                    }
+                }
+            }
         } catch (IOException e) {
-            // do nothing
+            e.printStackTrace();
         }
     }
 
@@ -177,9 +174,10 @@ public final class ZipUtils {
     }
 
     public static void main(String[] args) {
-        String targetPath = "E:\\project\\admin\\1495693264942";
-        File file = ZipUtils.zip(targetPath);
-        System.out.println(file);
-//        ZipUtils.unzip("F:\\Win7壁纸.zip");
+//        String targetPath = "E:\\project\\admin\\1495693264942";
+//        File file = ZipUtils.zip(targetPath);
+//        System.out.println(file);
+        zip("D:\\project\\1\\1519534909995", "D:\\project\\1\\1519534909995.zip");
+//        ZipUtils.unzip("D:\\project\\1\\1.zip", "D:\\project\\1\\2");
     }
 }

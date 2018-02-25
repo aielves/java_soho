@@ -22,8 +22,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
 <generatorConfiguration>
 
 	<!-- 数据库驱动 -->
-	<classPathEntry location="F:\repo\mysql\mysql-connector-java\5.1.18\mysql-connector-java-5.1.18.jar" />
-	<classPathEntry location="F:\repo\mysql\mysql-connector-java\5.1.18\mysql-connector-java-5.1.18.jar" />
+	<classPathEntry location="C:\maven_repo\mysql\mysql-connector-java\5.1.18\mysql-connector-java-5.1.18.jar" />
 
 	<context id="MySQLTables" targetRuntime="MyBatis3">
 

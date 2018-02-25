@@ -4,6 +4,7 @@ import com.soho.codegen.domain.DbMessage;
 import com.soho.codegen.domain.OauthUser;
 import com.soho.codegen.domain.ZipMessage;
 import com.soho.codegen.service.CodeGenService;
+import com.soho.codegen.shiro.aconst.BizErrorCode;
 import com.soho.ex.BizErrorEx;
 import com.soho.shiro.oauth2.aconst.OAuth2Client;
 import com.soho.shiro.utils.HttpUtils;
@@ -14,11 +15,14 @@ import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -44,6 +48,12 @@ public class CodeGenController {
     @ResponseBody
     public Object generate(DbMessage dbMessage) throws BizErrorEx {
         return codeGenService.generate(dbMessage);
+    }
+
+    @RequestMapping(value = "/uploadFile")
+    @ResponseBody
+    public Object uploadFile(Integer uploadtype, @RequestParam("file") MultipartFile file) throws BizErrorEx {
+        return codeGenService.uploadFile(uploadtype, file);
     }
 
     @RequestMapping(value = "/getUser")
@@ -131,6 +141,56 @@ public class CodeGenController {
             }
         }
         return null;
+    }
+
+    @RequestMapping(value = "/downUploadFile")
+    @ResponseBody
+    public Object downUploadFile(HttpServletResponse response, String filePath) throws BizErrorEx {
+        try {
+            File file = new File(filePath);
+            if (file.exists()) {
+                response.setContentType("application/force-download");// 设置强制下载不打开
+                response.addHeader("Content-Disposition",
+                        "attachment;fileName=" + filePath.substring(filePath.lastIndexOf(File.separator)));// 设置文件名
+                byte[] buffer = new byte[1024];
+                FileInputStream fis = null;
+                BufferedInputStream bis = null;
+                try {
+                    fis = new FileInputStream(file);
+                    bis = new BufferedInputStream(fis);
+                    OutputStream os = response.getOutputStream();
+                    int i = bis.read(buffer);
+                    while (i != -1) {
+                        os.write(buffer, 0, i);
+                        i = bis.read(buffer);
+                    }
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                } finally {
+                    if (bis != null) {
+                        try {
+                            bis.close();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    if (fis != null) {
+                        try {
+                            fis.close();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "下载失败");
     }
 
 }

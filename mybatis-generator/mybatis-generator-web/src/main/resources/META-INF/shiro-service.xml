@@ -139,6 +139,8 @@
                 /codegen/generate* = authc
                 /codegen/getZipFile* = authc
                 /codegen/downFile* = authc
+                /codegen/downUploadFile* = authc
+                /codegen/uploadFile* = authc
             </value>
         </property>
     </bean>

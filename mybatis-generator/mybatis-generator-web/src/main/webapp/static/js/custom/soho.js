@@ -99,6 +99,7 @@ function submitMyForm() {
 }
 
 var isSubmit = false;
+
 function doSubmit() {
     if (isSubmit) {
         return;
@@ -321,6 +322,52 @@ function submitSignUpForm() {
             });
         } else {
             jAlert(result.msg, "友情提示");
+        }
+    });
+}
+
+var btnlock = false;
+
+function uploadfile() {
+    if (btnlock == true) {
+        alert('正在处理,请耐心等待...');
+        return false;
+    }
+    var file_status = jQuery('#file_status');
+    var file_deal = jQuery('#file_deal');
+    var file_down = jQuery('#file_down');
+    var file_path = jQuery('#file_path');
+    file_status.show();
+    file_deal.show();
+    btnlock = true;
+    var type = jQuery("input[name='uploadtype']:checked").val();
+    jQuery("#uploadfile").ajaxSubmit({
+        type: 'post',
+        url: '/codegen/uploadFile?uploadtype=' + type,
+        success: function (data) {
+            if (data.code == '000000') {
+                var path = encodeURI(data.data.path);
+                file_path.attr("href", "/codegen/downUploadFile?filePath=" + path);
+                file_deal.hide();
+                file_down.show();
+            } else {
+                file_status.hide();
+                file_deal.hide();
+                file_down.hide();
+                if (data.msg == undefined) {
+                    alert('您尚未登录或登录已超时');
+                } else {
+                    alert(data.msg);
+                }
+            }
+            btnlock = false;
+        },
+        error: function (XmlHttpRequest, textStatus, errorThrown) {
+            alert("上传或处理失败,请尝试刷新页面再操作");
+            file_status.hide();
+            file_deal.hide();
+            file_down.hide();
+            btnlock = false;
         }
     });
 }

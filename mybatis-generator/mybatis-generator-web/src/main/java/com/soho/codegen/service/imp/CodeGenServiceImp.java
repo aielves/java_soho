@@ -8,6 +8,7 @@ import com.soho.codegen.domain.DeftConfig;
 import com.soho.codegen.domain.OauthUser;
 import com.soho.codegen.domain.ZipMessage;
 import com.soho.codegen.service.CodeGenService;
+import com.soho.codegen.shiro.aconst.BizErrorCode;
 import com.soho.ex.BizErrorEx;
 import com.soho.mybatis.exception.MybatisDAOEx;
 import com.soho.mybatis.sqlcode.aconst.SortBy;
@@ -15,6 +16,7 @@ import com.soho.mybatis.sqlcode.condition.imp.SQLCnd;
 import com.soho.utils.ZipUtils;
 import com.soho.web.domain.Ret;
 import com.soho.zookeeper.security.imp.AESDcipher;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.mybatis.generator.api.ShellRunner;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.sql.Connection;
@@ -92,12 +95,12 @@ public class CodeGenServiceImp implements CodeGenService {
             user.setId(0l);
         }
         String zipName = System.currentTimeMillis() + "";
-        String newPath = user.getUsername() + File.separator + zipName;
+        String newPath = user.getId() + File.separator + zipName;
         session.setAttribute("targetProject", deftConfig.getFileDirPath() + File.separator + newPath);
         String[] arg = {"-configfile", deftConfig.getConfigXmlPath()};
         ShellRunner.main(arg);
         String path = deftConfig.getFileDirPath() + File.separator + newPath;
-        ZipUtils.zip(path);
+        ZipUtils.zip(path, path + ".zip");
         String zipFilePath = path + ".zip";
         File zipFile = new File(zipFilePath);
         if (zipFile.exists()) {
@@ -298,6 +301,87 @@ public class CodeGenServiceImp implements CodeGenService {
         } catch (MybatisDAOEx ex) {
             throw new BizErrorEx(ex.getErrorCode(), ex.getMessage());
         }
+    }
+
+    @Override
+    public Map<String, Object> uploadFile(Integer uploadtype, MultipartFile file) throws BizErrorEx {
+        try {
+            if (uploadtype == null) {
+                throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "请选择文件类型");
+            }
+            if (file == null || StringUtils.isEmpty(file.getOriginalFilename())) {
+                throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "上传文件不能为空");
+            }
+            long filesize = file.getSize();
+            if (filesize > (5000 * 1024)) {
+                throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "上传文件不能超过5000K");
+            }
+            Session session = SecurityUtils.getSubject().getSession();
+            OauthUser user = session.getAttribute("session_user") == null ? null : (OauthUser) session.getAttribute("session_user");
+            if (user == null) {
+                user = new OauthUser();
+                user.setId(0l);
+            }
+            String filetime = user.getId() + "" + System.currentTimeMillis();
+            String orgname = file.getOriginalFilename();
+            String fileName = filetime + orgname.substring(orgname.lastIndexOf("."));
+            String fileDir = deftConfig.getFileDirPath() + File.separator + user.getId();
+            String newPath = fileDir + File.separator + fileName;
+            if (uploadtype == 1) {
+                if (orgname.endsWith(".zip")) {
+                    File file1 = new File(fileDir);
+                    if (!file1.exists()) {
+                        file1.mkdirs();
+                    }
+                    File savefile = new File(newPath);
+                    file.transferTo(savefile);  // 保存上传ZIP文件
+                    String unzipDir = fileDir + File.separator + filetime; // 设置解压目录
+                    ZipUtils.unzip(newPath, unzipDir); // 解压原始ZIP文件
+                    savefile.delete(); // 删除原始ZIP文件
+                    // 遍历原始文件并执行压缩方法
+                    File unzipDirFile = new File(unzipDir);
+                    if (unzipDirFile.isDirectory()) {
+                        File[] files = unzipDirFile.listFiles();
+                        if (files != null && files.length > 0) {
+                            for (File it : files) {
+                                String filename = it.getName();
+                                if (it.isFile() && (filename.endsWith(".jpg") || filename.endsWith(".jpeg"))) {
+                                    Thumbnails.of(it.getPath()).scale(1.0f).toFile(it.getPath());
+                                } else {
+                                    it.delete();
+                                }
+                            }
+                        }
+                    }
+                    newPath = unzipDir + ".zip";
+                    ZipUtils.zip(unzipDir, newPath);
+                } else {
+                    throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "请上传ZIP格式的文件");
+                }
+            } else if (uploadtype == 2) {
+                if (orgname.endsWith(".jpg") || orgname.endsWith(".jpeg")) {
+                    File file1 = new File(fileDir);
+                    if (!file1.exists()) {
+                        file1.mkdirs();
+                    }
+                    file.transferTo(new File(newPath));
+                    Thumbnails.of(newPath).scale(1.0f).toFile(newPath);
+                } else {
+                    throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "请上传JPG或JPEG格式的文件");
+                }
+            } else {
+                throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "文件类型异常");
+            }
+            Map<String, Object> map = new HashMap<>();
+            map.put("path", newPath);
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (e instanceof BizErrorEx) {
+                throw new BizErrorEx(((BizErrorEx) e).getErrorCode(), e.getMessage());
+            }
+        }
+        throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "处理失败,请重新尝试");
     }
 
 }
