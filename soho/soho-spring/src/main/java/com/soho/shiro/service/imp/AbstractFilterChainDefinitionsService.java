@@ -50,6 +50,15 @@ public abstract class AbstractFilterChainDefinitionsService implements FilterCha
                 String chainDefinition = entry.getValue().trim().replace(" ", "");
                 manager.createChain(url, chainDefinition);
             }
+            // 加载自定义权限配置
+            Map<String, String> otherDefinitions = fetchOtherDefinitions();
+            if (otherDefinitions != null && !otherDefinitions.isEmpty()) {
+                for (Map.Entry<String, String> entry : chains.entrySet()) {
+                    String url = entry.getKey();
+                    String chainDefinition = entry.getValue().trim().replace(" ", "");
+                    manager.createChain(url, chainDefinition);
+                }
+            }
         }
     }
 
