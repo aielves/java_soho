@@ -10,6 +10,15 @@
     <link type="text/css" href="//g.alicdn.com/sd/ncpc/nc.css?t=1516894524024" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/jquery-1.7.min.js"></script>
     <script type="text/javascript" src="//g.alicdn.com/sd/ncpc/nc.js?t=1516894524024"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?f11a728a6e58315ab0a8554150920f9f";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
 <body>
 <div id="_umfp" style="display:inline;width:1px;height:1px;overflow:hidden"></div>
