@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class XMemcacheCache implements Cache {
 
+    private String project_code = "default_";
+
     private MemcachedClient memcachedClient;
 
     public MemcachedClient getMemcachedClient() {
@@ -20,7 +22,7 @@ public class XMemcacheCache implements Cache {
 
     public <V> V get(Object key) {
         try {
-            return memcachedClient.get(key.toString());
+            return memcachedClient.get(project_code + key.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -29,7 +31,7 @@ public class XMemcacheCache implements Cache {
 
     public <V> boolean put(Object key, V value, int exp) {
         try {
-            return memcachedClient.set(key.toString(), exp, value);
+            return memcachedClient.set(project_code + key.toString(), exp, value);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -38,7 +40,7 @@ public class XMemcacheCache implements Cache {
 
     public <V> boolean put(Object key, V value) {
         try {
-            return memcachedClient.set(key.toString(), 0, value);
+            return memcachedClient.set(project_code + key.toString(), 0, value);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -47,7 +49,7 @@ public class XMemcacheCache implements Cache {
 
     public boolean remove(Object key) {
         try {
-            return memcachedClient.delete(key.toString());
+            return memcachedClient.delete(project_code + key.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -85,4 +87,11 @@ public class XMemcacheCache implements Cache {
         return memcachedClient.getClass();
     }
 
+    public String getProject_code() {
+        return project_code;
+    }
+
+    public void setProject_code(String project_code) {
+        this.project_code = project_code;
+    }
 }

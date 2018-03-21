@@ -9,7 +9,6 @@
             <map>
                 <entry key="default_cache_" value-ref="sessionCache"/>
                 <entry key="session_cache_" value-ref="sessionCache"/>
-                <entry key="shiro_data_cache_" value-ref="shiroDataCache"/>
             </map>
         </property>
     </bean>
@@ -17,11 +16,7 @@
     <!-- 分布式会话缓存 -->
     <bean id="sessionCache" class="com.soho.shiro.cache.imp.XMemcacheCache">
         <property name="memcachedClient" ref="memcachedClient"/>
-    </bean>
-
-    <!-- SHIRO缓存 -->
-    <bean id="shiroDataCache" class="com.soho.shiro.cache.imp.XMemcacheCache">
-        <property name="memcachedClient" ref="memcachedClient"/>
+        <property name="project_code" value="adc"/>
     </bean>
 
     <bean name="memcachedClient" class="net.rubyeye.xmemcached.utils.XMemcachedClientFactoryBean">

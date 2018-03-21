@@ -7,7 +7,9 @@
     <bean id="shiroCacheManager"
           class="com.soho.shiro.cache.imp.SimpleShiroCacheManager">
         <property name="cache">
-            <bean class="com.soho.shiro.cache.imp.ShiroDataCache"/>
+            <bean class="com.soho.shiro.cache.imp.ShiroDataCache">
+                <property name="project_code" value="adc"/>
+            </bean>
         </property>
     </bean>
 
@@ -19,7 +21,9 @@
     <!-- Session服务器配置 -->
     <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
         <property name="activeSessionsCache">
-            <bean class="com.soho.shiro.cache.imp.ShiroSessionCache"/>
+            <bean class="com.soho.shiro.cache.imp.ShiroSessionCache">
+                <property name="project_code" value="adc"/>
+            </bean>
         </property>
         <property name="sessionIdGenerator">
             <bean class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>

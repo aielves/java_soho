@@ -16,20 +16,22 @@ import java.util.Set;
  */
 public class ShiroSessionCache implements Cache<String, Session> {
 
+    private String project_code = "default_";
+
     @Autowired(required = false)
     private CacheManager cacheManager;
 
     public Session get(String s) throws CacheException {
-        return getCache().get(CacheManager.SESSION_CACHE + s);
+        return getCache().get(project_code + CacheManager.SESSION_CACHE + s);
     }
 
     public Session put(String s, Session session) throws CacheException {
-        getCache().put(CacheManager.SESSION_CACHE + s, session, (int) session.getTimeout() / 1000);
+        getCache().put(project_code + CacheManager.SESSION_CACHE + s, session, (int) session.getTimeout() / 1000);
         return session;
     }
 
     public Session remove(String s) throws CacheException {
-        getCache().remove(CacheManager.SESSION_CACHE + s);
+        getCache().remove(project_code + CacheManager.SESSION_CACHE + s);
         return null;
     }
 
@@ -59,6 +61,14 @@ public class ShiroSessionCache implements Cache<String, Session> {
 
     public void setCacheManager(CacheManager cacheManager) {
         this.cacheManager = cacheManager;
+    }
+
+    public String getProject_code() {
+        return project_code;
+    }
+
+    public void setProject_code(String project_code) {
+        this.project_code = project_code;
     }
 
 }

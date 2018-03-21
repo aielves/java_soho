@@ -93,4 +93,11 @@ public interface Cache {
      */
     public abstract Class<?> getInstanceClassType();
 
+    /**
+     * 获取项目标识编码
+     *
+     * @return String
+     */
+    public abstract String getProject_code();
+
 }

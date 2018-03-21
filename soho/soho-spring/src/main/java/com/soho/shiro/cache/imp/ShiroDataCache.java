@@ -15,6 +15,8 @@ import java.util.Set;
  */
 public class ShiroDataCache<K, V> implements Cache<Object, V> {
 
+    private String project_code = "default_";
+
     @Autowired(required = false)
     private CacheManager cacheManager;
 
@@ -23,7 +25,7 @@ public class ShiroDataCache<K, V> implements Cache<Object, V> {
     }
 
     public V get(Object key) throws CacheException {
-        return getCache().get(CacheManager.SHIRO_DATA_CACHE + key);
+        return getCache().get(project_code + CacheManager.SHIRO_DATA_CACHE + key);
     }
 
     public Set<Object> keys() {
@@ -31,13 +33,13 @@ public class ShiroDataCache<K, V> implements Cache<Object, V> {
     }
 
     public V put(Object key, V value) throws CacheException {
-        getCache().put(CacheManager.SHIRO_DATA_CACHE + key, value);
+        getCache().put(project_code + CacheManager.SHIRO_DATA_CACHE + key, value);
         return value;
     }
 
     public V remove(Object key) throws CacheException {
-        V v = getCache().get(CacheManager.SHIRO_DATA_CACHE + key);
-        getCache().remove(CacheManager.SHIRO_DATA_CACHE + key);
+        V v = getCache().get(project_code + CacheManager.SHIRO_DATA_CACHE + key);
+        getCache().remove(project_code + CacheManager.SHIRO_DATA_CACHE + key);
         return v;
     }
 
@@ -65,4 +67,11 @@ public class ShiroDataCache<K, V> implements Cache<Object, V> {
         this.cacheManager = cacheManager;
     }
 
+    public String getProject_code() {
+        return project_code;
+    }
+
+    public void setProject_code(String project_code) {
+        this.project_code = project_code;
+    }
 }
