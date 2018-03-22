@@ -80,24 +80,49 @@ public class NumUtils {
         return false;
     }
 
-    public static String digitNone(Object number, int digit) {
-        String b1 = number.toString();
-        if (b1.indexOf(".") != -1) {
-            String[] strings = b1.split("\\.");
-            if (strings.length >= 2) {
-                String s1 = strings[0];
-                String s2 = strings[1];
-                if (s2.length() > digit) {
-                    s2 = s2.substring(0, digit);
+    // split number str
+    public static String digit(Object number, int scale) {
+        if (scale <= 0)
+            scale = 0;
+        String str1 = "";
+        String str2 = "";
+        String number1 = number.toString();
+        if (number1.indexOf(".") != -1) {
+            String[] split_str = number1.split("\\.");
+            str1 = split_str[0];
+            str2 = split_str[1];
+            if (str2.length() > scale) {
+                str2 = str2.substring(0, scale);
+                if (!"".equals(str2)) {
+                    str2 = cover4zero(str2, scale);
                 }
-                if (!"".equals(s2)) {
-                    b1 = s1 + "." + s2;
-                } else {
-                    b1 = s1;
-                }
+            } else {
+                str2 = cover4zero(str2, scale);
+            }
+            if (!"".equals(str2)) {
+                str1 = str1 + "." + str2;
+            }
+        } else {
+            str1 = number1;
+            if (scale > 0) {
+                str2 = cover4zero("0", scale);
+            }
+            if (!"".equals(str2)) {
+                str1 = str1 + "." + str2;
             }
         }
-        return b1;
+        return str1;
+    }
+
+    private static String cover4zero(String str2, int scale) {
+        if (str2.length() >= scale) {
+            return str2;
+        }
+        int len = scale - str2.length();
+        for (int i = 0; i < len; i++) {
+            str2 = str2 + "0";
+        }
+        return str2;
     }
 
 }
