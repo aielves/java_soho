@@ -1,6 +1,8 @@
 package com.soho.shiro.cache.imp;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.soho.shiro.cache.CacheManager;
+import com.soho.web.domain.ProjectInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +17,17 @@ import java.util.Set;
  */
 public class ShiroDataCache<K, V> implements Cache<Object, V> {
 
-    private String project_code = "default_";
-
     @Autowired(required = false)
     private CacheManager cacheManager;
+    @Autowired(required = false)
+    private ProjectInfo projectInfo;
 
     public void clear() throws CacheException {
         getCache().clear();
     }
 
     public V get(Object key) throws CacheException {
-        return getCache().get(project_code + CacheManager.SHIRO_DATA_CACHE + key);
+        return getCache().get(getProjectCode() + CacheManager.SHIRO_DATA_CACHE + key);
     }
 
     public Set<Object> keys() {
@@ -33,13 +35,13 @@ public class ShiroDataCache<K, V> implements Cache<Object, V> {
     }
 
     public V put(Object key, V value) throws CacheException {
-        getCache().put(project_code + CacheManager.SHIRO_DATA_CACHE + key, value);
+        getCache().put(getProjectCode() + CacheManager.SHIRO_DATA_CACHE + key, value);
         return value;
     }
 
     public V remove(Object key) throws CacheException {
-        V v = getCache().get(project_code + CacheManager.SHIRO_DATA_CACHE + key);
-        getCache().remove(project_code + CacheManager.SHIRO_DATA_CACHE + key);
+        V v = getCache().get(getProjectCode() + CacheManager.SHIRO_DATA_CACHE + key);
+        getCache().remove(getProjectCode() + CacheManager.SHIRO_DATA_CACHE + key);
         return v;
     }
 
@@ -59,6 +61,13 @@ public class ShiroDataCache<K, V> implements Cache<Object, V> {
         return cache;
     }
 
+    private String getProjectCode() {
+        if (projectInfo != null && !StringUtils.isEmpty(projectInfo.getCode())) {
+            return projectInfo.getCode() + "_";
+        }
+        return "";
+    }
+
     public CacheManager getCacheManager() {
         return cacheManager;
     }
@@ -67,11 +76,4 @@ public class ShiroDataCache<K, V> implements Cache<Object, V> {
         this.cacheManager = cacheManager;
     }
 
-    public String getProject_code() {
-        return project_code;
-    }
-
-    public void setProject_code(String project_code) {
-        this.project_code = project_code;
-    }
 }

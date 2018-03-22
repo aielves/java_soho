@@ -1,6 +1,8 @@
 package com.soho.shiro.cache.imp;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.soho.shiro.cache.Cache;
+import com.soho.web.domain.ProjectInfo;
 import net.rubyeye.xmemcached.MemcachedClient;
 
 import java.util.Collection;
@@ -8,8 +10,7 @@ import java.util.Set;
 
 public class XMemcacheCache implements Cache {
 
-    private String project_code = "default_";
-
+    private ProjectInfo projectInfo;
     private MemcachedClient memcachedClient;
 
     public MemcachedClient getMemcachedClient() {
@@ -20,9 +21,17 @@ public class XMemcacheCache implements Cache {
         this.memcachedClient = memcachedClient;
     }
 
+    public ProjectInfo getProjectInfo() {
+        return projectInfo;
+    }
+
+    public void setProjectInfo(ProjectInfo projectInfo) {
+        this.projectInfo = projectInfo;
+    }
+
     public <V> V get(Object key) {
         try {
-            return memcachedClient.get(project_code + key.toString());
+            return memcachedClient.get(getProjectCode() + key.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -31,7 +40,7 @@ public class XMemcacheCache implements Cache {
 
     public <V> boolean put(Object key, V value, int exp) {
         try {
-            return memcachedClient.set(project_code + key.toString(), exp, value);
+            return memcachedClient.set(getProjectCode() + key.toString(), exp, value);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -40,7 +49,7 @@ public class XMemcacheCache implements Cache {
 
     public <V> boolean put(Object key, V value) {
         try {
-            return memcachedClient.set(project_code + key.toString(), 0, value);
+            return memcachedClient.set(getProjectCode() + key.toString(), 0, value);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -49,7 +58,7 @@ public class XMemcacheCache implements Cache {
 
     public boolean remove(Object key) {
         try {
-            return memcachedClient.delete(project_code + key.toString());
+            return memcachedClient.delete(getProjectCode() + key.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -87,11 +96,11 @@ public class XMemcacheCache implements Cache {
         return memcachedClient.getClass();
     }
 
-    public String getProject_code() {
-        return project_code;
+    public String getProjectCode() {
+        if (projectInfo != null && !StringUtils.isEmpty(projectInfo.getCode())) {
+            return projectInfo.getCode() + "_";
+        }
+        return "";
     }
 
-    public void setProject_code(String project_code) {
-        this.project_code = project_code;
-    }
 }
