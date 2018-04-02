@@ -55,6 +55,9 @@ function getDBTable() {
         jAlert("请输入数据库密码", "友情提示");
         return false;
     }
+    jdbcUrl = encodeURI(jdbcUrl, "UTF-8");
+    username = encodeURI(username, "UTF-8");
+    password = encodeURI(password, "UTF-8");
     jQuery.post("/codegen/getDBTables", "dbType=" + dbType + "&jdbcUrl=" + jdbcUrl + "&username=" + username + "&password=" + password, function (result) {
         if (result.code == "000000") {
             jQuery("#tables").html("");
@@ -165,6 +168,9 @@ function doSubmit() {
     } else {
         tables = tables.substring(1);
     }
+    jdbcUrl = encodeURI(jdbcUrl, "UTF-8");
+    username = encodeURI(username, "UTF-8");
+    password = encodeURI(password, "UTF-8");
     jQuery.post("/codegen/generate", "dbType=" + dbType + "&jdbcUrl=" + jdbcUrl + "&username=" + username + "&password=" + password + "&moduleName=" + moduleName + "&packageName=" + packageName + "&tables=" + tables, function (result) {
         // alert(JSON.stringify(result));
         if (result.code == "000000") {
