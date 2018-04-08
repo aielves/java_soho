@@ -905,6 +905,7 @@ public abstract class IntrospectedTable {
         setMyBatis3UpdateByExampleWhereClauseId("Update_By_Example_Where_Clause"); //$NON-NLS-1$  
         setCountByCndId("countByCnd");
         setFindByCndId("findByCnd");
+        setFindMapByCndId("findMapByCnd");
         setDeleteByCndId("deleteByCnd");
         setUpdateByCndId("updateByCnd");
     }
