@@ -52,7 +52,7 @@ public class FindMapByCndElementGenerator extends
 
         context.getCommentGenerator().addComment(answer);
 
-        /*StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("select "); //$NON-NLS-1$  
 
         if (stringHasValue(introspectedTable
@@ -70,10 +70,9 @@ public class FindMapByCndElementGenerator extends
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$  
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        /*sb.append(introspectedTable
+                .getAliasedFullyQualifiedTableNameAtRuntime());*/
         answer.addElement(new TextElement(sb.toString()));
-        answer.addElement(new TextElement("<include refid=\"Global.Where_Clause\" />"));*/
         answer.addElement(new TextElement("<include refid=\"Global.Where_Clause_Complex\" />"));
         parentElement.addElement(answer);
     }
