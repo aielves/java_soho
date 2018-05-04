@@ -908,6 +908,7 @@ public abstract class IntrospectedTable {
         setCountByCndId("countByCnd");
         setFindByCndId("findByCnd");
         setFindMapByCndId("findMapByCnd");
+        setFindFieldByCndId("findFieldByCnd");
         setDeleteByCndId("deleteByCnd");
         setUpdateByCndId("updateByCnd");
     }

@@ -96,8 +96,8 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addFindByCndElement(answer);
         addDeleteByCndElement(answer);
         addUpdateByCndElement(answer);
-        addFindMapByCndElement(answer);
         addFindFieldByCndElement(answer);
+        addFindMapByCndElement(answer);
 
         return answer;
     }

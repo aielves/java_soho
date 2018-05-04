@@ -155,39 +155,6 @@ public class JavaBeansUtil {
     }
 
     /**
-     * This method ensures that the specified input string is a valid Java property name. The rules are as follows:
-     * 
-     * 1. If the first character is lower case, then OK 2. If the first two characters are upper case, then OK 3. If the
-     * first character is upper case, and the second character is lower case, then the first character should be made
-     * lower case
-     * 
-     * eMail &gt; eMail firstName &gt; firstName URL &gt; URL XAxis &gt; XAxis a &gt; a B &gt; b Yaxis &gt; yaxis
-     *
-     * @param inputString
-     *            the input string
-     * @return the valid property name
-     */
-    public static String getValidPropertyName(String inputString) {
-        String answer;
-
-        if (inputString == null) {
-            answer = null;
-        } else if (inputString.length() < 2) {
-            answer = inputString.toLowerCase(Locale.US);
-        } else {
-            if (Character.isUpperCase(inputString.charAt(0))
-                    && !Character.isUpperCase(inputString.charAt(1))) {
-                answer = inputString.substring(0, 1).toLowerCase(Locale.US)
-                        + inputString.substring(1);
-            } else {
-                answer = inputString;
-            }
-        }
-
-        return answer;
-    }
-
-    /**
      * Gets the java beans getter.
      *
      * @param introspectedColumn
@@ -219,6 +186,39 @@ public class JavaBeansUtil {
         method.addBodyLine(sb.toString());
 
         return method;
+    }
+
+    /**
+     * This method ensures that the specified input string is a valid Java property name. The rules are as follows:
+     *
+     * 1. If the first character is lower case, then OK 2. If the first two characters are upper case, then OK 3. If the
+     * first character is upper case, and the second character is lower case, then the first character should be made
+     * lower case
+     *
+     * eMail &gt; eMail firstName &gt; firstName URL &gt; URL XAxis &gt; XAxis a &gt; a B &gt; b Yaxis &gt; yaxis
+     *
+     * @param inputString
+     *            the input string
+     * @return the valid property name
+     */
+    public static String getValidPropertyName(String inputString) {
+        String answer;
+
+        if (inputString == null) {
+            answer = null;
+        } else if (inputString.length() < 2) {
+            answer = inputString.toLowerCase(Locale.US);
+        } else {
+            if (Character.isUpperCase(inputString.charAt(0))
+                    && !Character.isUpperCase(inputString.charAt(1))) {
+                answer = inputString.substring(0, 1).toLowerCase(Locale.US)
+                        + inputString.substring(1);
+            } else {
+                answer = inputString;
+            }
+        }
+
+        return answer;
     }
 
     /**
