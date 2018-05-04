@@ -262,6 +262,8 @@ public abstract class IntrospectedTable {
         ATTR_MYBATIS3_COUNT_BY_CND, // 条件统计
 
         ATTR_MYBATIS3_FIND_MAP_BY_CND, // 组合表条件查询
+
+        ATTR_MYBATIS3_FIND_FIELD_BY_CND, // 单字段条件查询
     }
 
     /**
@@ -1363,6 +1365,11 @@ public abstract class IntrospectedTable {
                 s);
     }
 
+    public void setFindFieldByCndId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_MYBATIS3_FIND_FIELD_BY_CND,
+                s);
+    }
+
     /**
      * Calculate java client implementation package.
      *
@@ -1935,6 +1942,11 @@ public abstract class IntrospectedTable {
     public String getMyBatis3FindMapByCnd() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_MYBATIS3_FIND_MAP_BY_CND);
+    }
+
+    public String getMyBatis3FindFieldByCnd() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_MYBATIS3_FIND_FIELD_BY_CND);
     }
 
     public void setMyBatis3UpdateByCnd(String mybatis3UpdateByCnd) {

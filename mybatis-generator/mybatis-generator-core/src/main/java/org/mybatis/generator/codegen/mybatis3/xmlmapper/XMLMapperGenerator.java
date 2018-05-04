@@ -97,6 +97,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addDeleteByCndElement(answer);
         addUpdateByCndElement(answer);
         addFindMapByCndElement(answer);
+        addFindFieldByCndElement(answer);
 
         return answer;
     }
@@ -268,6 +269,13 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected void addFindMapByCndElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
             AbstractXmlElementGenerator elementGenerator = new FindMapByCndElementGenerator();
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    protected void addFindFieldByCndElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
+            AbstractXmlElementGenerator elementGenerator = new FindFieldByCndElementGenerator();
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }
