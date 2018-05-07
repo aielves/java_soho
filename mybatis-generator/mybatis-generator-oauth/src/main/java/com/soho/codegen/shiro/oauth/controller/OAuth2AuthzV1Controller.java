@@ -54,7 +54,7 @@ public class OAuth2AuthzV1Controller extends OAuth2AuthzController {
             String sig = request.getParameter("sig");
             String token = request.getParameter("token");
             String scene = request.getParameter("scene");
-            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAIZqbWU3IQyNCf", "nbdU22g6C68F48sAV9KVsZVwKtPun4");
+            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI6Lq7SoAzfMwE", "rXMwZH2RqgIRRLl9LipsoT432jAJYU");
             IAcsClient client = new DefaultAcsClient(profile);
             DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Jaq", "jaq.aliyuncs.com");
             AfsCheckRequest afsCheckRequest = new AfsCheckRequest();
