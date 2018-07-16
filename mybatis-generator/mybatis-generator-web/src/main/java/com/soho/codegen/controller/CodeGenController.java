@@ -6,9 +6,6 @@ import com.soho.codegen.domain.ZipMessage;
 import com.soho.codegen.service.CodeGenService;
 import com.soho.codegen.shiro.aconst.BizErrorCode;
 import com.soho.ex.BizErrorEx;
-import com.soho.shiro.oauth2.aconst.OAuth2Client;
-import com.soho.shiro.utils.HttpUtils;
-import com.soho.shiro.utils.SessionUtils;
 import com.soho.web.domain.Ret;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -18,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/codegen")
@@ -32,32 +26,20 @@ public class CodeGenController {
     @Autowired
     private CodeGenService codeGenService;
 
-    @Autowired
-    private OAuth2Client oAuth2Client;
-
-    @RequestMapping(value = "/logout")
     @ResponseBody
-    public Object logout() {
-        Map<String, String> map = (Map<String, String>) SessionUtils.getAttribute("tokeninfo");
-        String s = HttpUtils.sendPost(oAuth2Client.getLogout_token_uri() + "?access_token=" + map.get("access_token") + "&access_pbk=" + map.get("access_pbk"), null);
-        SecurityUtils.getSubject().logout();
-        return new ModelAndView("redirect:" + oAuth2Client.getDomain_uri() + "?ts=" + System.currentTimeMillis());
-    }
-
     @RequestMapping(value = "/generate")
-    @ResponseBody
     public Object generate(DbMessage dbMessage) throws BizErrorEx {
         return codeGenService.generate(dbMessage);
     }
 
-    @RequestMapping(value = "/uploadFile")
     @ResponseBody
+    @RequestMapping(value = "/uploadFile")
     public Object uploadFile(Integer uploadtype, @RequestParam("file") MultipartFile file) throws BizErrorEx {
         return codeGenService.uploadFile(uploadtype, file);
     }
 
-    @RequestMapping(value = "/getUser")
     @ResponseBody
+    @RequestMapping(value = "/getUser")
     public Object generate() throws BizErrorEx {
         if (SecurityUtils.getSubject().isAuthenticated()) {
             Session session = SecurityUtils.getSubject().getSession();
@@ -73,32 +55,26 @@ public class CodeGenController {
         throw new BizErrorEx(Ret.UNKNOWN_STATUS, "尚未登录");
     }
 
-    @RequestMapping(value = "/getDBTables")
     @ResponseBody
+    @RequestMapping(value = "/getDBTables")
     public Object getDBTables(DbMessage dbMessage) throws BizErrorEx {
         return codeGenService.getDBTables(dbMessage);
     }
 
-    @RequestMapping(value = "/getZipFile")
     @ResponseBody
+    @RequestMapping(value = "/getZipFile")
     public Object getZipFile() throws BizErrorEx {
         return codeGenService.getZipFiles();
     }
 
-    @RequestMapping(value = "/delFile")
     @ResponseBody
+    @RequestMapping(value = "/delFile")
     public Object delFile(String cbx_ids) throws BizErrorEx {
         return codeGenService.delFile(cbx_ids);
     }
 
-    @RequestMapping(value = "/signup")
     @ResponseBody
-    public Object signup(OauthUser user) throws BizErrorEx {
-        return codeGenService.signup(user);
-    }
-
     @RequestMapping(value = "/downFile")
-    @ResponseBody
     public Object downFile(HttpServletResponse response, String fileId) throws BizErrorEx {
         ZipMessage zipMessage = codeGenService.downFile(fileId);
         File file = new File(zipMessage.getFilePath());
@@ -119,14 +95,12 @@ public class CodeGenController {
                     i = bis.read(buffer);
                 }
             } catch (Exception e) {
-                // TODO: handle exception
                 e.printStackTrace();
             } finally {
                 if (bis != null) {
                     try {
                         bis.close();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -134,7 +108,6 @@ public class CodeGenController {
                     try {
                         fis.close();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -143,8 +116,8 @@ public class CodeGenController {
         return null;
     }
 
-    @RequestMapping(value = "/downUploadFile")
     @ResponseBody
+    @RequestMapping(value = "/downUploadFile")
     public Object downUploadFile(HttpServletResponse response, String filePath) throws BizErrorEx {
         try {
             File file = new File(filePath);
@@ -165,14 +138,12 @@ public class CodeGenController {
                         i = bis.read(buffer);
                     }
                 } catch (Exception e) {
-                    // TODO: handle exception
                     e.printStackTrace();
                 } finally {
                     if (bis != null) {
                         try {
                             bis.close();
                         } catch (IOException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -180,7 +151,6 @@ public class CodeGenController {
                         try {
                             fis.close();
                         } catch (IOException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -190,7 +160,7 @@ public class CodeGenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "下载失败");
+        throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "下载失败");
     }
 
 }

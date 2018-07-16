@@ -307,14 +307,14 @@ public class CodeGenServiceImp implements CodeGenService {
     public Map<String, Object> uploadFile(Integer uploadtype, MultipartFile file) throws BizErrorEx {
         try {
             if (uploadtype == null) {
-                throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "请选择文件类型");
+                throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "请选择文件类型");
             }
             if (file == null || StringUtils.isEmpty(file.getOriginalFilename())) {
-                throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "上传文件不能为空");
+                throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "上传文件不能为空");
             }
             long filesize = file.getSize();
             if (filesize > (5000 * 1024)) {
-                throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "上传文件不能超过5000K");
+                throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "上传文件不能超过5000K");
             }
             Session session = SecurityUtils.getSubject().getSession();
             OauthUser user = session.getAttribute("session_user") == null ? null : (OauthUser) session.getAttribute("session_user");
@@ -356,7 +356,7 @@ public class CodeGenServiceImp implements CodeGenService {
                     newPath = unzipDir + ".zip";
                     ZipUtils.zip(unzipDir, newPath);
                 } else {
-                    throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "请上传ZIP格式的文件");
+                    throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "请上传ZIP格式的文件");
                 }
             } else if (uploadtype == 2) {
                 if (orgname.endsWith(".jpg") || orgname.endsWith(".jpeg")) {
@@ -367,10 +367,10 @@ public class CodeGenServiceImp implements CodeGenService {
                     file.transferTo(new File(newPath));
                     Thumbnails.of(newPath).scale(1.0f).toFile(newPath);
                 } else {
-                    throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "请上传JPG或JPEG格式的文件");
+                    throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "请上传JPG或JPEG格式的文件");
                 }
             } else {
-                throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "文件类型异常");
+                throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "文件类型异常");
             }
             Map<String, Object> map = new HashMap<>();
             map.put("path", newPath);
@@ -381,7 +381,7 @@ public class CodeGenServiceImp implements CodeGenService {
                 throw new BizErrorEx(((BizErrorEx) e).getErrorCode(), e.getMessage());
             }
         }
-        throw new BizErrorEx(BizErrorCode.OAUTH_LOGIN_ERROR, "处理失败,请重新尝试");
+        throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "处理失败,请重新尝试");
     }
 
 }

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Login Home Page</title>
+    <link href="//static.cartoonai.com/codegen/login/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link type="text/css" href="//g.alicdn.com/sd/ncpc/nc.css?t=1516894524024" rel="stylesheet"/>
+    <script type="text/javascript" src="//static.cartoonai.com/codegen/login/js/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="//g.alicdn.com/sd/ncpc/nc.js?t=1516894524024"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?f11a728a6e58315ab0a8554150920f9f";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+<div id="_umfp" style="display:inline;width:1px;height:1px;overflow:hidden"></div>
+<div class="wrap">
+    <!-- strat-contact-form -->
+    <div class="contact-form clearfix">
+        <!-- start-account -->
+        <div class="account">
+            <h2><a href="/static/signup.html">Don' have an account? Sign Up!</a></h2>
+            <div class="span"><a href="#"><img src="//static.cartoonai.com/codegen/login/images/facebook.png" alt=""/><i>Sign In with
+                Facebook</i>
+                <div class="clear"></div>
+            </a></div>
+            <div class="span1"><a href="#"><img src="//static.cartoonai.com/codegen/login/images/twitter.png" alt=""/><i>Sign In with
+                Twitter</i>
+                <div class="clear"></div>
+            </a></div>
+            <div class="span2"><a href="#"><img src="//static.cartoonai.com/codegen/login/images/gplus.png" alt=""/><i>Sign In with Google+</i>
+                <div class="clear"></div>
+            </a></div>
+        </div>
+        <!-- end-account -->
+        <!-- start-form -->
+        <form class="contact_form" action="#" method="post" id="contact_form" name="contact_form">
+            <h1>Login Into Your Account</h1>
+            <ul class="clearfix">
+                <li style="width: 300px">
+                    <input type="text" class="textbox1" name="username" id="username" maxlength="18" value="" placeholder="username"/>
+                    <span class="form_hint">Enter Your Account</span>
+                    <p><img src="//static.cartoonai.com/codegen/login/images/contact.png" alt=""></p>
+                </li>
+                <li style="width: 300px">
+                    <input type="password" name="password" class="textbox2" id="password" maxlength="18" placeholder="password">
+                    <p><img src="//static.cartoonai.com/codegen/login/images/lock.png" alt=""></p>
+                </li>
+            </ul>
+            <div class="container" style="margin-left: 0px;margin-top: 8%;width: 100%;">
+                <div class="ln">
+                    <div id="dom_id"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="remember-me-wrapper clearfix">
+                <label class="checkbox"><input type="checkbox" name="checkbox" checked="checked"
+                                               style="margin-top: 10px;"><i></i>Remember
+                    me</label>
+                <div class="forgot">
+                    <a href="#">forgot password?</a>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+        </form>
+        <!-- end-form -->
+        <div class="clear"></div>
+    </div>
+    <!-- end-contact-form -->
+    <div class="footer">
+        <p>developed by <a href="#">www.aielves.net</a></p>
+    </div>
+</div>
+<script>
+    var nc = new noCaptcha();
+    var nc_appkey = 'FFFF000000000179AE04';
+    var nc_scene = 'login';
+    var nc_token = [nc_appkey, (new Date()).getTime(), Math.random()].join(':');
+    var nc_option = {
+        renderTo: '#dom_id',
+        appkey: nc_appkey,
+        scene: nc_scene,
+        token: nc_token,
+        callback: function (data) {// 校验成功回调
+            jQuery.post("/user/jaq", "csessionid=" + data.csessionid + "&sig=" + data.sig + "&token=" + nc_token + "&scene=" + nc_scene, function (json) {
+                if (json.code == "000000") {
+                    var username = jQuery("#username").val();
+                    var password = jQuery("#password").val();
+                    if (username == "" || password == "") {
+                        alert("username/password is not allowed to be null");
+                        location.href = "/static/login.html";
+                        return false;
+                    }
+                    jQuery.post("/user/login", "username=" + username + "&password=" + password, function (json) {
+                        if (json.code == "000000") {
+                            location.href = "/";
+                        } else {
+                            alert(json.msg);
+                            location.href = "/static/login.html";
+                            return false;
+                        }
+                    });
+                } else {
+                    alert("authentication failed");
+                    location.href = "/static/login.html";
+                    return false;
+                }
+            });
+        }
+    };
+    nc.init(nc_option);
+</script>
+</body>
+</html>

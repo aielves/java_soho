@@ -21,7 +21,7 @@ var islogin = false;
 function initMsg() {
     jQuery.post("/codegen/getUser", "", function (result) {
         if (result.code == "000000") {
-            jQuery("#loginName").html(result.data.nickname + "&nbsp;&nbsp;<a href='/codegen/logout'>退出</a>");
+            jQuery("#loginName").html(result.data.nickname + "&nbsp;&nbsp;<a href='/user/logout'>退出</a>");
             islogin = true;
         } else {
             var msg = "友情提示:生成功能需要登录后方可使用!";
@@ -197,6 +197,7 @@ function getFiles() {
     jQuery("#tribune").hide();
     jQuery("#basicform").hide();
     if (!islogin) {
+        alert("请先登录");
         return;
     }
     jQuery.post("/codegen/getZipFile", "", function (result) {
@@ -317,11 +318,11 @@ function submitSignUpForm() {
         jAlert("请输入您的昵称", "友情提示");
         return false;
     }
-    jQuery.post("/codegen/signup", "username=" + username + "&password=" + password + "&nickname=" + nickname + "&company=" + company, function (result) {
+    jQuery.post("/user/signup", "username=" + username + "&password=" + password + "&nickname=" + nickname + "&company=" + company, function (result) {
         if (result.code == "000000") {
             jConfirm('注册已成功,是否前往登录?', '友情提示', function (r) {
                 if (r == true) {
-                    location.href = '/codegen/generate';
+                    location.href = '/static/login.html';
                 } else {
                     location.href = '/static/signup.html';
                 }

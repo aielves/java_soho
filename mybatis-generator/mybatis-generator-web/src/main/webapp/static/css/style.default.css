@@ -19,18 +19,18 @@
  * Website: http://themepixels.com/
 ***/
 
-@import url('../fonts/roboto.css');
-@import url('plugins/jquery.alerts.css');
-@import url('plugins/uniform.tp.css');
-@import url('plugins/jquery.ui.css');
-@import url('plugins/jquery.ui.autocomplete.css');
-@import url('plugins/fullcalendar.css');
-@import url('plugins/colorbox.css');
-@import url('plugins/colorpicker.css');
-@import url('plugins/jquery.jgrowl.css');
-@import url('plugins/jquery.tagsinput.css');
-@import url('plugins/ui.spinner.css');
-@import url('plugins/jquery.chosen.css');
+@import url('//static.cartoonai.com/codegen/index/css/fonts/roboto.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/jquery.alerts.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/uniform.tp.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/jquery.ui.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/jquery.ui.autocomplete.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/fullcalendar.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/colorbox.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/colorpicker.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/jquery.jgrowl.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/jquery.tagsinput.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/ui.spinner.css');
+@import url('//static.cartoonai.com/codegen/index/css/plugins/jquery.chosen.css');
 
 
 /***** 1. RESET STYLE *****/
@@ -71,7 +71,7 @@ h5 { font-size: 14px; }
 
 span.h3 { font-size: 24px; display: block; }
 
-body.withvernav { background: #fff url(../images/line.ccc.png) repeat-y 230px 0; } /* with left menu*/
+body.withvernav { background: #fff url(//static.cartoonai.com/codegen/index/images/line.ccc.png) repeat-y 230px 0; } /* with left menu*/
 body.withmenucoll { background-position: 55px 0; } /* with menu style 1 in collapsed mode */
 body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in collapsed mode */
 
@@ -102,14 +102,14 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 /***** 4. LOGIN PAGE *****/
 /*************************/
 
-.loginpage { background: #fff url(../images/patternbg.png); }
+.loginpage { background: #fff url(//static.cartoonai.com/codegen/index/images/patternbg.png); }
 .loginbox { 
 	width: 350px; padding: 5px; background: #fff; margin: 7% auto 0 auto; -moz-border-radius: 2px; -webkit-border-radius: 2px;
 	border-radius: 2px; -moz-box-shadow: 0 0 2px rgba(0,0,0,0.3); -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3); 
 	box-shadow: 0 0 2px rgba(0,0,0,0.3);
 }
 .loginboxinner { 
-	padding: 20px; background: #32415a url(../images/patternbg.png); -moz-border-radius: 0 2px 2px 0; 
+	padding: 20px; background: #32415a url(//static.cartoonai.com/codegen/index/images/patternbg.png); -moz-border-radius: 0 2px 2px 0;
 	-webkit-border-radius: 0 0 2px 2px; border-radius: 0 0 2px 2px;
 }
 .loginbox .logo { text-align: center; }
@@ -122,7 +122,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 
 .loginbox form { display: block; margin-top: 20px; }
 .loginbox .username { 
-	background: #eee url(../images/icons/username.png) no-repeat 13px center; -moz-border-radius: 2px; -webkit-border-radius: 2px; 
+	background: #eee url(//static.cartoonai.com/codegen/index/images/icons/username.png) no-repeat 13px center; -moz-border-radius: 2px; -webkit-border-radius: 2px;
 	border-radius: 2px; -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.4); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.4); 
 	box-shadow: 0 1px 2px rgba(0,0,0,0.4); margin: 20px 0;
 }
@@ -136,7 +136,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 	border-radius: 0 2px 2px 0;
 }
 .loginbox .password { 
-	background: #eee url(../images/icons/password.png) no-repeat 13px center; -moz-border-radius: 2px; -webkit-border-radius: 2px; 
+	background: #eee url(//static.cartoonai.com/codegen/index/images/icons/password.png) no-repeat 13px center; -moz-border-radius: 2px; -webkit-border-radius: 2px;
 	border-radius: 2px; -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.4); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.4); 
 	box-shadow: 0 1px 2px rgba(0,0,0,0.4); margin: 20px 0; overflow: hidden;
 }
@@ -147,7 +147,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 }
 
 .loginbox button { 
-	background: #f0801d url(../images/btngrad.png) repeat-x top left; border: 0; padding: 15px 0; text-align: center; 
+	background: #f0801d url(//static.cartoonai.com/codegen/index/images/btngrad.png) repeat-x top left; border: 0; padding: 15px 0; text-align: center;
 	font-family: 'RobotoCondensed', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; width: 100%; text-transform: uppercase;  
 	-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.4); 
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.4); box-shadow: 0 1px 2px rgba(0,0,0,0.4);
@@ -181,7 +181,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 /********************************/
 
 
-.topheader { background: #34445e url(../images/default/topheaderbg.png); padding: 8px 10px; position: relative; border-bottom: 1px solid #303f59; }
+.topheader { background: #34445e url(//static.cartoonai.com/codegen/index/images/default/topheaderbg.png); padding: 8px 10px; position: relative; border-bottom: 1px solid #303f59; }
 .topheader .left h1.logo { 
 	font-family: 'RobotoCondensed', Arial, Helvetica, sans-serif; font-weight: normal; text-transform: uppercase; color: #fb9337;
 	float: left; font-size: 30px; margin: 10px 0;
@@ -201,14 +201,14 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .search input[type=text]:focus { font-style: normal; color: #6a778d; }
 .search .submitbutton { 
 	float: left; border: 0; border-bottom: 1px solid #445775; -moz-border-radius: 0 0 2px 0; -webkit-border-radius: 0 0 2px 0; cursor: pointer;
-	border-radius: 0 0 2px 0; background: url(../images/default/searchbutton.png) no-repeat 0 0; width: 38px; height: 37px; vertical-align: middle;
+	border-radius: 0 0 2px 0; background: url(//static.cartoonai.com/codegen/index/images/default/searchbutton.png) no-repeat 0 0; width: 38px; height: 37px; vertical-align: middle;
 }
 
 .topheader .right { position: absolute; top: 10px; right: 10px; }
 
 .notification { float: left; position: relative; }
 .notification a.count { 
-	background: #cc170e url(../images/default/notibg.png) repeat-x top left; margin-right: 10px; 
+	background: #cc170e url(//static.cartoonai.com/codegen/index/images/default/notibg.png) repeat-x top left; margin-right: 10px; 
 	font-size: 14px; font-family: 'RobotoCondensed', Arial, Helvetica, sans-serif; padding: 8px 13px;
 	-moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border-bottom: 1px solid #445775;
 	-moz-box-shadow: inset 0 0 5px #400603; -webkit-box-shadow: inset 0 0 5px #400603; box-shadow: inset 0 0 5px #400603; 
@@ -271,7 +271,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 
 
 .userinfo { 
-	padding: 6px 18px 6px 6px; background: #32415a url(../images/default/userinfoarrow.png) no-repeat right center; -moz-border-radius: 2px; 
+	padding: 6px 18px 6px 6px; background: #32415a url(//static.cartoonai.com/codegen/index/images/default/userinfoarrow.png) no-repeat right center; -moz-border-radius: 2px; 
 	-webkit-border-radius: 2px; border-radius: 2px; -moz-box-shadow: inset 1px 1px 2px #2b384e; float: left; border-bottom: 1px solid #445775;
 	-webkit-box-shadow: inset 1px 1px 2px #2b384e; box-shadow: inset 1px 1px 2px #2b384e; cursor: pointer;
 }
@@ -302,7 +302,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 
 
 .header { 
-	background: #485b79 url(../images/default/headerbg.png); min-height: 50px; overflow: hidden; border-bottom: 5px solid #fb9337; 
+	background: #485b79 url(//static.cartoonai.com/codegen/index/images/default/headerbg.png); min-height: 50px; overflow: hidden; border-bottom: 5px solid #fb9337; 
 	-moz-box-shadow: inset 0 1px 0 #50627f; -webkit-box-shadow: inset 0 1px 0 #50627f; box-shadow: inset 0 1px 0 #50627f;
 	position: relative;
 }
@@ -317,19 +317,19 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .headermenu li a span { opacity: 0.5; }
 .headermenu li a span.icon { height: 30px; display: block; margin-bottom: 10px; }
 
-.headermenu li a span.icon-flatscreen { background: url(../images/icons/flatscreen.white.png) no-repeat center center; }
-.headermenu li a span.icon-pencil { background: url(../images/icons/pencil.white.png) no-repeat center center; }
-.headermenu li a span.icon-speech { background: url(../images/icons/speech.white.png) no-repeat center center; }
-.headermenu li a span.icon-message { background: url(../images/icons/message.white.png) no-repeat center center; }
-.headermenu li a span.icon-chart { background: url(../images/icons/chart.white.png) no-repeat center center; }
+.headermenu li a span.icon-flatscreen { background: url(//static.cartoonai.com/codegen/index/images/icons/flatscreen.white.png) no-repeat center center; }
+.headermenu li a span.icon-pencil { background: url(//static.cartoonai.com/codegen/index/images/icons/pencil.white.png) no-repeat center center; }
+.headermenu li a span.icon-speech { background: url(//static.cartoonai.com/codegen/index/images/icons/speech.white.png) no-repeat center center; }
+.headermenu li a span.icon-message { background: url(//static.cartoonai.com/codegen/index/images/icons/message.white.png) no-repeat center center; }
+.headermenu li a span.icon-chart { background: url(//static.cartoonai.com/codegen/index/images/icons/chart.white.png) no-repeat center center; }
 .headermenu li a:hover { 
-	background: url(../images/default/bghover.png) no-repeat center bottom; -moz-box-shadow: inset 0 1px 0 #4f627e; 
+	background: url(//static.cartoonai.com/codegen/index/images/default/bghover.png) no-repeat center bottom; -moz-box-shadow: inset 0 1px 0 #4f627e; 
 	-webkit-box-shadow: inset 0 1px 0 #4f627e; box-shadow: inset 0 1px 0 #4f627e;
 }
 
 .headermenu li.current { border-left: 0; border-right: 1px solid #394962;  }
 .headermenu li.current a { 
-	background: url(../images/default/arrow-active.png) no-repeat center bottom; -moz-box-shadow: inset 0 1px 0 #4f627e; 
+	background: url(//static.cartoonai.com/codegen/index/images/default/arrow-active.png) no-repeat center bottom; -moz-box-shadow: inset 0 1px 0 #4f627e; 
 	-webkit-box-shadow: inset 0 1px 0 #4f627e; box-shadow: inset 0 1px 0 #4f627e; }
 .headermenu li.current a span { opacity: 1; } 
 
@@ -352,7 +352,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 /*********************************/
 
 
-.pageheader { padding-top: 20px; background: url(../images/default/noise.white.png); position: relative; }
+.pageheader { padding-top: 20px; background: url(//static.cartoonai.com/codegen/index/images/default/noise.white.png); position: relative; }
 .pageheader .pagetitle { 
 	margin: 0 10px; color: #485b79; font-weight: normal; font-size: 28px; font-family: 'RobotoBoldCondensed', Arial, Helvetica, sans-serif; 
 }
@@ -401,7 +401,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .vernav ul li a:hover { background-color: #32415A; color: #eee; }
 .vernav ul li.current a { background-color: #32415a; color: #fb9337; }
 .vernav ul ul { margin: 0; margin-left: 10px; display: none; }
-.vernav ul ul li a { color: #999; background: #fff url(../images/line.dashed.png) no-repeat -25px center; border-left: 1px dashed #ccc; padding-left: 10px; }
+.vernav ul ul li a { color: #999; background: #fff url(//static.cartoonai.com/codegen/index/images/line.dashed.png) no-repeat -25px center; border-left: 1px dashed #ccc; padding-left: 10px; }
 .vernav ul ul li a:hover { background-color: #fff; color: #666; }
 .vernav ul li.current ul { display: block; }
 .vernav ul li.current ul li a { background-color: #fff; color: #999; }
@@ -420,7 +420,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .vernav2 ul ul { margin: 0; padding-left: 10px; border-top: 1px solid #eee; display: none; }
 .vernav2 ul ul li { border-bottom: 0; }
 .vernav2 ul ul li a { 
-	color: #999; background: #fff url(../images/line.dashed.png) no-repeat -25px center; border-left: 1px dashed #ccc; padding-left: 10px; 
+	color: #999; background: #fff url(//static.cartoonai.com/codegen/index/images/line.dashed.png) no-repeat -25px center; border-left: 1px dashed #ccc; padding-left: 10px;
 }
 .vernav2 ul ul li a:hover { background-color: #fff; color: #666; }
 .vernav2 ul ul li:last-child { border-bottom: 0; }
@@ -430,16 +430,16 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .vernav2 ul li.current ul li.current a { background-color: #fff; color: #fb9337; }
 
 .vernav ul li span.arrow, .vernav2 ul li span.arrow { 
-	position: absolute; top: 17px; right: 10px; background: url(../images/default/menuarrow.png) no-repeat 0 0;
+	position: absolute; top: 17px; right: 10px; background: url(//static.cartoonai.com/codegen/index/images/default/menuarrow.png) no-repeat 0 0;
 	width: 11px; height: 5px;
 }
 .vernav ul li.current span.arrow, .vernav2 ul li.current span.arrow { background-position: 0 -5px; }
 
 .iconmenu ul li a { 
-	padding-left: 35px; background-image: url(../images/default/icons_sprite.png); background-repeat: no-repeat; background-position: 10px 12px; 
+	padding-left: 35px; background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite.png); background-repeat: no-repeat; background-position: 10px 12px; 
 }
-.iconmenu ul li a:hover { background-image: url(../images/default/icons_sprite2.png); }
-.iconmenu ul li.current a:hover { background-image: url(../images/default/icons_sprite.png); }
+.iconmenu ul li a:hover { background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite2.png); }
+.iconmenu ul li.current a:hover { background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite.png); }
 .iconmenu ul ul { padding-left: 25px; }
 
 .iconmenu ul li a.editor { background-position: 8px 10px; }
@@ -477,8 +477,8 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .menucoll ul li span.arrow { display: none; }
 .menucoll > ul > li { margin-bottom: 1px; }
 .menucoll > ul > li > a { overflow: hidden; width: 0; height: 36px; padding: 0 0 0 35px; }
-.menucoll > ul > li.hover > a { background-color: #32415A; background-image: url(../images/default/icons_sprite2.png); }
-.menucoll > ul > li.current > a { background-image: url(../images/default/icons_sprite.png); } 
+.menucoll > ul > li.hover > a { background-color: #32415A; background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite2.png); }
+.menucoll > ul > li.current > a { background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite.png); } 
 .menucoll ul ul { 
 	position: absolute; z-index: 200; top: 0; left: 24px; padding: 0; width: 200px; background: none; border: 1px solid #ccc; 
 	-moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); box-shadow: 2px 1px 3px rgba(0,0,0,0.1);
@@ -497,8 +497,8 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .menucoll2 ul li { height: 36px; position: relative; }
 .menucoll2 ul li span.arrow { display: none; }
 .menucoll2 > ul > li > a { overflow: hidden; width: 0; height: 36px; padding: 0 0 0 35px; }
-.menucoll2 > ul > li.hover > a { background-color: #f7f7f7; background-image: url(../images/default/icons_sprite2.png); }
-.menucoll2 > ul > li.current > a { background-image: url(../images/default/icons_sprite.png); } 
+.menucoll2 > ul > li.hover > a { background-color: #f7f7f7; background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite2.png); }
+.menucoll2 > ul > li.current > a { background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite.png); } 
 .menucoll2 ul ul { 
 	position: absolute; z-index: 100; top: 0; left: 35px; padding: 0; width: 200px; background: none; border: 1px solid #ccc; 
 	-moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); box-shadow: 2px 1px 3px rgba(0,0,0,0.1);
@@ -516,7 +516,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 
 .togglemenu { 
 	border-left: 1px solid #ddd; border-right: 1px solid #ddd; display: block; height: 21px; cursor: pointer;
-	background: url(../images/menucollapsed.png) no-repeat center 0; margin: 10px;
+	background: url(//static.cartoonai.com/codegen/index/images/menucollapsed.png) no-repeat center 0; margin: 10px;
 }
 .togglemenu_collapsed { background-position: center -21px; margin: 10px 5px; border-width: 0; }
 
@@ -576,11 +576,11 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 	text-align: center; display: block; padding-top: 70px; font-family: 'RobotoBoldCondensed', Arial, Helvetica, sans-serif; 
 	text-transform: uppercase;
 }
-.shortcuts li a.settings { background-image: url(../images/icons/64/settings.png); }
-.shortcuts li a.users { background-image: url(../images/icons/64/users.png); }
-.shortcuts li a.gallery { background-image: url(../images/icons/64/images.png); }
-.shortcuts li a.events { background-image: url(../images/icons/64/events.png); }
-.shortcuts li a.analytics { background-image: url(../images/icons/64/analytics.png); }
+.shortcuts li a.settings { background-image: url(//static.cartoonai.com/codegen/index/images/icons/64/settings.png); }
+.shortcuts li a.users { background-image: url(//static.cartoonai.com/codegen/index/images/icons/64/users.png); }
+.shortcuts li a.gallery { background-image: url(//static.cartoonai.com/codegen/index/images/icons/64/images.png); }
+.shortcuts li a.events { background-image: url(//static.cartoonai.com/codegen/index/images/icons/64/events.png); }
+.shortcuts li a.analytics { background-image: url(//static.cartoonai.com/codegen/index/images/icons/64/analytics.png); }
 
 
 .toplist { list-style: none; }
@@ -635,32 +635,32 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .filemgr_menu li a.prev, .filemgr_menu li a.next { display: block; padding: 15px; border: 1px solid #ccc; cursor: pointer; background-color: #fff; }
 .filemgr_menu li a.prev:hover, .filemgr_menu li a.next:hover { background-color: #eee; border-color: #bbb; }
 .filemgr_menu li a.prev { 
-	border-right: 0; background: #fff url(../images/arrow.png) no-repeat 10px 8px; -moz-border-radius: 2px 0 0 2px;
+	border-right: 0; background: #fff url(//static.cartoonai.com/codegen/index/images/arrow.png) no-repeat 10px 8px; -moz-border-radius: 2px 0 0 2px;
 	-webkit-border-radius: 2px 0 0 2px; border-radius: 2px 0 0 2px;
 }
 .filemgr_menu li a.prev_disabled { background-position: 10px -46px; cursor: default; }
 .filemgr_menu li a.prev_disabled:hover { border-color: #ccc; background-color: #fff; }
 .filemgr_menu li a.next { 
-	background: #fff url(../images/arrow.png) no-repeat -39px 8px; -moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0; 
+	background: #fff url(//static.cartoonai.com/codegen/index/images/arrow.png) no-repeat -39px 8px; -moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0;
 	border-radius: 0 2px 2px 0;
 }
 .filemgr_menu li a.next_disabled { background-position: -39px -46px; cursor: default; }
 .filemgr_menu li a.next_disabled:hover { border-color: #ccc; background-color: #fff; }
 
 .filemgr_menu li a.selectall { 
-	background-image: url(../images/selectall.png); background-position: 7px 7px; background-repeat: no-repeat; padding-left: 27px; 
+	background-image: url(//static.cartoonai.com/codegen/index/images/selectall.png); background-position: 7px 7px; background-repeat: no-repeat; padding-left: 27px;
 }
 .filemgr_menu li a.preview { 
-	background-image: url(../images/preview.png); background-position: 7px 8px; background-repeat: no-repeat; padding-left: 30px; 
+	background-image: url(//static.cartoonai.com/codegen/index/images/preview.png); background-position: 7px 8px; background-repeat: no-repeat; padding-left: 30px;
 }
 .filemgr_menu li a.preview_disabled { opacity: 0.5; }
 .filemgr_menu li a.preview_disabled:hover { background-color: #fff; cursor: default; }
 
 .filemgr_menu li a.newfolder { 
-	padding: 15px; background-image: url(../images/addfolder.png); background-position: 7px 8px; background-repeat: no-repeat;
+	padding: 15px; background-image: url(//static.cartoonai.com/codegen/index/images/addfolder.png); background-position: 7px 8px; background-repeat: no-repeat;
 }
 .filemgr_menu li a.trash { 
-	padding: 15px; background-image: url(../images/trash.png); background-position: 7px 7px; background-repeat: no-repeat;
+	padding: 15px; background-image: url(//static.cartoonai.com/codegen/index/images/trash.png); background-position: 7px 7px; background-repeat: no-repeat;
 }
 .filemgr_menu li a.trash_disabled { opacity: 0.5; }
 .filemgr_menu li a.trash_disabled:hover { background-color: #fff; cursor: default; }
@@ -733,7 +733,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .widgetcontent ul.linklist li a { display: block; padding: 2px 5px; color: #666; }
 .widgetcontent ul.linklist li a:hover { background: #f7f7f7; text-decoration: none; }
 
-.widgetbox .titlehover h2 span { background: #333 url(../images/icons/arrow.png) no-repeat right; }
+.widgetbox .titlehover h2 span { background: #333 url(//static.cartoonai.com/codegen/index/images/icons/arrow.png) no-repeat right; }
 .widgetbox .widgettoggle { overflow: hidden; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; }
 
 .widgetbox .listthumb { list-style: none; margin: 0; }
@@ -778,11 +778,11 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 }
 .recent_list li:first-child { border-top: 1px solid #ddd; }
 
-.recent_list li.message { background-image: url(../images/icons/mail.png); }
-.recent_list li.user { background-image: url(../images/icons/users.png); }
-.recent_list li.call { background-image: url(../images/icons/call.png); }
-.recent_list li.calendar { background-image: url(../images/icons/calendar.png); }
-.recent_list li.settings { background-image: url(../images/icons/settings.png); }
+.recent_list li.message { background-image: url(//static.cartoonai.com/codegen/index/images/icons/mail.png); }
+.recent_list li.user { background-image: url(//static.cartoonai.com/codegen/index/images/icons/users.png); }
+.recent_list li.call { background-image: url(//static.cartoonai.com/codegen/index/images/icons/call.png); }
+.recent_list li.calendar { background-image: url(//static.cartoonai.com/codegen/index/images/icons/calendar.png); }
+.recent_list li.settings { background-image: url(//static.cartoonai.com/codegen/index/images/icons/settings.png); }
 
 .recent_list li.new { background-color: #fff; }
 .recent_list li .msg { margin-left: 35px; background: #f7f7f7; padding: 8px 10px; border-left: 1px solid #ddd; }
@@ -803,11 +803,11 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .slide_wrap{ padding: 20px 50px ; min-height: 60px; }
 .bx-prev { 
 	position: absolute; top: 0; left: 0; width: 30px; height: 100%; opacity: 0.6; vertical-align: middle; 
-	background: #eee url(../images/prev.png) no-repeat center center; border-right: 1px solid #ddd; 
+	background: #eee url(//static.cartoonai.com/codegen/index/images/prev.png) no-repeat center center; border-right: 1px solid #ddd;
 }
 .bx-next { 
 	position: absolute; top: 0; right: 0; width: 30px; height: 100%; opacity: 0.6; vertical-align: middle; 
-	background: #eee url(../images/next.png) no-repeat center center; border-left: 1px solid #ddd;  
+	background: #eee url(//static.cartoonai.com/codegen/index/images/next.png) no-repeat center center; border-left: 1px solid #ddd;
 }
 .bx-prev:hover, .bx-next:hover { opacity: 1; }
 .slide_img { float: left; }
@@ -840,7 +840,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 .fc-button-today:hover { color: #FB9337; background: #eee; border-color: #ccc; }
 
 input.hasDatepicker { 
-	background-image: url(../images/icons/calendar.png) !important; background-repeat: no-repeat !important; 
+	background-image: url(//static.cartoonai.com/codegen/index/images/icons/calendar.png) !important; background-repeat: no-repeat !important;
 	background-position: 5px 7px !important; padding-left: 27px !important; width: 80px !important;  
 }
 
@@ -863,11 +863,11 @@ input.hasDatepicker {
 .stdtable thead th.head0, .stdtable tfoot th.head0, .stdtable thead td.head0, .stdtable tfoot td.head0 { background-color: #fcfcfc; }
 .stdtable thead th.head1, .stdtable tfoot th.head1, .stdtable thead td.head1, .stdtable tfoot td.head1 { background-color: #f7f7f7; }
 .stdtable thead th.sorting, .stdtable thead td.sorting { 
-	background-image: url(../images/sort_both.png); background-repeat: no-repeat; background-position: right center; }
+	background-image: url(//static.cartoonai.com/codegen/index/images/sort_both.png); background-repeat: no-repeat; background-position: right center; }
 .stdtable thead th.sorting_asc, .stdtable thead td.sorting_asc { 
-	background-image: url(../images/sort_asc.png); background-repeat: no-repeat; background-position: right 9px; }
+	background-image: url(//static.cartoonai.com/codegen/index/images/sort_asc.png); background-repeat: no-repeat; background-position: right 9px; }
 .stdtable thead th.sorting_desc, .stdtable thead td.sorting_desc  { 
-	background-image: url(../images/sort_desc.png); background-repeat: no-repeat; background-position: right 9px; }
+	background-image: url(//static.cartoonai.com/codegen/index/images/sort_desc.png); background-repeat: no-repeat; background-position: right 9px; }
 .stdtable thead th.nosort { background-image: none !important; }
 .stdtable thead td { font-weight: bold; }
 .stdtable thead td.center { text-align: center; }
@@ -1010,7 +1010,7 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 .dualselect .ds_arrow { display: inline-block; vertical-align: top; padding-top: 60px; margin: 0 10px; }
 .dualselect .ds_arrow .ds_prev, .dualselect .ds_arrow .ds_next { 
 	display: block; padding: 5px 10px 7px 10px; border: 1px solid #ccc; margin-bottom: 5px; font-size: 24px; font-weight: bold; 
-	-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; background: #eee url(../images/titlebg.png) repeat-x top left;
+	-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; background: #eee url(//static.cartoonai.com/codegen/index/images/titlebg.png) repeat-x top left;
 }
 .dualselect .ds_arrow .ds_prev:hover, .dualselect .ds_arrow .ds_next:hover {
 	background: #FB9337; color: #fff; border-color: #F0882C; cursor: pointer;	
@@ -1036,10 +1036,10 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 	margin-bottom: 5px;
 }
 .wizard .hormenu li a span.dot { 
-	display: block; height: 20px; margin-top: 5px; text-align: center; background: url(../images/stepline.png) repeat-x center left; 
+	display: block; height: 20px; margin-top: 5px; text-align: center; background: url(//static.cartoonai.com/codegen/index/images/stepline.png) repeat-x center left;
 }
 .wizard .hormenu li span.label { display: block; text-align: center; font-weight: bold; color: #999; margin-top: 10px; }
-.wizard .hormenu li a span.dot span { width: 20px; height: 20px; display: inline-block; background: url(../images/steps.png) no-repeat 0 -40px; }
+.wizard .hormenu li a span.dot span { width: 20px; height: 20px; display: inline-block; background: url(//static.cartoonai.com/codegen/index/images/steps.png) no-repeat 0 -40px; }
 .wizard .hormenu li:first-child a span.dot { margin-left: 47%; text-align: left; }
 .wizard .hormenu li:last-child a span.dot { margin-right: 47%; text-align: right; }
 .wizard .hormenu li a.done span.label { color: #666; }
@@ -1160,11 +1160,11 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 .progress .bar { background: #eee; -moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px; padding: 1px; border: 1px solid #bbb; }
 .progress .bar { -moz-box-shadow: inset 2px 2px 3px #fff; -webkit-box-shadow: inset 2px 2px 3px #fff; box-shadow: inset 2px 2px 3px #fff; }
 .progress .bar .value { 
-	height: 5px; -moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px; background-image: url(../images/progress.png); }
+	height: 5px; -moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px; background-image: url(//static.cartoonai.com/codegen/index/images/progress.png); }
 .progress .bar2 { background: #eee; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; padding: 1px; border: 1px solid #bbb; }
 .progress .bar2 { -moz-box-shadow: inset 2px 2px 3px #fff; -webkit-box-shadow: inset 2px 2px 3px #fff; box-shadow: inset 2px 2px 5px #ccc; }
 .progress .bar2 .value { padding: 2px 0; text-align: center; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; color: #fff; }
-.progress .bar2 .value { background-image: url(../images/progress.png); background-position: 0 0; font-size: 11px; font-weight: bold; }
+.progress .bar2 .value { background-image: url(//static.cartoonai.com/codegen/index/images/progress.png); background-position: 0 0; font-size: 11px; font-weight: bold; }
 
 .progress .bluebar { 
 	background-color: #06f; -moz-box-shadow: inset 1px 1px 2px #9af; -webkit-box-shadow: inset 1px 1px 2px #9af; 
@@ -1220,10 +1220,10 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 
 
 .breadcrumbs { 
-	display: block; list-style: none; border: 1px solid #ccc; background: url(../images/titlebg.png) repeat-x top left; 
+	display: block; list-style: none; border: 1px solid #ccc; background: url(//static.cartoonai.com/codegen/index/images/titlebg.png) repeat-x top left;
 	-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px;
 }
-.breadcrumbs li { display: inline-block; background: url(../images/separator.png) no-repeat right center; margin-right: 5px; font-size: 11px; }
+.breadcrumbs li { display: inline-block; background: url(//static.cartoonai.com/codegen/index/images/separator.png) no-repeat right center; margin-right: 5px; font-size: 11px; }
 .breadcrumbs li:last-child { background: none; color: #333; }
 .breadcrumbs li a { display: block; padding: 5px 20px 5px 5px; }
 .breadcrumbs li:first-child a { padding-left: 10px; }
@@ -1258,7 +1258,7 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 }
 .notibar p { margin: 15px 10px 0 55px; font-size: 13px; color: #333; }
 .notibar a.close { 
-	position: absolute; width: 14px; height: 14px; top: 5px; right: 5px; background-image: url(../images/close.png); background-repeat: no-repeat; }
+	position: absolute; width: 14px; height: 14px; top: 5px; right: 5px; background-image: url(//static.cartoonai.com/codegen/index/images/close.png); background-repeat: no-repeat; }
 .notibar a.close:hover { cursor: pointer; }
 .msgalert a.close { background-position: -14px 0; }
 .msgalert a.close:hover { background-position: -14px -14px; }
@@ -1271,12 +1271,12 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 .announcement a.close { background-position: -56px 0; }
 .announcement a.close:hover { background-position: -56px -14px; }
 
-.msgalert { border: 1px solid #eac572; background: #ffe9ad url(../images/notifications.png) no-repeat 0 -52px; }
-.msginfo { border: 1px solid #99c4ea; background: #d1e4f3 url(../images/notifications.png) no-repeat 0 -156px; }
-.msgsuccess { border: 1px solid #c1d779; background: #effeb9 url(../images/notifications.png) no-repeat 0 -104px; }
-.msgerror { border: 1px solid #e18b7c; background: #fad5cf url(../images/notifications.png) no-repeat 0 0; }
+.msgalert { border: 1px solid #eac572; background: #ffe9ad url(//static.cartoonai.com/codegen/index/images/notifications.png) no-repeat 0 -52px; }
+.msginfo { border: 1px solid #99c4ea; background: #d1e4f3 url(//static.cartoonai.com/codegen/index/images/notifications.png) no-repeat 0 -156px; }
+.msgsuccess { border: 1px solid #c1d779; background: #effeb9 url(//static.cartoonai.com/codegen/index/images/notifications.png) no-repeat 0 -104px; }
+.msgerror { border: 1px solid #e18b7c; background: #fad5cf url(//static.cartoonai.com/codegen/index/images/notifications.png) no-repeat 0 0; }
 .announcement { 
-	border: 1px solid #fbe187; background: #ffffdf url(../images/icons/blogperfume/Advertisment/advertisment-32.png) no-repeat 10px 10px; 
+	border: 1px solid #fbe187; background: #ffffdf url(//static.cartoonai.com/codegen/index/images/icons/64/advertisment-32.png) no-repeat 10px 10px;
 	color: #95673f; height: auto;
 }
 .announcement h3 { margin: 15px 10px 10px 55px; }
@@ -1294,14 +1294,14 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 	-moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px;
 }
 .contactlist li a { padding: 8px 5px; display: block; color: #666; }
-.contactlist li.online a { background: url(../images/online.png) no-repeat right 16px; }
+.contactlist li.online a { background: url(//static.cartoonai.com/codegen/index/images/online.png) no-repeat right 16px; }
 .contactlist li.new a { font-weight: bold; }
 .contactlist li a:hover { background-color: #fcfcfc; text-decoration: none; }
 .contactlist li a img { vertical-align: middle; display: inline-block; margin-right: 10px; }
 
 .chatsearch { padding: 5px; background: #eee; border: 1px solid #ddd; overflow: hidden; }
 .chatsearch input { 
-	float: left; border: 1px solid #ddd; padding: 7px 5px 7px 35px; width: 196px; background: #fff url(../images/search.png) no-repeat left center; 
+	float: left; border: 1px solid #ddd; padding: 7px 5px 7px 35px; width: 196px; background: #fff url(//static.cartoonai.com/codegen/index/images/search.png) no-repeat left center;
 	color: #ccc;
 }
 .chatsearch input:focus { color: #333; }
@@ -1312,7 +1312,7 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 .chatcontent .messagebox input { 
 	border: 1px solid #ccc; padding: 8px 5px 8px 30px; display: inline-block; margin-left: 10px;
 	-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px;
-	background: #fff url(../images/chat.png) no-repeat 8px 8px; width: 100%;
+	background: #fff url(//static.cartoonai.com/codegen/index/images/chat.png) no-repeat 8px 8px; width: 100%;
 }
 .chatcontent .messagebox input:focus { -moz-box-shadow: 0 0 5px #eee; -webkit-box-shadow: 0 0 5px #eee; box-shadow: 0 0 5px #eee; }
 .chatcontent .messagebox button { 
@@ -1350,7 +1350,7 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
 .buttonlist li { display: inline-block; margin-bottom: 15px; margin-right: 10px; }
 a.btn { 
 	display: inline-block; border: 1px solid #ccc; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; font-weight: bold;
-	background-repeat: no-repeat; background-image: url(../images/icons/sprites.png); background-color: #f7f7f7;
+	background-repeat: no-repeat; background-image: url(//static.cartoonai.com/codegen/index/images/icons/sprites.png); background-color: #f7f7f7;
 	-moz-box-shadow: inset 0 1px 0 #fff; -webkit-box-shadow: inset 0 1px 0 #fff; box-shadow: inset 0 1px 0 #fff; color: #666;
 }
 a.btn:hover { text-decoration: none; color: #333; border: 1px solid #bbb; }
@@ -1459,7 +1459,7 @@ a.btn_list2 { background-position: -47px -480px; }
 a.btn_table { background-position: -82px -480px; }
 
 .stdbtn { 
-	font-weight: bold; padding: 7px 10px; border: 1px solid #ccc; background: #eee url(../images/buttons.png) repeat-x top left; color: #333; 
+	font-weight: bold; padding: 7px 10px; border: 1px solid #ccc; background: #eee url(//static.cartoonai.com/codegen/index/images/buttons.png) repeat-x top left; color: #333;
 	-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; cursor: pointer; opacity: 0.8;
 }
 .stdbtn:hover { text-decoration: none; opacity: 1; }
@@ -1482,21 +1482,21 @@ a.btn_table { background-position: -82px -480px; }
 
 /***** CUSTOM COLOR *****/
 a.btn_orange { 
-	background-image: url(../images/icons/sprites.white.png); background-color: #FB9337; color: #fff; 
+	background-image: url(//static.cartoonai.com/codegen/index/images/icons/sprites.white.png); background-color: #FB9337; color: #fff;
 	-moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; border-color: #F0882C; opacity: 0.9;
 }
 a.btn_orange span { background-color: #FB9337; border-left: 0; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 a.btn_orange:hover { opacity: 1; color: #fff; border-color: #F0882C; }
 
 a.btn_blue { 
-	background-image: url(../images/icons/sprites.white.png); background-color: #0f91f5; color: #fff; 
+	background-image: url(//static.cartoonai.com/codegen/index/images/icons/sprites.white.png); background-color: #0f91f5; color: #fff;
 	-moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; border-color: #0976c9; opacity: 0.9;
 }
 a.btn_blue span { background-color: #0f91f5; border-left: 0; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 a.btn_blue:hover { opacity: 1; color: #fff; border-color: #0976c9; }
 
 a.btn_black { 
-	background-image: url(../images/icons/sprites.white.png); background-color: #333; color: #fff; 
+	background-image: url(//static.cartoonai.com/codegen/index/images/icons/sprites.white.png); background-color: #333; color: #fff;
 	-moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; border-color: #222; opacity: 0.9;
 }
 a.btn_black span { background-color: #333; border-left: 0; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
@@ -1514,7 +1514,7 @@ a.btn_yellow:hover { opacity: 1; color: #fff; border-color: #ebb205; }
 /*********************************/
 
 blockquote { 
-	font-size: 16px; font-family: Georgia, "Times New Roman", Times, serif; background: url(../images/quote.png) no-repeat 0 0; 
+	font-size: 16px; font-family: Georgia, "Times New Roman", Times, serif; background: url(//static.cartoonai.com/codegen/index/images/quote.png) no-repeat 0 0;
 	font-style: italic; line-height: 24px; padding-left: 30px; margin: 10px 0;
 }
 blockquote.alignleft { width: 300px; float: left; margin: 10px 10px 5px 0; }
@@ -1613,12 +1613,12 @@ blockquote.alignright { width: 300px; float: right; margin: 10px 0 5px 10px; tex
 .profile_summary li a span { color: #FB9337; }
 
 blockquote.bq2 { 
-	background: #fcfcfc url(../images/quote2.png) no-repeat 10px 10px; padding: 10px 35px; font-size: 14px; position: relative;
+	background: #fcfcfc url(//static.cartoonai.com/codegen/index/images/quote2.png) no-repeat 10px 10px; padding: 10px 35px; font-size: 14px; position: relative;
 	border: 1px solid #ddd; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; margin: 40px 0 20px 0;
 }
 
 .edit_status { 
-	display: inline-block; background: url(../images/icons/sprites.png) no-repeat -162px -269px; width: 16px; height: 16px; 
+	display: inline-block; background: url(//static.cartoonai.com/codegen/index/images/icons/sprites.png) no-repeat -162px -269px; width: 16px; height: 16px;
 	position: absolute; top: 5px; right: 5px; opacity: 0.8; display: none;
 }
 .edit_status:hover { opacity: 1; cursor: pointer; }
@@ -1690,30 +1690,30 @@ blockquote.bq2 {
 }
 .photosharing_menu li a.prev:hover, .photosharing_menu li a.next:hover { background-color: #eee; border-color: #bbb; }
 .photosharing_menu li a.prev { 
-	border-right: 0; background: #fff url(../images/arrow.png) no-repeat 10px 8px; -moz-border-radius: 2px 0 0 2px;
+	border-right: 0; background: #fff url(//static.cartoonai.com/codegen/index/images/arrow.png) no-repeat 10px 8px; -moz-border-radius: 2px 0 0 2px;
 	-webkit-border-radius: 2px 0 0 2px; border-radius: 2px 0 0 2px;
 }
 .photosharing_menu li a.prev_disabled { background-position: 10px -46px; cursor: default; }
 .photosharing_menu li a.prev_disabled:hover { border-color: #ccc; background-color: #fff; }
 .photosharing_menu li a.next { 
-	background: #fff url(../images/arrow.png) no-repeat -39px 8px; -moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0; 
+	background: #fff url(//static.cartoonai.com/codegen/index/images/arrow.png) no-repeat -39px 8px; -moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0;
 	border-radius: 0 2px 2px 0;
 }
 .photosharing_menu li a.next_disabled { background-position: -39px -46px; cursor: default; }
 .photosharing_menu li a.next_disabled:hover { border-color: #ccc; background-color: #fff; }
 
 .photosharing_menu li a.viewsizes { 
-	background-image: url(../images/preview.png); background-position: 7px 8px; background-repeat: no-repeat; padding-left: 30px; 
+	background-image: url(//static.cartoonai.com/codegen/index/images/preview.png); background-position: 7px 8px; background-repeat: no-repeat; padding-left: 30px;
 }
 .photosharing_menu li a.trash { 
-	padding: 15px; background-image: url(../images/trash.png); background-position: 7px 7px; background-repeat: no-repeat;
+	padding: 15px; background-image: url(//static.cartoonai.com/codegen/index/images/trash.png); background-position: 7px 7px; background-repeat: no-repeat;
 }
 
 .dropdown { position: relative; }
 .dropdown ul { display: none; }
 .dropdown .dropdown_label { padding-right: 30px; }
 .dropdown span.arrow { 
-	position: absolute; top: 12px; right: 10px; background: url(../images/default/menuarrow.png) no-repeat 0 0; width: 11px; height: 5px;
+	position: absolute; top: 12px; right: 10px; background: url(//static.cartoonai.com/codegen/index/images/default/menuarrow.png) no-repeat 0 0; width: 11px; height: 5px;
 	display: block; 
 }
 .dropdown ul { 
@@ -1745,8 +1745,8 @@ blockquote.bq2 {
 .ps_sidebar .ps_authorinfo a:hover { text-decoration: underline; }
 .ps_sidebar .viewinfo { margin: 20px 0; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
 .ps_sidebar .viewinfo span { padding-left: 22px; display: inline-block; }
-.ps_sidebar .viewinfo .numviews { background: url(../images/icons/bar.png) no-repeat left center; margin-right: 20px; }
-.ps_sidebar .viewinfo .numcomments { background: url(../images/icons/comment.png) no-repeat left center; }
+.ps_sidebar .viewinfo .numviews { background: url(//static.cartoonai.com/codegen/index/images/icons/bar.png) no-repeat left center; margin-right: 20px; }
+.ps_sidebar .viewinfo .numcomments { background: url(//static.cartoonai.com/codegen/index/images/icons/comment.png) no-repeat left center; }
 
 .morephotolist { list-style: none; }
 .morephotolist li { display: inline-block; float: left; margin: 0 10px 10px 0; }
@@ -1785,13 +1785,13 @@ blockquote.bq2 {
 }
 .prodhead_menu li a.prev:hover, .prodhead_menu li a.next:hover { background-color: #eee; border-color: #bbb; }
 .prodhead_menu li a.prev { 
-	border-right: 0; background: #fff url(../images/arrow.png) no-repeat 10px 8px; -moz-border-radius: 2px 0 0 2px;
+	border-right: 0; background: #fff url(//static.cartoonai.com/codegen/index/images/arrow.png) no-repeat 10px 8px; -moz-border-radius: 2px 0 0 2px;
 	-webkit-border-radius: 2px 0 0 2px; border-radius: 2px 0 0 2px;
 }
 .prodhead_menu li a.prev_disabled { background-position: 10px -46px; cursor: default; }
 .prodhead_menu li a.prev_disabled:hover { border-color: #ccc; background-color: #fff; }
 .prodhead_menu li a.next { 
-	background: #fff url(../images/arrow.png) no-repeat -39px 8px; -moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0; 
+	background: #fff url(//static.cartoonai.com/codegen/index/images/arrow.png) no-repeat -39px 8px; -moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0;
 	border-radius: 0 2px 2px 0;
 }
 .prodhead_menu li a.next_disabled { background-position: -39px -46px; cursor: default; }
@@ -1806,7 +1806,7 @@ blockquote.bq2 {
 .prodlist li .thumb { padding: 5px; border: 1px solid #ddd; }
 .prodlist li .thumb img { width: 225px; }
 .prodlist li .content { position: absolute; top: 5px; left: 5px; width: 225px; height: 163px; overflow: hidden; }
-.prodlist li .contentinner { background: url(../images/bluetrans.png); padding: 5px 7px; margin-top: 132px; height: 163px; }
+.prodlist li .contentinner { background: url(//static.cartoonai.com/codegen/index/images/bluetrans.png); padding: 5px 7px; margin-top: 132px; height: 163px; }
 .prodlist li .title { color: #fff; font-family: 'RobotoCondensed',Arial,Helvetica,sans-serif; font-size: 13px; }
 .prodlist li .title:hover { color: #FB9337; }
 .prodlist li .price { color: #fff; font-weight: bold; float: right; }
@@ -1826,11 +1826,11 @@ blockquote.bq2 {
 .mailinbox tbody tr.unread a.title { font-weight: bold; }
 .mailinbox td.star, .mailinbox td.attachment { text-align: center; }
 .msgstar { 
-	display: inline-block; width: 16px; height: 16px; background: url(../images/icons/unstar.png) no-repeat 0 0; 
+	display: inline-block; width: 16px; height: 16px; background: url(//static.cartoonai.com/codegen/index/images/icons/unstar.png) no-repeat 0 0;
 	cursor: pointer; opacity: 0.5; 
 }
 .msgstar:hover { opacity: 1; }
-.starred { background-image: url(../images/icons/star.png); opacity: 1; }
+.starred { background-image: url(//static.cartoonai.com/codegen/index/images/icons/star.png); opacity: 1; }
 
 .msghead { padding-bottom: 20px; }
  
@@ -1847,23 +1847,23 @@ blockquote.bq2 {
 }
 .msghead_menu li a.prev:hover, .msghead_menu li a.next:hover { background-color: #eee; border-color: #bbb; }
 .msghead_menu li a.prev { 
-	border-right: 0; background: #fff url(../images/arrow.png) no-repeat 10px 8px; -moz-border-radius: 2px 0 0 2px;
+	border-right: 0; background: #fff url(//static.cartoonai.com/codegen/index/images/arrow.png) no-repeat 10px 8px; -moz-border-radius: 2px 0 0 2px;
 	-webkit-border-radius: 2px 0 0 2px; border-radius: 2px 0 0 2px;
 }
 .msghead_menu li a.prev_disabled { background-position: 10px -46px; cursor: default; }
 .msghead_menu li a.prev_disabled:hover { border-color: #ccc; background-color: #fff; }
 .msghead_menu li a.next { 
-	background: #fff url(../images/arrow.png) no-repeat -39px 8px; -moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0; 
+	background: #fff url(//static.cartoonai.com/codegen/index/images/arrow.png) no-repeat -39px 8px; -moz-border-radius: 0 2px 2px 0; -webkit-border-radius: 0 2px 2px 0;
 	border-radius: 0 2px 2px 0;
 }
 .msghead_menu li a.next_disabled { background-position: -39px -46px; cursor: default; }
 .msghead_menu li a.next_disabled:hover { border-color: #ccc; background-color: #fff; }
 
 .msghead_menu li a.reportspam { 
-	background-image: url(../images/icons/info.png); background-position: 7px 8px; background-repeat: no-repeat; padding-left: 30px; 
+	background-image: url(//static.cartoonai.com/codegen/index/images/icons/info.png); background-position: 7px 8px; background-repeat: no-repeat; padding-left: 30px;
 }
 .msghead_menu li a.msgtrash { 
-	padding: 15px; background-image: url(../images/trash.png); background-position: 7px 7px; background-repeat: no-repeat;
+	padding: 15px; background-image: url(//static.cartoonai.com/codegen/index/images/trash.png); background-position: 7px 7px; background-repeat: no-repeat;
 }
 .msghead_menu li.right { float: right; }
 .msghead_menu .pageinfo { padding-right: 20px; display: block; margin-top: 5px; }
@@ -1882,7 +1882,7 @@ blockquote.bq2 {
 .errorwrapper h1 { font-size: 32px; margin-bottom: 20px; }
 .errorwrapper h3 { font-size: 18px; }
 .errorwrapper ul { list-style: none; line-height: 28px; }
-.errorwrapper ul li { text-indent: 30px; background: url(../images/list.png) no-repeat 0 4px; }
+.errorwrapper ul li { text-indent: 30px; background: url(//static.cartoonai.com/codegen/index/images/list.png) no-repeat 0 4px; }
 
 
 
@@ -1946,9 +1946,9 @@ blockquote.bq2 {
 	display: inline-block; width: 16px; height: 16px; cursor: pointer; margin-left: 5px; vertical-align: middle; opacity: 0.5;
 }
 .imagelist li span a.edit:hover, .imagelist li span a.view:hover, .imagelist li span a.delete:hover { opacity: 1; }
-.imagelist li span a.edit { background: url(../images/icons/editor.png); }
-.imagelist li span a.view { background: url(../images/icons/glass.png); }
-.imagelist li span a.delete { background: url(../images/icons/trash.png); }
+.imagelist li span a.edit { background: url(//static.cartoonai.com/codegen/index/images/icons/editor.png); }
+.imagelist li span a.view { background: url(//static.cartoonai.com/codegen/index/images/icons/glass.png); }
+.imagelist li span a.delete { background: url(//static.cartoonai.com/codegen/index/images/icons/trash.png); }
 
 .photoEdit { width: 480px; }
 .photoEdit h3 { font-size: 18px; }
@@ -1964,18 +1964,18 @@ blockquote.bq2 {
 .sortlist > li { display: block; margin-bottom: 7px; }
 .sortlist > li div.label { padding: 10px; border: 1px solid #ccc; -moz-border-radius: 2px; -webkit-border-radius: 2px; 
 	border-radius: 2px; -moz-box-shadow: 0 1px 1px rgba(0,0,0,.05); -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05); 
-	box-shadow: 0 1px 1px rgba(0,0,0,.05); background: #eee url(../images/titlebg.png) repeat-x top left; position: relative;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05); background: #eee url(//static.cartoonai.com/codegen/index/images/titlebg.png) repeat-x top left; position: relative;
 }
 .sortlist > li span.moveicon { 
-	display: inline-block; width: 16px; height: 16px; background: url(../images/icons/widgets.png) no-repeat 0 center; vertical-align: middle;
+	display: inline-block; width: 16px; height: 16px; background: url(//static.cartoonai.com/codegen/index/images/icons/widgets.png) no-repeat 0 center; vertical-align: middle;
 	margin-right: 10px; opacity: 0.3;
 }
 .sortlist > li span.moveicon:hover { opacity: 0.5; cursor: move; }
 .sortlist > li span.arrowdrop { 
-	position: absolute; display: block; width: 20px; height: 30px; background: url(../images/sort_desc.png) no-repeat center center;
+	position: absolute; display: block; width: 20px; height: 30px; background: url(//static.cartoonai.com/codegen/index/images/sort_desc.png) no-repeat center center;
 	top: 6px; right: 5px; opacity: 0.5; border-left: 1px solid #ccc; 
 }
-.sortlist > li span.arrowup { background-image: url(../images/sort_asc.png); }
+.sortlist > li span.arrowup { background-image: url(//static.cartoonai.com/codegen/index/images/sort_asc.png); }
 .sortlist > li span.arrowdrop:hover { opacity: 0.8; cursor: pointer; }
 .sortlist > li div.details { 
 	border: 1px solid #ccc; border-top: 0; padding: 10px; -moz-border-radius: 0 0 2px 2px; -webkit-border-radius: 0 0 2px 2px; 
@@ -2094,8 +2094,8 @@ blockquote.bq2 {
 	.menucoll ul li span.arrow { display: none; }
 	.menucoll > ul > li { margin-bottom: 1px; }
 	.menucoll > ul > li > a { overflow: hidden; width: 0; height: 36px; padding: 0 0 0 35px; }
-	.menucoll > ul > li.hover > a { background-color: #32415A; background-image: url(../images/default/icons_sprite2.png); }
-	.menucoll > ul > li.current > a { background-image: url(../images/default/icons_sprite.png); } 
+	.menucoll > ul > li.hover > a { background-color: #32415A; background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite2.png); }
+	.menucoll > ul > li.current > a { background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite.png); } 
 	.menucoll ul ul { 
 		position: absolute; z-index: 200; top: 0; left: 24px; padding: 0; width: 200px; background: none; border: 1px solid #ccc; 
 		-moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); box-shadow: 2px 1px 3px rgba(0,0,0,0.1);
@@ -2113,8 +2113,8 @@ blockquote.bq2 {
 	.menucoll2 ul li { height: 36px; position: relative; }
 	.menucoll2 ul li span.arrow { display: none; }
 	.menucoll2 > ul > li > a { overflow: hidden; width: 0; height: 36px; padding: 0 0 0 35px; }
-	.menucoll2 > ul > li.hover > a { background-color: #f7f7f7; background-image: url(../images/default/icons_sprite2.png); }
-	.menucoll2 > ul > li.current > a { background-image: url(../images/default/icons_sprite.png); } 
+	.menucoll2 > ul > li.hover > a { background-color: #f7f7f7; background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite2.png); }
+	.menucoll2 > ul > li.current > a { background-image: url(//static.cartoonai.com/codegen/index/images/default/icons_sprite.png); } 
 	.menucoll2 ul ul { 
 		position: absolute; z-index: 100; top: 0; left: 35px; padding: 0; width: 200px; background: none; border: 1px solid #ccc; 
 		-moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); box-shadow: 2px 1px 3px rgba(0,0,0,0.1);
@@ -2131,7 +2131,7 @@ blockquote.bq2 {
 	
 	.togglemenu { 
 		border-left: 1px solid #ddd; border-right: 1px solid #ddd; display: block; height: 21px; cursor: pointer;
-		background: url(../images/menucollapsed.png) no-repeat center 0; margin: 10px;
+		background: url(//static.cartoonai.com/codegen/index/images/menucollapsed.png) no-repeat center 0; margin: 10px;
 	}
 	.togglemenu_collapsed { background-position: center -21px; margin: 10px 5px; border-width: 0; }
 	
@@ -2245,18 +2245,18 @@ blockquote.bq2 {
 		
 	.search .searchicon {
 		position: absolute; right: 195px; display: inline-block; width: 36px; height: 35px; 
-		background: #2e3e58 url(../images/icons/sprites.white.png) no-repeat -10px -10px; border: 1px solid #233147; 
+		background: #2e3e58 url(//static.cartoonai.com/codegen/index/images/icons/sprites.white.png) no-repeat -10px -10px; border: 1px solid #233147;
 		-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; cursor: pointer;
 		-moz-box-shadow: 0 1px 0 rgba(250,250,250,0.1); -webkit-box-shadow: 0 1px 0 rgba(250,250,250,0.1); 
 		box-shadow: 0 1px 0 rgba(250,250,250,0.1);
 	}
 	.search .searchinner { 
-		padding: 10px; background: #485B79 url(../images/default/topheaderbg.png); overflow: hidden; margin-top: 10px; width: 100%;
+		padding: 10px; background: #485B79 url(//static.cartoonai.com/codegen/index/images/default/topheaderbg.png); overflow: hidden; margin-top: 10px; width: 100%;
 		position: absolute; left: 0; top: -10px; z-index: 100; display: none;
 	}
 	.search .searchinner input { width: 80%; }
 	.search .searchcancel { 
-		float: left; width: 30px; height: 36px; background: url(../images/default/searchcancel.png) no-repeat center center; cursor: pointer; 
+		float: left; width: 30px; height: 36px; background: url(//static.cartoonai.com/codegen/index/images/default/searchcancel.png) no-repeat center center; cursor: pointer; 
 	}
 	
 	.shortcuts li { width: 100px; }
@@ -2425,7 +2425,7 @@ blockquote.bq2 {
 	.search .searchinner input { width: 75%; }
 	
 	/* LOGIN */
-	.loginpage { background: url(../images/patternbg.png) repeat scroll 0 0 #32415A; }
+	.loginpage { background: url(//static.cartoonai.com/codegen/index/images/patternbg.png) repeat scroll 0 0 #32415A; }
 	.loginbox { width: auto; margin: 10px; background: none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 	.loginboxinner { background: none; }
 	

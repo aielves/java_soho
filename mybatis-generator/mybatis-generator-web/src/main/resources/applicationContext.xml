@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-
-       Copyright ${license.git.copyrightYears} the original author or authors.
-
-       Licensed under the Apache License, Version 2.0 (the "License");
-       you may not use this file except in compliance with the License.
-       You may obtain a copy of the License at
-
-          http://www.apache.org/licenses/LICENSE-2.0
-
-       Unless required by applicable law or agreed to in writing, software
-       distributed under the License is distributed on an "AS IS" BASIS,
-       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-       See the License for the specific language governing permissions and
-       limitations under the License.
-
--->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
@@ -32,7 +15,7 @@
     <context:annotation-config/>
 
     <!-- 默认扫描的包路径 -->
-    <context:component-scan base-package="com.soho"/>
+    <context:component-scan base-package="com.soho,com.soho.codegen"/>
 
     <!-- 开启父类代理模式 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
@@ -43,23 +26,7 @@
     <!-- Spring工具 -->
     <bean class="com.soho.shiro.utils.SpringUtils"/>
 
-    <!-- Zookeeper读取配置中心数据并设置指定解密字段 -->
-    <bean class="com.soho.zookeeper.core.ZKPropertyConfigurer">
-        <property name="locations">
-            <list>
-                <value>file:/home/config/zookeeper.properties</value>
-                <value>file:C:/IdeaProjects/soho/mybatis-generator/zookeeper.properties</value>
-            </list>
-        </property>
-        <property name="decipher">
-            <bean class="com.soho.zookeeper.security.imp.AESDcipher"/>
-        </property>
-        <property name="decipherKeys">
-            <array>
-                <value>db.passwd</value>
-            </array>
-        </property>
-    </bean>
+    <context:property-placeholder location="classpath*:jdbc.properties"/>
 
     <!-- 数据源配置 -->
     <bean id="springDataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -69,7 +36,7 @@
         <!-- 基本属性 url、user、password -->
         <property name="url" value="${db.url}"/>
         <property name="username" value="${db.user}"/>
-        <property name="password" value="${db.passwd}"/>
+        <property name="password" value="${db.password}"/>
         <!-- 配置初始化大小、最小、最大 -->
         <property name="initialSize" value="5"/>
         <property name="minIdle" value="5"/>
@@ -99,7 +66,8 @@
         <property name="mapperLocations">
             <list>
                 <value>classpath*:/mybatis_sqlresolver.xml</value> <!-- SQL解析器(SQLCnd方式查询数据) -->
-                <value>classpath*:/com/soho/**/*.xml</value>
+                <value>classpath*:/com/soho/codegen/**/mapper/*.xml</value>
+                <!--<value>classpath*:/META-INF/mybatis/*.xml</value>-->
             </list>
         </property>
         <property name="plugins">
@@ -131,37 +99,16 @@
     <!-- SQL监控插件 -->
     <bean id="sqlMonitorInterceptor" class="com.soho.mybatis.interceptor.SqlMonitorInterceptor">
         <property name="dbSelector" ref="dbSelector"/>
-        <property name="handler">
-            <bean class="com.soho.mybatis.interceptor.handler.imp.SimpleSqlMonitorHandler"/>
-        </property>
-    </bean>
-
-    <!-- 业务监控拦截器 -->
-    <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
-        <property name="advice">
-            <bean class="com.soho.mybatis.interceptor.SpringBizInterceptor">
-                <property name="handler">
-                    <bean
-                            class="com.soho.mybatis.interceptor.handler.imp.SimpleBizMonitorHandler"></bean>
-                </property>
-            </bean>
-        </property>
-        <property name="patterns">
-            <list>
-                <value>
-                    com.soho.test.service.*.
-                </value>
-            </list>
-        </property>
+        <!--<property name="handler">-->
+        <!--<bean class="com.soho.mybatis.interceptor.handler.imp.SimpleSqlMonitorHandler"/>-->
+        <!--</property>-->
     </bean>
 
     <bean class="com.soho.codegen.domain.DeftConfig">
-        <property name="fileDirPath" value="${deft.fileDirPath}"/>
-        <property name="configXmlPath" value="${deft.configXmlPath}"/>
+        <property name="fileDirPath" value="${conf.fileDirPath}"/>
+        <property name="configXmlPath" value="${conf.configXmlPath}"/>
     </bean>
 
-    <import resource="META-INF/dubbo-service.xml"/>
     <import resource="META-INF/shiro-service.xml"/>
-    <import resource="META-INF/memcached-service.xml"/>
 
 </beans>
