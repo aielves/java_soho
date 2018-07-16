@@ -54,6 +54,12 @@
             <groupId>com.soho</groupId>
             <artifactId>soho-spring</artifactId>
             <version>${soho.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

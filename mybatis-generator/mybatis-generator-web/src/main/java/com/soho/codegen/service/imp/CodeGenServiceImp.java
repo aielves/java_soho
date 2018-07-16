@@ -255,11 +255,10 @@ public class CodeGenServiceImp implements CodeGenService {
     public Map<String, Object> signup(OauthUser user) throws BizErrorEx {
         try {
             String username = user.getUsername();
-            if (StringUtils.isEmpty(username) || !username.matches("[a-zA-Z]{1}[a-zA-Z0-9_]{6,15}")) {
-                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "由字母数字下划线组成且开头必须是字母，6-15位");
+            if (StringUtils.isEmpty(username) || !username.matches("^1[3|4|5|6|7|8|9][0-9]{9}")) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入合法的手机号码");
             } else {
-                int count = 0;
-                count = oauthUserDAO.countByCnd(new SQLCnd().eq("username", username));
+                int count = oauthUserDAO.countByCnd(new SQLCnd().eq("username", username));
                 if (count > 0) {
                     throw new BizErrorEx(Ret.UNKNOWN_STATUS, "帐号已存在");
                 }
