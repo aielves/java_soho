@@ -8,6 +8,7 @@ import com.aliyuncs.jaq.model.v20161123.AfsCheckRequest;
 import com.aliyuncs.jaq.model.v20161123.AfsCheckResponse;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.soho.codegen.domain.DeftConfig;
 import com.soho.codegen.domain.OauthUser;
 import com.soho.codegen.service.CodeGenService;
 import com.soho.codegen.shiro.aconst.BizErrorCode;
@@ -34,6 +35,9 @@ import java.util.HashMap;
 public class UserLoginController {
 
     @Autowired
+    private DeftConfig config;
+
+    @Autowired
     private CodeGenService codeGenService;
 
     @ResponseBody
@@ -47,7 +51,7 @@ public class UserLoginController {
             String sig = request.getParameter("sig");
             String token = request.getParameter("token");
             String scene = request.getParameter("scene");
-            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI6Lq7SoAzfMwE", "rXMwZH2RqgIRRLl9LipsoT432jAJYU");
+            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", GGKUtils.appId, GGKUtils.appKey);
             IAcsClient client = new DefaultAcsClient(profile);
             DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Jaq", "jaq.aliyuncs.com");
             AfsCheckRequest afsCheckRequest = new AfsCheckRequest();
@@ -77,7 +81,7 @@ public class UserLoginController {
     @RequestMapping(value = "/logout")
     public Object logout() {
         SecurityUtils.getSubject().logout();
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:" + config.getDomain());
     }
 
     @ResponseBody
@@ -118,10 +122,10 @@ public class UserLoginController {
             AuthenticateSigResponse response = GGKUtils.iAcsClient.getAcsResponse(request);
             if (response.getCode() == 100) { // 验签通过
                 JAQUtils.toStateBySuccess();
-                httpResponse.sendRedirect("/static/signup.html");
+                httpResponse.sendRedirect(config.getDomain() + "/static/signup.html");
                 return;
             }
-            httpResponse.sendRedirect("/static/ggk.html");
+            httpResponse.sendRedirect(config.getDomain() + "/static/ggk.html");
         } catch (Exception e) {
             e.printStackTrace();
         }
