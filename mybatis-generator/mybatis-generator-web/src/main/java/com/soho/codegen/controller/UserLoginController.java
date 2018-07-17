@@ -2,6 +2,8 @@ package com.soho.codegen.controller;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
+import com.aliyuncs.afs.model.v20180112.AuthenticateSigRequest;
+import com.aliyuncs.afs.model.v20180112.AuthenticateSigResponse;
 import com.aliyuncs.jaq.model.v20161123.AfsCheckRequest;
 import com.aliyuncs.jaq.model.v20161123.AfsCheckResponse;
 import com.aliyuncs.profile.DefaultProfile;
@@ -9,7 +11,9 @@ import com.aliyuncs.profile.IClientProfile;
 import com.soho.codegen.domain.OauthUser;
 import com.soho.codegen.service.CodeGenService;
 import com.soho.codegen.shiro.aconst.BizErrorCode;
+import com.soho.codegen.utils.GGKUtils;
 import com.soho.ex.BizErrorEx;
+import com.soho.shiro.utils.HttpUtils;
 import com.soho.utils.JAQUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -17,10 +21,12 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 @Controller
@@ -62,6 +68,12 @@ public class UserLoginController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/sendsms", method = RequestMethod.POST)
+    public Object sendsms(String mobile) throws BizErrorEx {
+        return codeGenService.sendsms(mobile);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/logout")
     public Object logout() {
         SecurityUtils.getSubject().logout();
@@ -85,9 +97,40 @@ public class UserLoginController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/hasValid")
+    public Object hashValid() throws BizErrorEx {
+        if (!JAQUtils.toStateByValid()) {
+            throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "请先进行安全认证");
+        }
+        return new HashMap<>();
+    }
+
+    @RequestMapping("/validGGK")
+    public void validGGK(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String sessionid, String sig, String token, String scene) {
+        AuthenticateSigRequest request = new AuthenticateSigRequest();
+        request.setSessionId(sessionid);// 必填参数，从前端获取，不可更改，android和ios只变更这个参数即可，下面参数不变保留xxx
+        request.setSig(sig);// 必填参数，从前端获取，不可更改
+        request.setToken(token);// 必填参数，从前端获取，不可更改
+        request.setScene(scene);// 必填参数，从前端获取，不可更改
+        request.setAppKey("FFFF000000000179AE04");// 必填参数，后端填写
+        request.setRemoteIp(HttpUtils.getClientIP(httpRequest));// 必填参数，后端填写
+        try {
+            AuthenticateSigResponse response = GGKUtils.iAcsClient.getAcsResponse(request);
+            if (response.getCode() == 100) { // 验签通过
+                JAQUtils.toStateBySuccess();
+                httpResponse.sendRedirect("/static/signup.html");
+                return;
+            }
+            httpResponse.sendRedirect("/static/ggk.html");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/signup")
-    public Object signup(OauthUser user) throws BizErrorEx {
-        return codeGenService.signup(user);
+    public Object signup(OauthUser user, String smscode) throws BizErrorEx {
+        return codeGenService.signup(user, smscode);
     }
 
 }

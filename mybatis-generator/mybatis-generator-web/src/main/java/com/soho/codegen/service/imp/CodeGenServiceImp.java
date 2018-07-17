@@ -1,18 +1,18 @@
 package com.soho.codegen.service.imp;
 
+import com.soho.codegen.chuanglan.SendSmsUtils;
 import com.soho.codegen.dao.DbMessageDAO;
 import com.soho.codegen.dao.OauthUserDAO;
 import com.soho.codegen.dao.ZipMessageDAO;
-import com.soho.codegen.domain.DbMessage;
-import com.soho.codegen.domain.DeftConfig;
-import com.soho.codegen.domain.OauthUser;
-import com.soho.codegen.domain.ZipMessage;
+import com.soho.codegen.domain.*;
 import com.soho.codegen.service.CodeGenService;
 import com.soho.codegen.shiro.aconst.BizErrorCode;
 import com.soho.ex.BizErrorEx;
 import com.soho.mybatis.exception.MybatisDAOEx;
 import com.soho.mybatis.sqlcode.aconst.SortBy;
 import com.soho.mybatis.sqlcode.condition.imp.SQLCnd;
+import com.soho.shiro.utils.SessionUtils;
+import com.soho.utils.JAQUtils;
 import com.soho.utils.ZipUtils;
 import com.soho.web.domain.Ret;
 import com.soho.zookeeper.security.imp.AESDcipher;
@@ -250,37 +250,76 @@ public class CodeGenServiceImp implements CodeGenService {
         }
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public Map<String, Object> signup(OauthUser user) throws BizErrorEx {
+    public Map<String, Object> signup(OauthUser user, String smscode) throws BizErrorEx {
         try {
+            if (!JAQUtils.toStateByValid()) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请先进行安全认证");
+            }
             String username = user.getUsername();
-            if (StringUtils.isEmpty(username) || !username.matches("^1[3|4|5|6|7|8|9][0-9]{9}")) {
+            String password = user.getPassword();
+            String nickname = user.getNickname();
+            String company = user.getCompany();
+            if (!SendSmsUtils.isMobile(username)) {
                 throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入合法的手机号码");
             } else {
                 int count = oauthUserDAO.countByCnd(new SQLCnd().eq("username", username));
                 if (count > 0) {
-                    throw new BizErrorEx(Ret.UNKNOWN_STATUS, "帐号已存在");
+                    throw new BizErrorEx(Ret.UNKNOWN_STATUS, "您输入的手机号码已注册");
                 }
             }
-            String passwd = user.getPassword();
-            if (StringUtils.isEmpty(passwd) || passwd.length() < 6 || passwd.length() > 15) {
-                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入6-15位密码");
+            if (StringUtils.isEmpty(smscode)) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的短信验证码");
             }
-            String nickname = user.getNickname();
+            if (StringUtils.isEmpty(password) || password.length() < 6 || password.length() > 15) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的登录密码(6-15位)");
+            }
             if (StringUtils.isEmpty(nickname)) {
-                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "昵称不能为空");
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的昵称");
             }
-            user.setPassword(AESDcipher.encrypt(passwd));
-            user.setCtime(System.currentTimeMillis());
-            user.setUid(UUID.randomUUID().toString().replaceAll("-", "").toLowerCase());
-            oauthUserDAO.insert(user);
+            if (StringUtils.isEmpty(company)) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的所在的公司名称");
+            }
+            DxSms dx = SendSmsUtils.validSmsCode("86", username, smscode);
+            OauthUser save = new OauthUser();
+            save.setUsername(username);
+            save.setPassword(AESDcipher.encrypt(password));
+            save.setNickname(nickname);
+            save.setCompany(company);
+            save.setCtime(System.currentTimeMillis());
+            save.setUid(UUID.randomUUID().toString().replaceAll("-", "").toLowerCase());
+            oauthUserDAO.insert(save);
+            SendSmsUtils.delSmsCode(dx);
+            JAQUtils.toStateByRemove();
             Map<String, Object> map = new HashMap<>();
             map.put("result", "注册成功");
             return map;
         } catch (MybatisDAOEx ex) {
             throw new BizErrorEx(ex.getErrorCode(), ex.getMessage());
         }
+    }
+
+    @Override
+    public Map<String, Object> sendsms(String mobile) throws BizErrorEx {
+        if (!JAQUtils.toStateByValid()) {
+            throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请先进行安全认证");
+        }
+        SendSmsUtils.toSend(1, "86", mobile);
+        Session session = SessionUtils.getSession();
+        Object object = session.getAttribute("sms_count");
+        int sms_count = 1;
+        if (object != null) {
+            sms_count = Integer.parseInt(object.toString()) + 1;
+        }
+        if (sms_count > 3) {
+            SessionUtils.getSubject().logout();
+            throw new BizErrorEx(BizErrorCode.BIZ_SMS_ERROR, "由于您请求过于频繁,请重新进行认证");
+        }
+        session.setAttribute("sms_count", sms_count);
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", "验证码已下发");
+        return map;
     }
 
     @Override

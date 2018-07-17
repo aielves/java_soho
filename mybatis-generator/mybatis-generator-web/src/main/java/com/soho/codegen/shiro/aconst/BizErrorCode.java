@@ -21,5 +21,6 @@ package com.soho.codegen.shiro.aconst;
 public interface BizErrorCode {
 
     public static String BIZ_ERROR = "000102"; // 业务异常
+    public static String BIZ_SMS_ERROR = "000108"; // 获取短信过于频繁
 
 }

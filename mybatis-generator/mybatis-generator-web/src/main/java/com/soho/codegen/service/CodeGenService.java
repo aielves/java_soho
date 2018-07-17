@@ -22,7 +22,9 @@ public interface CodeGenService {
 
     public Map<String, Object> delFile(String cbx_ids) throws BizErrorEx;
 
-    public Map<String, Object> signup(OauthUser user) throws BizErrorEx;
+    public Map<String, Object> signup(OauthUser user, String smscode) throws BizErrorEx;
+
+    public Map<String, Object> sendsms(String mobile) throws BizErrorEx;
 
     public ZipMessage downFile(String fileId) throws BizErrorEx;
 

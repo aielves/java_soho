@@ -35,6 +35,10 @@ function initMsg() {
 }
 
 function getDBTable() {
+    if (!islogin) {
+        jAlert("登录后方可使用该功能!", "友情提示");
+        return;
+    }
     var dbType = jQuery("#dbType").val();
     var jdbcUrl = jQuery("#jdbcUrl").val();
     var username = jQuery("#username").val();
@@ -194,12 +198,12 @@ function doSubmit() {
 }
 
 function getFiles() {
-    jQuery("#tribune").hide();
-    jQuery("#basicform").hide();
     if (!islogin) {
-        alert("请先登录");
+        jAlert("您尚未登录!", "友情提示");
         return;
     }
+    jQuery("#tribune").hide();
+    jQuery("#basicform").hide();
     jQuery.post("/codegen/getZipFile", "", function (result) {
         // alert(JSON.stringify(result));
         if (result.code == "000000") {
@@ -231,6 +235,10 @@ function getFiles() {
 }
 
 function delFile(id) {
+    if (!islogin) {
+        jAlert("您尚未登录!", "友情提示");
+        return;
+    }
     jConfirm('删除文件后无法恢复,确定删除?', '友情提示', function (r) {
         if (r == true) {
             jQuery.post("/codegen/delFile", "cbx_ids=" + id, function (result) {
@@ -246,6 +254,10 @@ function delFile(id) {
 }
 
 function delAllFile() {
+    if (!islogin) {
+        jAlert("您尚未登录!", "友情提示");
+        return;
+    }
     var cbx_ids = "";
     var index = 0;
     jQuery.each(jQuery("input:checkbox[name='fileId']:checked"), function (i, v) {
@@ -306,19 +318,24 @@ function submitSignUpForm() {
     var password = jQuery("#password").val();
     var nickname = jQuery("#nickname").val();
     var company = jQuery("#company").val();
+    var smscode = jQuery("#smscode").val();
     if (username == null || "" == username) {
-        jAlert("请输入您的帐号", "友情提示");
+        jAlert("请输入您的手机号码", "友情提示");
         return false;
     }
     if (password == null || "" == password) {
-        jAlert("请输入您的密码", "友情提示");
+        jAlert("请输入您的登录密码(6-15位)", "友情提示");
         return false;
     }
     if (nickname == null || "" == nickname) {
         jAlert("请输入您的昵称", "友情提示");
         return false;
     }
-    jQuery.post("/user/signup", "username=" + username + "&password=" + password + "&nickname=" + nickname + "&company=" + company, function (result) {
+    if (smscode == null || "" == smscode) {
+        jAlert("请输入您的短信验证码", "友情提示");
+        return false;
+    }
+    jQuery.post("/user/signup", "username=" + username + "&password=" + password + "&nickname=" + nickname + "&company=" + company + "&smscode=" + smscode, function (result) {
         if (result.code == "000000") {
             jConfirm('注册已成功,是否前往登录?', '友情提示', function (r) {
                 if (r == true) {

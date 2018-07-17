@@ -6,9 +6,7 @@ import com.soho.codegen.domain.ZipMessage;
 import com.soho.codegen.service.CodeGenService;
 import com.soho.codegen.shiro.aconst.BizErrorCode;
 import com.soho.ex.BizErrorEx;
-import com.soho.web.domain.Ret;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,53 +27,51 @@ public class CodeGenController {
     @ResponseBody
     @RequestMapping(value = "/generate")
     public Object generate(DbMessage dbMessage) throws BizErrorEx {
+        validUserSession();
         return codeGenService.generate(dbMessage);
     }
 
     @ResponseBody
     @RequestMapping(value = "/uploadFile")
     public Object uploadFile(Integer uploadtype, @RequestParam("file") MultipartFile file) throws BizErrorEx {
+        validUserSession();
         return codeGenService.uploadFile(uploadtype, file);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getUser")
     public Object generate() throws BizErrorEx {
-        if (SecurityUtils.getSubject().isAuthenticated()) {
-            Session session = SecurityUtils.getSubject().getSession();
-            if (session != null) {
-                Object obj = session.getAttribute("session_user");
-                if (obj != null) {
-                    OauthUser user = (OauthUser) obj;
-                    user.setPassword(null);
-                    return user;
-                }
-            }
-        }
-        throw new BizErrorEx(Ret.UNKNOWN_STATUS, "尚未登录");
+        validUserSession();
+        OauthUser user = (OauthUser) SecurityUtils.getSubject().getSession().getAttribute("session_user");
+        user.setPassword(null);
+        return user;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getDBTables")
     public Object getDBTables(DbMessage dbMessage) throws BizErrorEx {
+        validUserSession();
         return codeGenService.getDBTables(dbMessage);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getZipFile")
     public Object getZipFile() throws BizErrorEx {
+        validUserSession();
         return codeGenService.getZipFiles();
     }
 
     @ResponseBody
     @RequestMapping(value = "/delFile")
     public Object delFile(String cbx_ids) throws BizErrorEx {
+        validUserSession();
         return codeGenService.delFile(cbx_ids);
     }
 
     @ResponseBody
     @RequestMapping(value = "/downFile")
     public Object downFile(HttpServletResponse response, String fileId) throws BizErrorEx {
+        validUserSession();
         ZipMessage zipMessage = codeGenService.downFile(fileId);
         File file = new File(zipMessage.getFilePath());
         if (file.exists()) {
@@ -119,6 +115,7 @@ public class CodeGenController {
     @ResponseBody
     @RequestMapping(value = "/downUploadFile")
     public Object downUploadFile(HttpServletResponse response, String filePath) throws BizErrorEx {
+        validUserSession();
         try {
             File file = new File(filePath);
             if (file.exists()) {
@@ -161,6 +158,16 @@ public class CodeGenController {
             e.printStackTrace();
         }
         throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "下载失败");
+    }
+
+    private void validUserSession() throws BizErrorEx {
+        if (!SecurityUtils.getSubject().isAuthenticated()) {
+            throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "尚未登录");
+        }
+        Object object = SecurityUtils.getSubject().getSession().getAttribute("session_user");
+        if (object == null) {
+            throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "用户数据异常,请重新登录");
+        }
     }
 
 }
