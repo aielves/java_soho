@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <description>Quartz定时器配置</description>
+    <!-- 工作的bean -->
+    <bean id="myJob" class="com.soho.codegen.task.JobTask"/>
+
+    <!-- job的配置开始 -->
+    <bean id="myJobDetail1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="myJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>clearExpireData</value>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <!-- job的配置结束 -->
+    <!-- 调度的配置开始 -->
+    <bean id="crontestJobTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="myJobDetail1"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value> <!-- 1分钟执行一次 -->
+        </property>
+    </bean>
+    <!-- 调度的配置结束 -->
+
+    <!-- 启动触发器的配置开始 -->
+    <bean name="startQuertz" lazy-init="false" autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="crontestJobTrigger1"/> <!-- 1分钟执行一次返现 -->
+            </list>
+        </property>
+    </bean>
+    <!-- 启动触发器的配置结束 -->
+</beans>

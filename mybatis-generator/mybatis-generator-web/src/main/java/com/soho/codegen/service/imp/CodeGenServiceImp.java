@@ -185,7 +185,7 @@ public class CodeGenServiceImp implements CodeGenService {
             user.setId(0l);
         }
         try {
-            List<ZipMessage> zipMessages = zipMessageDAO.findByCnd(new SQLCnd().eq("userId", user.getId()).orderby("ctime", SortBy.D).limit(1, 50));
+            List<ZipMessage> zipMessages = zipMessageDAO.findByCnd(new SQLCnd().eq("userId", user.getId()).orderby("ctime", SortBy.D).eq("state", 1).limit(1, 50));
             if (zipMessages != null && !zipMessages.isEmpty()) {
                 List<Map<String, Object>> list = new ArrayList<>(zipMessages.size());
                 for (ZipMessage message : zipMessages) {
@@ -239,7 +239,9 @@ public class CodeGenServiceImp implements CodeGenService {
                     if (file.exists()) {
                         file.delete();
                     }
-                    zipMessageDAO.delete(zipMessage.getId());
+                    zipMessage.setState(2);
+                    zipMessage.setUtime(System.currentTimeMillis());
+                    zipMessageDAO.update(zipMessage);
                 }
             }
             Map<String, Object> map = new HashMap<>();

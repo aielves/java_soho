@@ -110,5 +110,6 @@
     </bean>
 
     <import resource="META-INF/shiro-service.xml"/>
+    <import resource="META-INF/quartz-service.xml"/>
 
 </beans>
