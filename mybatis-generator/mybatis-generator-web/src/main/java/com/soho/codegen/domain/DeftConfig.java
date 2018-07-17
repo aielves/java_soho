@@ -7,6 +7,15 @@ public class DeftConfig {
 
     private String fileDirPath;
     private String configXmlPath;
+    private String domain;
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
     public String getFileDirPath() {
         return fileDirPath;

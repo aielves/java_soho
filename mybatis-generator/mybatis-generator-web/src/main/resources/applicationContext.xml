@@ -107,6 +107,7 @@
     <bean class="com.soho.codegen.domain.DeftConfig">
         <property name="fileDirPath" value="${conf.fileDirPath}"/>
         <property name="configXmlPath" value="${conf.configXmlPath}"/>
+        <property name="domain" value="${conf.domain}"/>
     </bean>
 
     <import resource="META-INF/shiro-service.xml"/>
