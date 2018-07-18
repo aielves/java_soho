@@ -1,6 +1,7 @@
 package com.soho.codegen.chuanglan;
 
 import com.alibaba.fastjson.JSON;
+import com.soho.codegen.domain.DeftConfig;
 import com.soho.codegen.domain.DxSms;
 import com.soho.codegen.service.DxSmsService;
 import com.soho.codegen.shiro.aconst.BizErrorCode;
@@ -30,9 +31,9 @@ public class SendSmsUtils {
 
     public static final String charset = "utf-8";
     // 用户平台API账号(非登录账号,示例:N1234567)
-    public static String account = "";
+    // public static String account = "";
     // 用户平台API密码(非登录密码)
-    public static String pswd = "";
+    // public static String pswd = "";
     //状态报告
     public static String report = "true";
     // 发送短信地址
@@ -61,7 +62,8 @@ public class SendSmsUtils {
         } else {
             throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "暂不支持其他类型发送");
         }
-        SmsSendRequest smsSingleRequest = new SmsSendRequest(account, pswd, sms.getContent(), sms.getMobile(), report);
+        DeftConfig config = SpringUtils.getBean(DeftConfig.class);
+        SmsSendRequest smsSingleRequest = new SmsSendRequest(config.getSmsAppId(), config.getSmsAppKey(), sms.getContent(), sms.getMobile(), report);
         String requestJson = JSON.toJSONString(smsSingleRequest);
         sms.setReqstate(requestJson);
         String response = ChuangLanSmsUtil.sendSmsByPost(smsSingleRequestServerUrl, requestJson);

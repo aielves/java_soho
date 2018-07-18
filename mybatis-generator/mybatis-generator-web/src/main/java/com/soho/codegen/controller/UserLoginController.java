@@ -51,7 +51,7 @@ public class UserLoginController {
             String sig = request.getParameter("sig");
             String token = request.getParameter("token");
             String scene = request.getParameter("scene");
-            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", GGKUtils.appId, GGKUtils.appKey);
+            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getAliAppId(), config.getAliAppKey());
             IAcsClient client = new DefaultAcsClient(profile);
             DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Jaq", "jaq.aliyuncs.com");
             AfsCheckRequest afsCheckRequest = new AfsCheckRequest();

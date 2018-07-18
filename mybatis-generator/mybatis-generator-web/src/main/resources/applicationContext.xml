@@ -108,6 +108,10 @@
         <property name="fileDirPath" value="${conf.fileDirPath}"/>
         <property name="configXmlPath" value="${conf.configXmlPath}"/>
         <property name="domain" value="${conf.domain}"/>
+        <property name="aliAppId" value="${conf.aliAppId}"/>
+        <property name="aliAppKey" value="${conf.aliAppKey}"/>
+        <property name="smsAppId" value="${conf.smsAppId}"/>
+        <property name="smsAppKey" value="${conf.smsAppKey}"/>
     </bean>
 
     <import resource="META-INF/shiro-service.xml"/>
