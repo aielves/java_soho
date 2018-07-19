@@ -43,32 +43,34 @@ public class UserLoginController {
     @ResponseBody
     @RequestMapping(value = "/jaq")
     public Object jaq_valid(HttpServletRequest request) throws BizErrorEx {
-        try {  // JAQ行为分析认证
-            if (JAQUtils.toStateByValid()) {
-                return new HashMap<>();
-            }
-            String csessionid = request.getParameter("csessionid");
-            String sig = request.getParameter("sig");
-            String token = request.getParameter("token");
-            String scene = request.getParameter("scene");
-            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getAliAppId(), config.getAliAppKey());
-            IAcsClient client = new DefaultAcsClient(profile);
-            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Jaq", "jaq.aliyuncs.com");
-            AfsCheckRequest afsCheckRequest = new AfsCheckRequest();
-            afsCheckRequest.setPlatform(3);//必填参数，请求来源： 1：Android端； 2：iOS端； 3：PC端及其他
-            afsCheckRequest.setSession(csessionid);// 必填参数，从前端获取，不可更改
-            afsCheckRequest.setSig(sig);// 必填参数，从前端获取，不可更改
-            afsCheckRequest.setToken(token);// 必填参数，从前端获取，不可更改
-            afsCheckRequest.setScene(scene);// 必填参数，从前端获取，不可更改
-            AfsCheckResponse afsCheckResponse = client.getAcsResponse(afsCheckRequest);
-            if (afsCheckResponse.getErrorCode() == 0 && afsCheckResponse.getData() == true) {
-                JAQUtils.toStateBySuccess();
-                return new HashMap<>();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "JAQ验证失败");
+//        try {  // JAQ行为分析认证
+//            if (JAQUtils.toStateByValid()) {
+//                return new HashMap<>();
+//            }
+//            String csessionid = request.getParameter("csessionid");
+//            String sig = request.getParameter("sig");
+//            String token = request.getParameter("token");
+//            String scene = request.getParameter("scene");
+//            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getAliAppId(), config.getAliAppKey());
+//            IAcsClient client = new DefaultAcsClient(profile);
+//            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Jaq", "jaq.aliyuncs.com");
+//            AfsCheckRequest afsCheckRequest = new AfsCheckRequest();
+//            afsCheckRequest.setPlatform(3);//必填参数，请求来源： 1：Android端； 2：iOS端； 3：PC端及其他
+//            afsCheckRequest.setSession(csessionid);// 必填参数，从前端获取，不可更改
+//            afsCheckRequest.setSig(sig);// 必填参数，从前端获取，不可更改
+//            afsCheckRequest.setToken(token);// 必填参数，从前端获取，不可更改
+//            afsCheckRequest.setScene(scene);// 必填参数，从前端获取，不可更改
+//            AfsCheckResponse afsCheckResponse = client.getAcsResponse(afsCheckRequest);
+//            if (afsCheckResponse.getErrorCode() == 0 && afsCheckResponse.getData() == true) {
+//                JAQUtils.toStateBySuccess();
+//                return new HashMap<>();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "JAQ验证失败");
+        JAQUtils.toStateBySuccess();
+        return new HashMap<>();
     }
 
     @ResponseBody

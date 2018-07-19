@@ -60,31 +60,39 @@ public class CodeGenServiceImp implements CodeGenService {
         String username = dbMessage.getUsername();
         String password = dbMessage.getPassword();
         String tables = dbMessage.getTables();
-        if (moduleName == null) {
+        if (moduleName == null || moduleName.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "至少选择一个模块");
         }
-        if (packageName == null) {
+        if (packageName == null || packageName.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入类包路径");
         }
         if (dbType == null) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请选择数据库类型");
         }
-        if (StringUtils.isEmpty(jdbcUrl)) {
+        if (StringUtils.isEmpty(jdbcUrl) || jdbcUrl.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入数据库地址");
         }
-        if (StringUtils.isEmpty(username)) {
+        if (!jdbcUrl.startsWith("jdbc:mysql://")) {
+            throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入合法的数据库地址");
+        }
+        if (StringUtils.isEmpty(username) || username.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入数据库帐号");
         }
-        if (StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(password) || password.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入数据库密码");
         }
         if (StringUtils.isEmpty(tables)) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "至少选择一个数据表");
         }
+        if (tables.length() > 20000) {
+            throw new BizErrorEx(Ret.UNKNOWN_STATUS, "选择的表过多,请适当减少数量");
+        }
         // 驱动程序名
         String jdbcDriver = null;
         if (dbType.intValue() == 1) {
             jdbcDriver = "com.mysql.jdbc.Driver";
+        } else {
+            throw new BizErrorEx(Ret.UNKNOWN_STATUS, "暂不支持其他驱动");
         }
         dbMessage.setJdbcDriver(jdbcDriver);
         Session session = SecurityUtils.getSubject().getSession();
@@ -134,16 +142,20 @@ public class CodeGenServiceImp implements CodeGenService {
         String jdbcUrl = dbMessage.getJdbcUrl();
         String username = dbMessage.getUsername();
         String password = dbMessage.getPassword();
+        // jdbc:mysql://119.23.23.55:3306/mch
         if (dbType == null) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请选择数据库类型");
         }
-        if (StringUtils.isEmpty(jdbcUrl)) {
+        if (StringUtils.isEmpty(jdbcUrl) || jdbcUrl.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入数据库地址");
         }
-        if (StringUtils.isEmpty(username)) {
+        if (!jdbcUrl.startsWith("jdbc:mysql://")) {
+            throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入合法的数据库地址");
+        }
+        if (StringUtils.isEmpty(username) || username.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入数据库帐号");
         }
-        if (StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(password) || password.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入数据库密码");
         }
         // 驱动程序名
@@ -277,11 +289,11 @@ public class CodeGenServiceImp implements CodeGenService {
             if (StringUtils.isEmpty(password) || password.length() < 6 || password.length() > 15) {
                 throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的登录密码(6-15位)");
             }
-            if (StringUtils.isEmpty(nickname)) {
-                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的昵称");
+            if (StringUtils.isEmpty(nickname) || nickname.length() > 15) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的昵称(15位以内)");
             }
-            if (StringUtils.isEmpty(company)) {
-                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的所在的公司名称");
+            if (StringUtils.isEmpty(company) || nickname.length() > 20) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的所在的公司名称(20位以内)");
             }
             DxSms dx = SendSmsUtils.validSmsCode("86", username, smscode);
             OauthUser save = new OauthUser();

@@ -129,7 +129,7 @@ function doSubmit() {
     if ("" == moduleName) {
         jAlert("至少选择一个模块", "友情提示");
         isSubmit = false;
-        jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+        jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
         return false;
     } else {
         moduleName = moduleName.substring(1);
@@ -137,37 +137,37 @@ function doSubmit() {
     if ("" == packageName) {
         jAlert("请输入类包路径", "友情提示");
         isSubmit = false;
-        jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+        jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
         return false;
     }
     if (dbType == null || "" == dbType) {
         jAlert("请选择数据库类型", "友情提示");
         isSubmit = false;
-        jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+        jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
         return false;
     }
     if (jdbcUrl == null || "" == jdbcUrl) {
         jAlert("请输入数据库地址", "友情提示");
         isSubmit = false;
-        jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+        jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
         return false;
     }
     if (username == null || "" == username) {
         jAlert("请输入数据库帐号", "友情提示");
         isSubmit = false;
-        jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+        jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
         return false;
     }
     if (password == null || "" == password) {
         jAlert("请输入数据库密码", "友情提示");
         isSubmit = false;
-        jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+        jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
         return false;
     }
     if ("" == tables) {
         jAlert("至少选择一个数据表", "友情提示");
         isSubmit = false;
-        jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+        jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
         return false;
     } else {
         tables = tables.substring(1);
@@ -187,21 +187,21 @@ function doSubmit() {
                     jQuery("#fileform").show();
                 }
                 isSubmit = false;
-                jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+                jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
             });
         } else {
             jAlert(result.msg, "友情提示");
             isSubmit = false;
-            jQuery("#submitbtn").text("开始生成").removeAttr("disabled");
+            jQuery("#submitbtn").text("开始生成文件").removeAttr("disabled");
         }
     });
 }
 
 function getFiles() {
-    if (!islogin) {
+    /*if (!islogin) {
         jAlert("您尚未登录!", "友情提示");
         return;
-    }
+    }*/
     jQuery("#tribune").hide();
     jQuery("#basicform").hide();
     jQuery.post("/codegen/getZipFile", "", function (result) {
