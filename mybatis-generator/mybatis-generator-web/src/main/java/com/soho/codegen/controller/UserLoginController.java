@@ -87,6 +87,12 @@ public class UserLoginController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/sumuse")
+    public Object sumuse() throws BizErrorEx {
+        return codeGenService.sumuse();
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/login")
     public Object login(String username, String password) throws BizErrorEx {
         try {

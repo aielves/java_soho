@@ -19,7 +19,18 @@
             location.href = "/static/ggk.html";
         }
     });
+    jQuery.post("/user/sumuse", "", function (result) {
+        if (result.code == "000000") {
+            jQuery("#rate").text(result.data.rate);
+            jQuery("#sumuse").text(result.data.sumuse);
+        }
+    });
 })();
+
+function notopen() {
+    jAlert("功能正在建设，敬请期待","友情提示")
+    return;
+}
 
 function submitSignUpForm() {
     var username = jQuery("#username").val();

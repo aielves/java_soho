@@ -1,9 +1,13 @@
 package com.soho.codegen.shiro.realm;
 
+import com.soho.codegen.domain.LoginLog;
 import com.soho.codegen.domain.OauthUser;
+import com.soho.codegen.service.LoginLogService;
 import com.soho.codegen.service.OauthUserService;
 import com.soho.ex.BizErrorEx;
 import com.soho.mybatis.sqlcode.condition.imp.SQLCnd;
+import com.soho.shiro.utils.HttpUtils;
+import com.soho.shiro.utils.SpringUtils;
 import com.soho.utils.JAQUtils;
 import com.soho.zookeeper.security.imp.AESDcipher;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +23,8 @@ public class WebLoginRealm extends AuthorizingRealm {
 
     @Autowired
     private OauthUserService oauthUserService;
+    @Autowired
+    private LoginLogService loginLogService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -40,12 +46,26 @@ public class WebLoginRealm extends AuthorizingRealm {
             if (user != null) {
                 SecurityUtils.getSubject().getSession().setAttribute("session_user", user);
                 JAQUtils.toStateByRemove();
+                saveLoginLog(user.getId());
                 return new SimpleAuthenticationInfo(token.getUsername(), token.getCredentials(), getName());
             }
         } catch (BizErrorEx ex) {
             ex.printStackTrace();
         }
         throw new AuthenticationException("username/password login error");
+    }
+
+    private void saveLoginLog(Long userId) {
+        LoginLog loginLog = new LoginLog();
+        loginLog.setUserId(userId);
+        loginLog.setLogaddr(HttpUtils.getClientIP(SpringUtils.getRequest()));
+        loginLog.setLogtime(System.currentTimeMillis());
+        loginLog.setCtime(loginLog.getLogtime());
+        try {
+            loginLogService.insert(loginLog);
+        } catch (BizErrorEx ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

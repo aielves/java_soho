@@ -30,4 +30,6 @@ public interface CodeGenService {
 
     public Map<String, Object> uploadFile(Integer uploadtype, MultipartFile file) throws BizErrorEx;
 
+    public Map<String, Object> sumuse() throws BizErrorEx;
+
 }

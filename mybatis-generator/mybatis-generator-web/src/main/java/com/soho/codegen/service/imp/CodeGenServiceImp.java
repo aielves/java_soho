@@ -436,4 +436,20 @@ public class CodeGenServiceImp implements CodeGenService {
         throw new BizErrorEx(BizErrorCode.BIZ_ERROR, "处理失败,请重新尝试");
     }
 
+    @Override
+    public Map<String, Object> sumuse() throws BizErrorEx {
+        double rate = 98.6;
+        int sumuse = 15678;
+        try {
+            int count = zipMessageDAO.countAll();
+            sumuse += count;
+        } catch (MybatisDAOEx ex) {
+            ex.printStackTrace();
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("rate", rate);
+        map.put("sumuse", sumuse);
+        return map;
+    }
+
 }

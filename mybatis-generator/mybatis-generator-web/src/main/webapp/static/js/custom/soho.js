@@ -32,7 +32,19 @@ function initMsg() {
             return false;
         }
     });
+    jQuery.post("/user/sumuse", "", function (result) {
+        if (result.code == "000000") {
+            jQuery("#rate").text(result.data.rate);
+            jQuery("#sumuse").text(result.data.sumuse);
+        }
+    });
 }
+
+function notopen() {
+    jAlert("功能正在建设，敬请期待","友情提示")
+    return;
+}
+
 
 function getDBTable() {
     if (!islogin) {
@@ -112,7 +124,7 @@ function doSubmit() {
         return;
     }
     isSubmit = true;
-    jQuery("#submitbtn").text("正在生成...").attr("disabled", true);
+    jQuery("#submitbtn").text("正在生成文件...").attr("disabled", true);
     var moduleName = "";
     jQuery("input[name='moduleName']:checked").each(function () {
         moduleName += "," + jQuery(this).val();
