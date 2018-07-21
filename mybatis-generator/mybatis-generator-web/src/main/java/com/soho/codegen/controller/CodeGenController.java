@@ -68,7 +68,7 @@ public class CodeGenController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/downFile", method = RequestMethod.POST)
+    @RequestMapping(value = "/downFile")
     public Object downFile(HttpServletResponse response, String fileId) throws BizErrorEx {
         validUserSession();
         ZipMessage zipMessage = codeGenService.downFile(fileId);
