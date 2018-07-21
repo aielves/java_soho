@@ -13,6 +13,7 @@ import com.soho.mybatis.sqlcode.aconst.SortBy;
 import com.soho.mybatis.sqlcode.condition.imp.SQLCnd;
 import com.soho.shiro.utils.SessionUtils;
 import com.soho.utils.JAQUtils;
+import com.soho.utils.NumUtils;
 import com.soho.utils.ZipUtils;
 import com.soho.web.domain.Ret;
 import com.soho.zookeeper.security.imp.AESDcipher;
@@ -94,6 +95,7 @@ public class CodeGenServiceImp implements CodeGenService {
         } else {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "暂不支持其他驱动");
         }
+        long start = System.currentTimeMillis();
         dbMessage.setJdbcDriver(jdbcDriver);
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute("dbmessage", dbMessage);
@@ -120,6 +122,7 @@ public class CodeGenServiceImp implements CodeGenService {
             zipMessage.setFileSize(zipFile.length());
             zipMessage.setDburl(dbMessage.getJdbcUrl());
             zipMessage.setTables(dbMessage.getTables());
+            zipMessage.setCostime(System.currentTimeMillis() - start);
             try {
                 zipMessageDAO.insert(zipMessage);
                 dbMessage.setUserId(user.getId());
@@ -142,9 +145,15 @@ public class CodeGenServiceImp implements CodeGenService {
         String jdbcUrl = dbMessage.getJdbcUrl();
         String username = dbMessage.getUsername();
         String password = dbMessage.getPassword();
-        // jdbc:mysql://119.23.23.55:3306/mch
         if (dbType == null) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请选择数据库类型");
+        }
+        // 驱动程序名
+        String jdbcDriver = null;
+        if (dbType.intValue() == 1) {
+            jdbcDriver = "com.mysql.jdbc.Driver";
+        } else {
+            throw new BizErrorEx(Ret.UNKNOWN_STATUS, "暂未支持其他数据库类型");
         }
         if (StringUtils.isEmpty(jdbcUrl) || jdbcUrl.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入数据库地址");
@@ -157,11 +166,6 @@ public class CodeGenServiceImp implements CodeGenService {
         }
         if (StringUtils.isEmpty(password) || password.length() > 100) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入数据库密码");
-        }
-        // 驱动程序名
-        String jdbcDriver = null;
-        if (dbType.intValue() == 1) {
-            jdbcDriver = "com.mysql.jdbc.Driver";
         }
         try {
             Class.forName(jdbcDriver);
@@ -206,7 +210,8 @@ public class CodeGenServiceImp implements CodeGenService {
                     map.put("dburl", message.getDburl());
                     map.put("tables", message.getTables());
                     map.put("fileName", message.getFileName());
-                    map.put("fileSize", message.getFileSize() + "(Byte)");
+                    map.put("fileSize", NumUtils.divide(message.getFileSize(), "1024", 2) + " (KB)");
+                    map.put("costime", NumUtils.divide(message.getCostime(), "1000", 2) + " (秒)");
                     map.put("ctime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(message.getCtime())));
                     list.add(map);
                 }

@@ -10,9 +10,8 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -25,21 +24,21 @@ public class CodeGenController {
     private CodeGenService codeGenService;
 
     @ResponseBody
-    @RequestMapping(value = "/generate")
+    @RequestMapping(value = "/generate", method = RequestMethod.POST)
     public Object generate(DbMessage dbMessage) throws BizErrorEx {
         validUserSession();
         return codeGenService.generate(dbMessage);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/uploadFile")
+    /*@ResponseBody
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public Object uploadFile(Integer uploadtype, @RequestParam("file") MultipartFile file) throws BizErrorEx {
         validUserSession();
         return codeGenService.uploadFile(uploadtype, file);
-    }
+    }*/
 
     @ResponseBody
-    @RequestMapping(value = "/getUser")
+    @RequestMapping(value = "/getUser", method = RequestMethod.POST)
     public Object generate() throws BizErrorEx {
         validUserSession();
         OauthUser user = (OauthUser) SecurityUtils.getSubject().getSession().getAttribute("session_user");
@@ -48,28 +47,28 @@ public class CodeGenController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getDBTables")
+    @RequestMapping(value = "/getDBTables", method = RequestMethod.POST)
     public Object getDBTables(DbMessage dbMessage) throws BizErrorEx {
         validUserSession();
         return codeGenService.getDBTables(dbMessage);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getZipFile")
+    @RequestMapping(value = "/getZipFile", method = RequestMethod.POST)
     public Object getZipFile() throws BizErrorEx {
         validUserSession();
         return codeGenService.getZipFiles();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delFile")
+    @RequestMapping(value = "/delFile", method = RequestMethod.POST)
     public Object delFile(String cbx_ids) throws BizErrorEx {
         validUserSession();
         return codeGenService.delFile(cbx_ids);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/downFile")
+    @RequestMapping(value = "/downFile", method = RequestMethod.POST)
     public Object downFile(HttpServletResponse response, String fileId) throws BizErrorEx {
         validUserSession();
         ZipMessage zipMessage = codeGenService.downFile(fileId);
@@ -113,7 +112,7 @@ public class CodeGenController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/downUploadFile")
+    @RequestMapping(value = "/downUploadFile", method = RequestMethod.POST)
     public Object downUploadFile(HttpServletResponse response, String filePath) throws BizErrorEx {
         validUserSession();
         try {

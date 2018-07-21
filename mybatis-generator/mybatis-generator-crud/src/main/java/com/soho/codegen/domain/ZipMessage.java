@@ -25,6 +25,12 @@ public class ZipMessage implements IDEntity<Long> {
 
     private Long fileSize;
 
+    /**
+     * Database Column Remarks:
+     *   生成耗时
+     */
+    private Long costime;
+
     private Long ctime;
 
     private Long utime;
@@ -89,6 +95,14 @@ public class ZipMessage implements IDEntity<Long> {
 
     public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
+    }
+
+    public Long getCostime() {
+        return costime;
+    }
+
+    public void setCostime(Long costime) {
+        this.costime = costime;
     }
 
     public Long getCtime() {

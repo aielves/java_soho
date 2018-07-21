@@ -223,19 +223,20 @@ function getFiles() {
             body.html("");
             var htmlStr = "";
             if (JSON.stringify(result.data) == "{}") {
-                body.html("<tr><td colspan=\"7\" align=\"center\" class=\"center\">暂无数据</td></tr>");
+                body.html("<tr><td colspan=\"8\" align=\"center\" class=\"center\">暂无数据</td></tr>");
             } else {
                 jQuery.each(result.data.list, function (i, v) {
                     htmlStr += ("<tr id='tr_" + v.id + "'>");
                     htmlStr += "<td align=\"center\"><div class=\"checker\" id=\"uniform-undefined\"><span id='cbx_" + v.id + "_s1'><div class=\"checker\" id=\"uniform-undefined\"><span id='cbx_" + v.id + "_s2'><input id='cbx_" + v.id + "' name='fileId' value='" + v.id + "' style=\"opacity: 0;\" type=\"checkbox\" onclick=\"cbx_func('cbx_" + v.id + "')\"></span></div></span></div></td>";
                     htmlStr += ("<td width=\"18%\">" + v.dburl + "</td>");
                     var tableStr = v.tables;
-                    if (tableStr.length > 100) {
-                        tableStr = tableStr.substring(0, 100) + "...";
+                    if (tableStr.length > 70) {
+                        tableStr = tableStr.substring(0, 70) + "...";
                     }
                     htmlStr += ("<td title='" + v.tables + "'>" + tableStr + "</td>");
                     htmlStr += ("<td width=\"8%\">" + v.fileName + "</td>");
                     htmlStr += ("<td width=\"8%\">" + v.fileSize + "</td>");
+                    htmlStr += ("<td width=\"8%\">" + v.costime + "</td>");
                     htmlStr += ("<td width=\"8%\">" + v.ctime + "</td>");
                     htmlStr += ("<td class=\"center\" width=\"12%\"><a class=\"btn btn_archive\" href=\"/codegen/downFile?fileId=" + v.id + "\"><span>下载</span></a>&nbsp;<a class=\"btn btn_trash\" onclick=\"delFile('" + v.id + "');\" href=\"javascript:void(0);\"><span>删除</span></a>&nbsp;</td>")
                     htmlStr += "</tr>";
