@@ -289,7 +289,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addUpdateByCndElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractXmlElementGenerator elementGenerator = new UpdateByCndElementGenerator();
+            AbstractXmlElementGenerator elementGenerator = new UpdateByCndElementGenerator1();
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }
