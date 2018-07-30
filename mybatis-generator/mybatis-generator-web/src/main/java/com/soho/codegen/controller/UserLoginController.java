@@ -117,8 +117,8 @@ public class UserLoginController {
         return new HashMap<>();
     }
 
-    @RequestMapping("/validGGK")
-    public void validGGK(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String sessionid, String sig, String token, String scene) {
+    @RequestMapping("/valid4signup")
+    public void valid4signup(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String sessionid, String sig, String token, String scene) {
         AuthenticateSigRequest request = new AuthenticateSigRequest();
         request.setSessionId(sessionid);// 必填参数，从前端获取，不可更改，android和ios只变更这个参数即可，下面参数不变保留xxx
         request.setSig(sig);// 必填参数，从前端获取，不可更改
@@ -133,7 +133,29 @@ public class UserLoginController {
                 httpResponse.sendRedirect(config.getDomain() + "/static/signup.html");
                 return;
             }
-            httpResponse.sendRedirect(config.getDomain() + "/static/ggk.html");
+            httpResponse.sendRedirect(config.getDomain() + "/static/valid4signup.html");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping("/valid4forget")
+    public void valid4forget(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String sessionid, String sig, String token, String scene) {
+        AuthenticateSigRequest request = new AuthenticateSigRequest();
+        request.setSessionId(sessionid);// 必填参数，从前端获取，不可更改，android和ios只变更这个参数即可，下面参数不变保留xxx
+        request.setSig(sig);// 必填参数，从前端获取，不可更改
+        request.setToken(token);// 必填参数，从前端获取，不可更改
+        request.setScene(scene);// 必填参数，从前端获取，不可更改
+        request.setAppKey("FFFF000000000179AE04");// 必填参数，后端填写
+        request.setRemoteIp(HttpUtils.getClientIP(httpRequest));// 必填参数，后端填写
+        try {
+            AuthenticateSigResponse response = GGKUtils.iAcsClient.getAcsResponse(request);
+            if (response.getCode() == 100) { // 验签通过
+                JAQUtils.toStateBySuccess();
+                httpResponse.sendRedirect(config.getDomain() + "/static/forget.html");
+                return;
+            }
+            httpResponse.sendRedirect(config.getDomain() + "/static/valid4forget.html");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,6 +165,12 @@ public class UserLoginController {
     @RequestMapping(value = "/signup")
     public Object signup(OauthUser user, String smscode) throws BizErrorEx {
         return codeGenService.signup(user, smscode);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/forget")
+    public Object forget(OauthUser user, String smscode) throws BizErrorEx {
+        return codeGenService.forget(user, smscode);
     }
 
 }

@@ -320,6 +320,40 @@ public class CodeGenServiceImp implements CodeGenService {
     }
 
     @Override
+    public Map<String, Object> forget(OauthUser user, String smscode) throws BizErrorEx {
+        try {
+            if (!JAQUtils.toStateByValid()) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请先进行安全认证");
+            }
+            String username = user.getUsername();
+            String password = user.getPassword();
+            if (!SendSmsUtils.isMobile(username)) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入合法的手机号码");
+            }
+            if (StringUtils.isEmpty(smscode)) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的短信验证码");
+            }
+            if (StringUtils.isEmpty(password) || password.length() < 6 || password.length() > 15) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请输入您的登录密码(6-15位)");
+            }
+            DxSms dx = SendSmsUtils.validSmsCode("86", username, smscode);
+            OauthUser update = oauthUserDAO.findOneByCnd(new SQLCnd().eq("username", username));
+            if (update == null) {
+                throw new BizErrorEx(Ret.UNKNOWN_STATUS, "手机号码尚未注册");
+            }
+            update.setPassword(AESDcipher.encrypt(password));
+            oauthUserDAO.update(update);
+            SendSmsUtils.delSmsCode(dx);
+            JAQUtils.toStateByRemove();
+            Map<String, Object> map = new HashMap<>();
+            map.put("result", "更新密码成功");
+            return map;
+        } catch (MybatisDAOEx ex) {
+            throw new BizErrorEx(ex.getErrorCode(), ex.getMessage());
+        }
+    }
+
+    @Override
     public Map<String, Object> sendsms(String mobile) throws BizErrorEx {
         if (!JAQUtils.toStateByValid()) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请先进行安全认证");

@@ -16,7 +16,7 @@
 (function () {
     jQuery.post("/user/hasValid", "", function (json) {
         if (json.code != "000000") {
-            location.href = "/static/valid4signup.html";
+            location.href = "/static/valid4forget.html";
         }
     });
     jQuery.post("/user/sumuse", "", function (result) {
@@ -32,35 +32,29 @@ function notopen() {
     return;
 }
 
-function submitSignUpForm() {
+function submitForgetForm() {
     var username = jQuery("#username").val();
     var password = jQuery("#password").val();
-    var nickname = jQuery("#nickname").val();
-    var company = jQuery("#company").val();
     var smscode = jQuery("#smscode").val();
     if (username == null || "" == username) {
         jAlert("请输入您的手机号码", "友情提示");
         return false;
     }
     if (password == null || "" == password) {
-        jAlert("请输入您的登录密码(6-15位)", "友情提示");
-        return false;
-    }
-    if (nickname == null || "" == nickname) {
-        jAlert("请输入您的昵称", "友情提示");
+        jAlert("请输入您的新登录密码(6-15位)", "友情提示");
         return false;
     }
     if (smscode == null || "" == smscode) {
         jAlert("请输入您的短信验证码", "友情提示");
         return false;
     }
-    jQuery.post("/user/signup", "username=" + username + "&password=" + password + "&nickname=" + nickname + "&company=" + company + "&smscode=" + smscode, function (result) {
+    jQuery.post("/user/forget", "username=" + username + "&password=" + password + "&smscode=" + smscode, function (result) {
         if (result.code == "000000") {
-            jConfirm('注册已成功,是否前往登录?', '友情提示', function (r) {
+            jConfirm('更新密码已成功,是否前往登录?', '友情提示', function (r) {
                 if (r == true) {
                     location.href = '/static/login.html';
                 } else {
-                    location.href = '/static/signup.html';
+                    location.href = '/static/forget.html';
                 }
             });
         } else {
@@ -80,7 +74,7 @@ function sendsms() {
             jAlert(json.data.result, "友情提示");
         } else if (json.code == "000108") {
             alert(json.msg);
-            location.href = "/static/valid4signup.html";
+            location.href = "/static/valid4forget.html";
         } else {
             jAlert(json.msg, "友情提示");
         }
