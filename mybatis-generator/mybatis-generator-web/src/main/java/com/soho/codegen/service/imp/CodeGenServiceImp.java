@@ -51,9 +51,9 @@ public class CodeGenServiceImp implements CodeGenService {
     @Autowired
     private OauthUserDAO oauthUserDAO;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public Map<String, Object> generate(DbMessage dbMessage) throws BizErrorEx {
+    public synchronized Map<String, Object> generate(DbMessage dbMessage) throws BizErrorEx {
         String moduleName = dbMessage.getModuleName();
         String packageName = dbMessage.getPackageName();
         Integer dbType = dbMessage.getDbType();
@@ -271,7 +271,7 @@ public class CodeGenServiceImp implements CodeGenService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Map<String, Object> signup(OauthUser user, String smscode) throws BizErrorEx {
+    public synchronized Map<String, Object> signup(OauthUser user, String smscode) throws BizErrorEx {
         try {
             if (!JAQUtils.toStateByValid()) {
                 throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请先进行安全认证");
@@ -319,8 +319,9 @@ public class CodeGenServiceImp implements CodeGenService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public Map<String, Object> forget(OauthUser user, String smscode) throws BizErrorEx {
+    public synchronized Map<String, Object> forget(OauthUser user, String smscode) throws BizErrorEx {
         try {
             if (!JAQUtils.toStateByValid()) {
                 throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请先进行安全认证");
@@ -353,8 +354,9 @@ public class CodeGenServiceImp implements CodeGenService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public Map<String, Object> sendsms(String mobile) throws BizErrorEx {
+    public synchronized Map<String, Object> sendsms(String mobile) throws BizErrorEx {
         if (!JAQUtils.toStateByValid()) {
             throw new BizErrorEx(Ret.UNKNOWN_STATUS, "请先进行安全认证");
         }
