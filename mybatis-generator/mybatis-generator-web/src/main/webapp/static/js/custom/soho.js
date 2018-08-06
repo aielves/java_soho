@@ -41,7 +41,7 @@ function initMsg() {
 }
 
 function notopen() {
-    jAlert("功能正在建设，敬请期待","友情提示")
+    jAlert("功能正在建设，敬请期待", "友情提示")
     return;
 }
 
@@ -94,27 +94,7 @@ function submitMyForm() {
         jAlert("登录后方可使用该功能!", "友情提示");
         return;
     }
-    jQuery("#sohoform").validate({
-        submitHandler: function () {
-            doSubmit();
-        },
-        rules: {
-            jdbcUrl: "required",
-            username: "required",
-            password: "required",
-            packageName: "required",
-            dbType: "required",
-            moduleName: "required"
-        },
-        messages: {
-            jdbcUrl: "请输入数据库地址",
-            username: "请输入数据库帐号",
-            password: "请输入数据库密码",
-            packageName: "请输入类包路径",
-            dbType: "请选择数据库类型",
-            moduleName: "至少选择一个模块"
-        }
-    });
+    doSubmit();
 }
 
 var isSubmit = false;
